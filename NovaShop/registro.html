@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Cuenta | NovaShop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nova: '#071A42',
+            electric: '#2563EB',
+            'nova-dark': '#040f28',
+            'electric-hover': '#1d4ed8'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Header Simplificado -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 py-4">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-black text-nova tracking-tight flex items-center gap-2">
+        <span class="bg-electric text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg font-bold shadow-md">N</span>
+        Nova<span class="text-electric">Shop</span>
+      </a>
+      <a href="login.html" class="text-xs sm:text-sm font-bold text-slate-600 hover:text-electric transition-colors flex items-center gap-1.5">
+        <span>¿Ya tienes cuenta?</span>
+        <span class="text-electric hover:underline">Iniciar sesión</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="flex-grow flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-lg">
+      
+      <!-- Card Principal de Registro -->
+      <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-xl shadow-nova/5 border border-slate-100 relative overflow-hidden">
+        <!-- Detalle decorativo superior -->
+        <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-nova via-electric to-blue-400"></div>
+
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 text-electric mb-3 text-2xl font-bold shadow-sm">
+            <i class="fa-solid fa-user-plus"></i>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-black text-nova tracking-tight">Crear una cuenta</h1>
+          <p class="text-slate-500 text-sm mt-1">Únete a NovaShop y disfruta de ofertas exclusivas.</p>
+        </div>
+
+        <!-- Botones de Registro Social Rápidos -->
+        <div class="grid grid-cols-2 gap-3 mb-6">
+          <button onclick="showToast('Registro con Google en desarrollo')" class="flex items-center justify-center gap-2 border border-slate-200 hover:border-slate-300 bg-slate-50 hover:bg-slate-100 py-2.5 rounded-xl text-xs font-bold text-slate-700 transition-all">
+            <i class="fa-brands fa-google text-red-500"></i> Google
+          </button>
+          <button onclick="showToast('Registro con Facebook en desarrollo')" class="flex items-center justify-center gap-2 border border-slate-200 hover:border-slate-300 bg-slate-50 hover:bg-slate-100 py-2.5 rounded-xl text-xs font-bold text-slate-700 transition-all">
+            <i class="fa-brands fa-facebook text-blue-600"></i> Facebook
+          </button>
+        </div>
+
+        <div class="relative flex py-2 items-center mb-6">
+          <div class="flex-grow border-t border-slate-200"></div>
+          <span class="flex-shrink mx-4 text-[11px] font-bold text-slate-400 uppercase tracking-widest">o regístrate con tu correo</span>
+          <div class="flex-grow border-t border-slate-200"></div>
+        </div>
+
+        <!-- Formulario -->
+        <form onsubmit="handleRegister(event)" class="space-y-4">
+          
+          <!-- Nombre Completo -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nombre completo</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                <i class="fa-regular fa-user text-sm"></i>
+              </span>
+              <input required type="text" id="regName" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400" placeholder="Ej. Freduard Rojas">
+            </div>
+          </div>
+
+          <!-- Correo y Teléfono en Grid -->
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Correo electrónico</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <i class="fa-regular fa-envelope text-sm"></i>
+                </span>
+                <input required type="email" id="regEmail" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400" placeholder="correo@ejemplo.com">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Teléfono / WhatsApp</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <i class="fa-solid fa-phone text-xs"></i>
+                </span>
+                <input required type="tel" id="regPhone" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400" placeholder="(809) 000-0000">
+              </div>
+            </div>
+          </div>
+
+          <!-- Contraseña -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Contraseña (Mín. 8 caracteres)</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                <i class="fa-solid fa-lock text-sm"></i>
+              </span>
+              <input required minlength="8" type="password" id="regPassword" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-10 pr-10 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400" placeholder="••••••••">
+              <button type="button" onclick="togglePassword('regPassword', 'eyeIcon1')" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600">
+                <i id="eyeIcon1" class="fa-regular fa-eye text-sm"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Confirmar Contraseña -->
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Confirmar contraseña</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                <i class="fa-solid fa-lock-keyhole text-sm"></i>
+              </span>
+              <input required minlength="8" type="password" id="regConfirmPassword" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-10 pr-10 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400" placeholder="••••••••">
+              <button type="button" onclick="togglePassword('regConfirmPassword', 'eyeIcon2')" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600">
+                <i id="eyeIcon2" class="fa-regular fa-eye text-sm"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Checkbox Términos -->
+          <div class="pt-2">
+            <label class="flex items-start gap-2.5 cursor-pointer text-xs text-slate-600 leading-relaxed">
+              <input required type="checkbox" class="mt-0.5 rounded border-slate-300 text-electric focus:ring-electric w-4 h-4 cursor-pointer">
+              <span>Acepto los <a href="politicas.html" target="_blank" class="text-electric font-bold hover:underline">términos de servicio</a> y las <a href="politicas.html" target="_blank" class="text-electric font-bold hover:underline">políticas de privacidad</a> de NovaShop.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="w-full bg-electric hover:bg-electric-hover text-white font-bold py-3.5 rounded-xl shadow-lg shadow-electric/20 transition-all flex items-center justify-center gap-2 text-sm mt-2">
+            <i class="fa-solid fa-user-check"></i>
+            <span>Crear mi cuenta</span>
+          </button>
+        </form>
+
+        <div class="mt-6 pt-6 border-t border-slate-100 text-center">
+          <p class="text-xs text-slate-500 font-medium">
+            ¿Ya tienes una cuenta registrada? 
+            <a href="login.html" class="text-nova font-black hover:text-electric transition-colors">Inicia sesión aquí</a>
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-nova text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div id="toastIcon" class="w-8 h-8 rounded-full bg-electric/20 text-electric flex items-center justify-center">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <span id="toastMsg" class="font-bold text-sm">Cuenta creada correctamente</span>
+  </div>
+
+  <!-- Footer Simplificado -->
+  <footer class="py-6 border-t border-slate-200 text-center text-xs text-slate-500 bg-white">
+    <p>© 2026 NovaShop. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    function togglePassword(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      
+      const pass = document.getElementById('regPassword').value;
+      const confirmPass = document.getElementById('regConfirmPassword').value;
+
+      if (pass !== confirmPass) {
+        showToast('Las contraseñas no coinciden', true);
+        return;
+      }
+
+      showToast('¡Registro exitoso! Redirigiendo a Mi Cuenta...');
+      
+      setTimeout(() => {
+        window.location.href = 'cuenta.html';
+      }, 1500);
+    }
+
+    function showToast(mensaje, isError = false) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastMsg.textContent = mensaje;
+
+      if (isError) {
+        toastIcon.className = "w-8 h-8 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center";
+        toastIcon.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+      } else {
+        toastIcon.className = "w-8 h-8 rounded-full bg-electric/20 text-electric flex items-center justify-center";
+        toastIcon.innerHTML = '<i class="fa-solid fa-check"></i>';
+      }
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Cuenta | NovaShop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nova: '#071A42',
+            electric: '#2563EB',
+            'nova-dark': '#040f28',
+            'electric-hover': '#1d4ed8'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Header Fijo / Navigation -->
+  <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-slate-200/80">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+      <a href="index.html" class="text-3xl font-black text-nova tracking-tight flex items-center gap-2">
+        <span class="bg-electric text-white w-9 h-9 rounded-xl flex items-center justify-center text-xl font-bold shadow-md">N</span>
+        Nova<span class="text-electric">Shop</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-700">
+        <a href="index.html" class="hover:text-electric transition-colors">Inicio</a>
+        <a href="catalogo.html" class="hover:text-electric transition-colors">Catálogo</a>
+        <a href="nosotros.html" class="hover:text-electric transition-colors">Nosotros</a>
+        <a href="contacto.html" class="hover:text-electric transition-colors">Contacto</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="catalogo.html" class="border border-nova/20 hover:border-nova text-nova font-bold px-4 py-2.5 rounded-xl text-sm transition-all hover:bg-slate-50">
+          <i class="fa-solid fa-bag-shopping mr-1.5 text-electric"></i> Comprar
+        </a>
+
+        <a href="carrito.html" class="relative bg-nova hover:bg-nova-dark text-white px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-nova/10 transition-all flex items-center gap-2">
+          <i class="fa-solid fa-cart-shopping text-electric"></i>
+          <span>Carrito</span>
+          <span id="cartCount" class="bg-electric text-white text-xs px-2 py-0.5 rounded-full font-black min-w-[20px] text-center">0</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex-grow w-full">
+    
+    <!-- Migas de pan / Breadcrumb -->
+    <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-6">
+      <a href="index.html" class="hover:text-electric">Inicio</a>
+      <i class="fa-solid fa-chevron-right text-[10px]"></i>
+      <span class="text-nova">Mi cuenta</span>
+    </div>
+
+    <!-- Header del Perfil / Banner Usuario -->
+    <div class="bg-nova text-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-nova/10 mb-8 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-electric/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left z-10">
+        <div class="relative">
+          <div class="w-20 h-20 rounded-2xl bg-gradient-to-tr from-electric to-blue-400 text-white flex items-center justify-center text-3xl font-black shadow-lg">
+            FR
+          </div>
+          <span class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 border-2 border-nova rounded-full"></span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 justify-center sm:justify-start">
+            <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Freduard Rojas</h1>
+            <span class="bg-electric/30 text-blue-200 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase border border-electric/40">Cliente VIP</span>
+          </div>
+          <p class="text-slate-300 text-xs sm:text-sm mt-1">freduard@ejemplo.com • Miembro desde 2026</p>
+        </div>
+      </div>
+
+      <a href="login.html" class="z-10 bg-white/10 hover:bg-white/20 text-white border border-white/20 px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Cerrar sesión</span>
+      </a>
+    </div>
+
+    <!-- Cards de Métricas / Resumen -->
+    <div class="grid sm:grid-cols-3 gap-5 mb-8">
+      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Mis Pedidos</p>
+          <h2 class="text-3xl font-black text-nova mt-1">2</h2>
+          <p class="text-[11px] text-slate-400 mt-1 font-medium">Historial completo</p>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-electric flex items-center justify-center text-xl font-bold">
+          <i class="fa-solid fa-box-archive"></i>
+        </div>
+      </article>
+
+      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pedidos en Camino</p>
+          <h2 class="text-3xl font-black text-nova mt-1">1</h2>
+          <p class="text-[11px] text-emerald-600 font-bold mt-1">Entrega estimada: Mañana</p>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl font-bold">
+          <i class="fa-solid fa-truck-fast"></i>
+        </div>
+      </article>
+
+      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex items-center justify-between">
+        <div>
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Favoritos</p>
+          <h2 class="text-3xl font-black text-nova mt-1">3</h2>
+          <p class="text-[11px] text-slate-400 mt-1 font-medium">Prendas guardadas</p>
+        </div>
+        <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl font-bold">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+      </article>
+    </div>
+
+    <!-- Pestañas de Navegación de Cuenta -->
+    <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-4 mb-8" id="tabButtons">
+      <button onclick="switchTab('pedidos')" id="tabBtn-pedidos" class="tab-btn active bg-nova text-white px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2">
+        <i class="fa-solid fa-clock-rotate-left"></i> Historial de Compras
+      </button>
+      <button onclick="switchTab('perfil')" id="tabBtn-perfil" class="tab-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2">
+        <i class="fa-regular fa-user"></i> Datos Personales
+      </button>
+      <button onclick="switchTab('favoritos')" id="tabBtn-favoritos" class="tab-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-5 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2">
+        <i class="fa-regular fa-heart"></i> Lista de Deseos
+      </button>
+    </div>
+
+    <!-- Pestaña 1: Historial de Compras -->
+    <section id="tab-pedidos" class="tab-content bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80 space-y-6">
+      <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+        <div>
+          <h2 class="text-xl font-black text-nova">Historial de Compras</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Revisa el estado de tus compras anteriores.</p>
+        </div>
+        <a href="catalogo.html" class="text-xs font-bold text-electric hover:underline flex items-center gap-1">
+          <span>Explorar catálogo</span>
+          <i class="fa-solid fa-arrow-right text-[10px]"></i>
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Pedido 1 (Activo) -->
+        <article class="p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200/60">
+            <div>
+              <span class="font-black text-sm text-nova">Orden #NS-84920</span>
+              <p class="text-xs text-slate-400">Fecha: 20 de Octubre, 2026</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="bg-blue-100 text-electric font-bold text-xs px-3 py-1 rounded-full flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-electric animate-ping"></span> En Camino
+              </span>
+              <span class="font-black text-base text-nova">RD$ 2,700</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-electric text-xl font-bold shrink-0">
+              <i class="fa-solid fa-shirt"></i>
+            </div>
+            <div class="flex-grow">
+              <p class="font-bold text-xs text-nova">Camiseta Essential Basic x1, Hoodie Urban Oversize x1</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Envío a: San Pedro de Macorís</p>
+            </div>
+            <a href="confirmacion.html" class="text-xs font-bold text-electric hover:underline shrink-0">Ver detalle</a>
+          </div>
+        </article>
+
+        <!-- Pedido 2 (Completado) -->
+        <article class="p-5 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200/60">
+            <div>
+              <span class="font-black text-sm text-nova">Orden #NS-41029</span>
+              <p class="text-xs text-slate-400">Fecha: 05 de Septiembre, 2026</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-3 py-1 rounded-full">
+                ● Entregado
+              </span>
+              <span class="font-black text-base text-nova">RD$ 3,200</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-electric text-xl font-bold shrink-0">
+              <i class="fa-solid fa-shoe-prints"></i>
+            </div>
+            <div class="flex-grow">
+              <p class="font-bold text-xs text-nova">Zapatillas Nova Runner x1</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">Entregado el 07/09/2026</p>
+            </div>
+            <button onclick="showToast('Reordenando artículos...')" class="text-xs font-bold text-electric hover:underline shrink-0">Comprar de nuevo</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Pestaña 2: Datos Personales -->
+    <section id="tab-perfil" class="tab-content hidden bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80">
+      <div class="pb-4 border-b border-slate-100 mb-6">
+        <h2 class="text-xl font-black text-nova">Datos Personales</h2>
+        <p class="text-xs text-slate-500 mt-0.5">Actualiza tu información de contacto y envío.</p>
+      </div>
+
+      <form onsubmit="handleSaveProfile(event)" class="space-y-5">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nombre Completo</label>
+            <input type="text" value="Freduard Rojas" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-electric">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Correo Electrónico</label>
+            <input type="email" value="freduard@ejemplo.com" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-electric">
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Teléfono / WhatsApp</label>
+            <input type="tel" value="(809) 555-0192" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-electric">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Provincia</label>
+            <input type="text" value="San Pedro de Macorís" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-electric">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Dirección Predeterminada de Envío</label>
+          <input type="text" value="Calle Principal #45, Centro de la Ciudad" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-electric">
+        </div>
+
+        <button type="submit" class="bg-electric hover:bg-electric-hover text-white px-6 py-3 rounded-xl font-bold text-xs shadow-lg shadow-electric/20 transition-all">
+          Guardar Cambios
+        </button>
+      </form>
+    </section>
+
+    <!-- Pestaña 3: Favoritos -->
+    <section id="tab-favoritos" class="tab-content hidden bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80">
+      <div class="pb-4 border-b border-slate-100 mb-6">
+        <h2 class="text-xl font-black text-nova">Lista de Deseos</h2>
+        <p class="text-xs text-slate-500 mt-0.5">Prendas guardadas para comprar más adelante.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-5">
+        <article class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-electric text-xl shrink-0">
+              <i class="fa-solid fa-shirt"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-xs text-nova line-clamp-1">Hoodie Urban</h4>
+              <p class="font-black text-electric text-xs mt-0.5">RD$ 1,850</p>
+            </div>
+          </div>
+          <button onclick="showToast('Añadido al carrito desde favoritos')" class="w-8 h-8 rounded-xl bg-nova text-white hover:bg-electric transition-colors flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-cart-plus text-xs"></i>
+          </button>
+        </article>
+
+        <article class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-electric text-xl shrink-0">
+              <i class="fa-solid fa-shoe-prints"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-xs text-nova line-clamp-1">Zapatillas Nova</h4>
+              <p class="font-black text-electric text-xs mt-0.5">RD$ 3,200</p>
+            </div>
+          </div>
+          <button onclick="showToast('Añadido al carrito desde favoritos')" class="w-8 h-8 rounded-xl bg-nova text-white hover:bg-electric transition-colors flex items-center justify-center shrink-0">
+            <i class="fa-solid fa-cart-plus text-xs"></i>
+          </button>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-nova text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="w-8 h-8 rounded-full bg-electric/20 text-electric flex items-center justify-center">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <span id="toastMsg" class="font-bold text-sm">Información actualizada</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-6 border-t border-slate-200 text-center text-xs text-slate-500 bg-white">
+    <p>© 2026 NovaShop. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Script JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      actualizarContadorHeader();
+    });
+
+    function actualizarContadorHeader() {
+      const carrito = JSON.parse(localStorage.getItem('novashop') || '[]');
+      const totalCount = carrito.reduce((sum, p) => sum + p.cantidad, 0);
+      document.getElementById('cartCount').textContent = totalCount;
+    }
+
+    function switchTab(tabId) {
+      // Ocultar todos los contenidos
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(c => c.classList.add('hidden'));
+
+      // Desactivar botones
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(b => {
+        b.classList.remove('bg-nova', 'text-white');
+        b.classList.add('bg-slate-200', 'text-slate-700');
+      });
+
+      // Mostrar seleccionado
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tabBtn-${tabId}`);
+      activeBtn.classList.remove('bg-slate-200', 'text-slate-700');
+      activeBtn.classList.add('bg-nova', 'text-white');
+    }
+
+    function handleSaveProfile(e) {
+      e.preventDefault();
+      showToast('Tus datos han sido actualizados con éxito');
+    }
+
+    function showToast(mensaje) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      
+      toastMsg.textContent = mensaje;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

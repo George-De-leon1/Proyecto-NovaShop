@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | NovaShop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nova: '#071A42',
+            electric: '#2563EB',
+            'nova-dark': '#040f28',
+            'electric-hover': '#1d4ed8'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+
+  <!-- Header Fijo / Navigation -->
+  <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-slate-200/80">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+      <a href="index.html" class="text-3xl font-black text-nova tracking-tight flex items-center gap-2">
+        <span class="bg-electric text-white w-9 h-9 rounded-xl flex items-center justify-center text-xl font-bold shadow-md">N</span>
+        Nova<span class="text-electric">Shop</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-700">
+        <a href="index.html" class="hover:text-electric transition-colors">Inicio</a>
+        <a href="catalogo.html" class="hover:text-electric transition-colors">Catálogo</a>
+        <a href="nosotros.html" class="hover:text-electric transition-colors">Nosotros</a>
+        <a href="contacto.html" class="text-electric border-b-2 border-electric pb-1">Contacto</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="login.html" class="border border-nova/20 hover:border-nova text-nova font-bold px-4 py-2.5 rounded-xl text-sm transition-all hover:bg-slate-50">
+          <i class="fa-regular font-bold fa-user mr-1.5"></i> Mi cuenta
+        </a>
+
+        <a href="carrito.html" class="relative bg-nova hover:bg-nova-dark text-white px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-nova/10 transition-all flex items-center gap-2">
+          <i class="fa-solid fa-cart-shopping text-electric"></i>
+          <span>Carrito</span>
+          <span id="cartCount" class="bg-electric text-white text-xs px-2 py-0.5 rounded-full font-black min-w-[20px] text-center">0</span>
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex-grow w-full">
+    
+    <!-- Migas de pan / Breadcrumb -->
+    <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-6">
+      <a href="index.html" class="hover:text-electric">Inicio</a>
+      <i class="fa-solid fa-chevron-right text-[10px]"></i>
+      <span class="text-nova">Contacto</span>
+    </div>
+
+    <!-- Encabezado -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-8 border-b border-slate-200">
+      <div>
+        <span class="text-electric font-bold text-xs tracking-widest uppercase">Atención al Cliente</span>
+        <h1 class="text-3xl sm:text-4xl font-black text-nova mt-1 tracking-tight">Contáctanos</h1>
+      </div>
+      <p class="text-slate-500 text-sm max-w-md">
+        Estamos aquí para ayudarte. Si tienes dudas sobre tu pedido, productos o envíos, escríbenos un mensaje.
+      </p>
+    </div>
+
+    <!-- Layout Grid -->
+    <div class="grid lg:grid-cols-12 gap-8 mt-10 items-start">
+      
+      <!-- Panel de Información de Contacto -->
+      <section class="lg:col-span-5 bg-nova text-white rounded-3xl p-8 sm:p-10 shadow-xl shadow-nova/10 relative overflow-hidden flex flex-col justify-between">
+        <!-- Decoración gráfica de fondo -->
+        <div class="absolute -right-12 -bottom-12 w-48 h-48 bg-electric/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div>
+          <span class="bg-white/10 text-blue-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-white/10">Soporte Directo</span>
+          <h2 class="text-2xl sm:text-3xl font-black mt-4">Información de contacto</h2>
+          <p class="text-blue-200 text-sm mt-2 leading-relaxed">
+            Ponte en contacto con nuestro equipo de atención y resolveremos tus inquietudes en el menor tiempo posible.
+          </p>
+
+          <div class="space-y-6 mt-8">
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-2xl bg-white/10 text-electric border border-white/10 flex items-center justify-center text-lg font-bold shrink-0">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div>
+                <p class="text-xs text-blue-300 font-bold uppercase tracking-wider">Ubicación</p>
+                <p class="text-sm font-bold text-white mt-0.5">San Pedro de Macorís, República Dominicana</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-2xl bg-white/10 text-electric border border-white/10 flex items-center justify-center text-lg font-bold shrink-0">
+                <i class="fa-regular fa-envelope"></i>
+              </div>
+              <div>
+                <p class="text-xs text-blue-300 font-bold uppercase tracking-wider">Correo Electrónico</p>
+                <p class="text-sm font-bold text-white mt-0.5">contacto@novashop.com</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-11 h-11 rounded-2xl bg-white/10 text-electric border border-white/10 flex items-center justify-center text-lg font-bold shrink-0">
+                <i class="fa-solid fa-clock"></i>
+              </div>
+              <div>
+                <p class="text-xs text-blue-300 font-bold uppercase tracking-wider">Horario de Atención</p>
+                <p class="text-sm font-bold text-white mt-0.5">Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+                <p class="text-xs text-slate-400 mt-0.5">Sábados: 9:00 AM - 1:00 PM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Redes Sociales -->
+        <div class="pt-10 mt-10 border-t border-white/10">
+          <p class="text-xs text-blue-300 font-bold uppercase tracking-wider mb-3">Síguenos en redes</p>
+          <div class="flex gap-3">
+            <a href="#" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-electric text-white flex items-center justify-center transition-colors border border-white/10"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-electric text-white flex items-center justify-center transition-colors border border-white/10"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-electric text-white flex items-center justify-center transition-colors border border-white/10"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Formulario de Contacto -->
+      <section class="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 shadow-sm border border-slate-200/80">
+        <h2 class="text-2xl font-black text-nova">Envíanos un mensaje</h2>
+        <p class="text-slate-500 text-sm mt-1">Completa el formulario y te responderemos a la brevedad.</p>
+
+        <form onsubmit="handleSubmitMessage(event)" class="space-y-5 mt-6">
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nombre completo</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <i class="fa-regular fa-user text-sm"></i>
+                </span>
+                <input required type="text" id="contactName" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400" placeholder="Ej. Freduard Rojas">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Correo electrónico</label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <i class="fa-regular fa-envelope text-sm"></i>
+                </span>
+                <input required type="email" id="contactEmail" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400" placeholder="correo@ejemplo.com">
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Asunto de la consulta</label>
+            <select id="contactSubject" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-bold cursor-pointer">
+              <option value="Consulta general">Consulta general</option>
+              <option value="Estado de mi pedido">Estado de mi pedido</option>
+              <option value="Consultas sobre producto o talla">Consultas sobre producto o talla</option>
+              <option value="Cambios y devoluciones">Cambios y devoluciones</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Escribe tu mensaje</label>
+            <textarea required id="contactMessage" rows="5" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl p-4 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400 resize-none" placeholder="Escribe aquí los detalles de tu pregunta..."></textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-electric hover:bg-electric-hover text-white py-4 rounded-xl font-bold shadow-lg shadow-electric/20 transition-all flex items-center justify-center gap-2 text-sm">
+            <i class="fa-regular fa-paper-plane"></i>
+            <span>Enviar mensaje</span>
+          </button>
+        </form>
+      </section>
+
+    </div>
+
+    <!-- Preguntas Frecuentes (FAQ) -->
+    <section class="mt-16 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-sm">
+      <div class="text-center max-w-xl mx-auto mb-10">
+        <span class="text-electric font-bold text-xs tracking-widest uppercase">Respuesta Rápida</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-nova mt-1">Preguntas Frecuentes</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 text-sm">
+        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+          <h3 class="font-bold text-nova flex items-center gap-2">
+            <i class="fa-solid fa-truck text-electric"></i> ¿Cuánto tardan en entregar un pedido?
+          </h3>
+          <p class="text-slate-500 mt-2 text-xs leading-relaxed">
+            Los envíos dentro de República Dominicana toman entre 24 y 48 horas laborables una vez procesada la orden.
+          </p>
+        </div>
+
+        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+          <h3 class="font-bold text-nova flex items-center gap-2">
+            <i class="fa-solid fa-rotate-left text-electric"></i> ¿Cuál es la política de cambios?
+          </h3>
+          <p class="text-slate-500 mt-2 text-xs leading-relaxed">
+            Tienes hasta 30 días posteriores a la entrega para solicitar cambios de talla o devoluciones sin costo adicional.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-nova text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="w-8 h-8 rounded-full bg-electric/20 text-electric flex items-center justify-center">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <span id="toastMsg" class="font-bold text-sm">Mensaje enviado con éxito</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-nova text-white pt-16 pb-12 mt-20 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-800/80">
+      <div class="md:col-span-1">
+        <a href="index.html" class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+          <span class="bg-electric text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg font-bold">N</span>
+          Nova<span class="text-electric">Shop</span>
+        </a>
+        <p class="text-slate-400 text-sm mt-4 leading-relaxed">
+          Tu destino definitivo para moda urbana, casual y deportiva. Vístete con actitud y calidad garantizada.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-black text-white text-base mb-4">Navegación</h4>
+        <ul class="space-y-2.5 text-sm text-slate-400">
+          <li><a href="index.html" class="hover:text-electric transition-colors">Inicio</a></li>
+          <li><a href="catalogo.html" class="hover:text-electric transition-colors">Catálogo Completo</a></li>
+          <li><a href="nosotros.html" class="hover:text-electric transition-colors">Sobre Nosotros</a></li>
+          <li><a href="contacto.html" class="hover:text-electric transition-colors">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-black text-white text-base mb-4">Soporte</h4>
+        <ul class="space-y-2.5 text-sm text-slate-400">
+          <li><a href="contacto.html" class="hover:text-electric transition-colors">Atención al cliente</a></li>
+          <li><a href="politicas.html" class="hover:text-electric transition-colors">Políticas de envío</a></li>
+          <li><a href="politicas.html" class="hover:text-electric transition-colors">Devoluciones</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-black text-white text-base mb-4">Contacto Directo</h4>
+        <p class="text-xs text-slate-400 mb-2">San Pedro de Macorís, República Dominicana.</p>
+        <p class="text-xs text-slate-400">Correo: contacto@novashop.com</p>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-slate-500 text-xs">
+      <p>© 2026 NovaShop. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Script JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      actualizarContadorHeader();
+    });
+
+    function actualizarContadorHeader() {
+      const carrito = JSON.parse(localStorage.getItem('novashop') || '[]');
+      const totalCount = carrito.reduce((sum, p) => sum + p.cantidad, 0);
+      document.getElementById('cartCount').textContent = totalCount;
+    }
+
+    function handleSubmitMessage(e) {
+      e.preventDefault();
+      const nombre = document.getElementById('contactName').value;
+      showToast(`¡Gracias ${nombre}! Tu mensaje ha sido enviado.`);
+      e.target.reset();
+    }
+
+    function showToast(mensaje) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      
+      toastMsg.textContent = mensaje;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>

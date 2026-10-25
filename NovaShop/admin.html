@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración | NovaShop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nova: '#071A42',
+            electric: '#2563EB',
+            'nova-dark': '#040f28',
+            'electric-hover': '#1d4ed8'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-100 text-slate-900 font-sans antialiased min-h-screen flex flex-col md:flex-row">
+
+  <!-- Sidebar Lateral Fijo -->
+  <aside class="w-full md:w-64 bg-nova text-white p-6 flex flex-col justify-between shrink-0 shadow-2xl md:min-h-screen z-30">
+    <div>
+      <!-- Brand Logo -->
+      <a href="index.html" class="text-2xl font-black text-white tracking-tight flex items-center gap-2 mb-2">
+        <span class="bg-electric text-white w-8 h-8 rounded-xl flex items-center justify-center text-lg font-bold shadow-md">N</span>
+        Nova<span class="text-electric">Shop</span>
+      </a>
+      <span class="bg-white/10 text-blue-200 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider block w-fit mb-8 border border-white/10">
+        Panel Administrativo
+      </span>
+
+      <!-- Navegación Dashboard -->
+      <nav class="space-y-1.5 font-bold text-sm">
+        <a href="#resumen" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-electric text-white shadow-lg shadow-electric/20 transition-all">
+          <i class="fa-solid fa-chart-pie text-base"></i> Resumen
+        </a>
+        <a href="#productos" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-all">
+          <i class="fa-solid fa-shirt text-base"></i> Productos
+        </a>
+        <a href="#pedidos" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-all">
+          <i class="fa-solid fa-cart-flatbed text-base"></i> Pedidos
+        </a>
+        <a href="#clientes" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-all">
+          <i class="fa-solid fa-users text-base"></i> Clientes
+        </a>
+      </nav>
+    </div>
+
+    <!-- Enlace Volver a la Tienda -->
+    <div class="pt-6 border-t border-white/10 mt-6 md:mt-0">
+      <a href="index.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-bold transition-all border border-white/5">
+        <span class="flex items-center gap-2"><i class="fa-solid fa-store"></i> Ver tienda online</span>
+        <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Área de Contenido Principal -->
+  <main class="flex-grow p-4 sm:p-8 md:p-10 max-w-7xl mx-auto w-full overflow-x-hidden">
+    
+    <!-- Top Header del Dashboard -->
+    <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-200">
+      <div>
+        <h1 id="resumen" class="text-3xl font-black text-nova tracking-tight">Dashboard</h1>
+        <p class="text-slate-500 text-sm mt-0.5">Resumen general y analítica de ventas de NovaShop.</p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 bg-white px-3.5 py-2 rounded-xl shadow-sm border border-slate-200 text-xs font-bold text-slate-600">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>Servidor Activo</span>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-nova text-white flex items-center justify-center font-bold text-sm shadow-md">
+          AD
+        </div>
+      </div>
+    </header>
+
+    <!-- Cards de Métricas Principales -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      
+      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Ventas Totales</span>
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-sack-dollar"></i>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h2 class="text-3xl font-black text-nova">RD$ 48,250</h2>
+          <p class="text-xs text-emerald-600 font-bold mt-1 flex items-center gap-1">
+            <i class="fa-solid fa-arrow-trend-up"></i> +12.5% este mes
+          </p>
+        </div>
+      </article>
+
+      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pedidos</span>
+          <div class="w-10 h-10 rounded-2xl bg-blue-50 text-electric flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-boxes-packing"></i>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h2 class="text-3xl font-black text-nova" id="totalOrdersCount">24</h2>
+          <p class="text-xs text-slate-500 font-medium mt-1">4 pendientes por enviar</p>
+        </div>
+      </article>
+
+      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Productos</span>
+          <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-shirt"></i>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h2 class="text-3xl font-black text-nova" id="totalProductsCount">8</h2>
+          <p class="text-xs text-slate-500 font-medium mt-1">4 categorías activas</p>
+        </div>
+      </article>
+
+      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Clientes Registrados</span>
+          <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg font-bold">
+            <i class="fa-solid fa-users"></i>
+          </div>
+        </div>
+        <div class="mt-4">
+          <h2 class="text-3xl font-black text-nova">18</h2>
+          <p class="text-xs text-emerald-600 font-bold mt-1 flex items-center gap-1">
+            <i class="fa-solid fa-user-plus"></i> +3 esta semana
+          </p>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Sección de Gestión de Productos -->
+    <section id="productos" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 mt-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+        <div>
+          <h2 class="text-2xl font-black text-nova">Gestión de Productos</h2>
+          <p class="text-xs text-slate-500 mt-1">Añade o administra el inventario de la tienda.</p>
+        </div>
+        <button onclick="toggleFormulario()" class="bg-electric hover:bg-electric-hover text-white px-5 py-3 rounded-xl font-bold text-xs shadow-lg shadow-electric/20 transition-all flex items-center justify-center gap-2 w-fit">
+          <i class="fa-solid fa-plus"></i>
+          <span>Agregar Producto</span>
+        </button>
+      </div>
+
+      <!-- Formulario para agregar producto -->
+      <form id="formulario" class="hidden bg-slate-50 p-6 rounded-2xl border border-slate-200 mt-6 space-y-4" onsubmit="guardarNuevoProducto(event)">
+        <h3 class="font-black text-nova text-sm uppercase tracking-wider mb-2">Nuevo Producto</h3>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nombre</label>
+            <input id="prodNombre" required placeholder="Ej. Chaqueta Varsity Nova" class="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-electric">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Precio (RD$)</label>
+            <input id="prodPrecio" required type="number" placeholder="1500" class="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-electric">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Categoría</label>
+            <select id="prodCategoria" class="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-electric font-medium">
+              <option value="Casual">Casual</option>
+              <option value="Deportiva">Deportiva</option>
+              <option value="Streetwear">Streetwear</option>
+              <option value="Calzado">Calzado</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-end gap-3 pt-2">
+          <button type="button" onclick="toggleFormulario()" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs hover:bg-slate-100">Cancelar</button>
+          <button type="submit" class="bg-nova text-white px-6 py-2.5 rounded-xl font-bold text-xs hover:bg-nova-dark">Guardar Producto</button>
+        </div>
+      </form>
+
+      <!-- Tabla de Productos -->
+      <div class="overflow-x-auto mt-6">
+        <table class="w-full text-left text-sm border-collapse">
+          <thead>
+            <tr class="bg-slate-50 text-slate-400 text-xs font-black uppercase tracking-wider border-b border-slate-200">
+              <th class="p-4">Producto</th>
+              <th class="p-4">Categoría</th>
+              <th class="p-4">Precio</th>
+              <th class="p-4">Estado</th>
+              <th class="p-4 text-right">Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tablaProductosBody" class="divide-y divide-slate-100">
+            <!-- Renderizado dinámico -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Grid Inferior: Pedidos y Clientes -->
+    <section class="grid lg:grid-cols-2 gap-8 mt-8">
+      
+      <!-- Gestión de Pedidos Recientes -->
+      <article id="pedidos" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+          <h2 class="text-xl font-black text-nova">Pedidos Recientes</h2>
+          <span class="text-xs font-bold text-electric cursor-pointer hover:underline">Ver todos</span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
+            <div>
+              <p class="font-black text-nova">#NS-84920</p>
+              <p class="text-slate-400 font-medium mt-0.5">Freduard Rojas • 2 items</p>
+            </div>
+            <div class="text-right">
+              <p class="font-black text-electric">RD$ 2,700</p>
+              <span class="inline-block mt-1 bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-md text-[10px]">En preparación</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
+            <div>
+              <p class="font-black text-nova">#NS-73109</p>
+              <p class="text-slate-400 font-medium mt-0.5">Camila Pérez • 1 item</p>
+            </div>
+            <div class="text-right">
+              <p class="font-black text-electric">RD$ 1,850</p>
+              <span class="inline-block mt-1 bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-md text-[10px]">Entregado</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
+            <div>
+              <p class="font-black text-nova">#NS-62045</p>
+              <p class="text-slate-400 font-medium mt-0.5">Gabriel Reyes • 3 items</p>
+            </div>
+            <div class="text-right">
+              <p class="font-black text-electric">RD$ 5,900</p>
+              <span class="inline-block mt-1 bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded-md text-[10px]">En camino</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Gestión de Clientes Registrados -->
+      <article id="clientes" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+          <h2 class="text-xl font-black text-nova">Clientes Recientes</h2>
+          <span class="text-xs font-bold text-electric cursor-pointer hover:underline">Gestionar</span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-blue-100 text-electric flex items-center justify-center font-bold">FR</div>
+              <div>
+                <p class="font-bold text-nova">Freduard Rojas</p>
+                <p class="text-slate-400">freduard@ejemplo.com</p>
+              </div>
+            </div>
+            <span class="text-slate-500 font-semibold">3 compras</span>
+          </div>
+
+          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold">CP</div>
+              <div>
+                <p class="font-bold text-nova">Camila Pérez</p>
+                <p class="text-slate-400">camila@ejemplo.com</p>
+              </div>
+            </div>
+            <span class="text-slate-500 font-semibold">1 compra</span>
+          </div>
+
+          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">GR</div>
+              <div>
+                <p class="font-bold text-nova">Gabriel Reyes</p>
+                <p class="text-slate-400">gabriel@ejemplo.com</p>
+              </div>
+            </div>
+            <span class="text-slate-500 font-semibold">5 compras</span>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-nova text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="w-8 h-8 rounded-full bg-electric/20 text-electric flex items-center justify-center">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <span id="toastMsg" class="font-bold text-sm">Notificación</span>
+  </div>
+
+  <!-- Javascript para administrar productos -->
+  <script>
+    // Inventario por defecto
+    let productosAdmin = [
+      { id: 1, nombre: 'Camiseta Essential', categoria: 'Casual', precio: 850, activo: true },
+      { id: 2, nombre: 'Hoodie Urban', categoria: 'Streetwear', precio: 1850, activo: true },
+      { id: 3, nombre: 'Zapatillas Nova', categoria: 'Calzado', precio: 3200, activo: true },
+      { id: 4, nombre: 'Pantalón Jogger Fit', categoria: 'Deportiva', precio: 1400, activo: false }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Cargar inventario guardado si existe
+      const guardados = localStorage.getItem('novashop_admin_products');
+      if (guardados) {
+        productosAdmin = JSON.parse(guardados);
+      }
+      renderTablaProductos();
+    });
+
+    function guardarLocal() {
+      localStorage.setItem('novashop_admin_products', JSON.stringify(productosAdmin));
+      renderTablaProductos();
+    }
+
+    function renderTablaProductos() {
+      const tbody = document.getElementById('tablaProductosBody');
+      const countEl = document.getElementById('totalProductsCount');
+      
+      tbody.innerHTML = '';
+      countEl.textContent = productosAdmin.length;
+
+      productosAdmin.forEach((p, index) => {
+        const row = document.createElement('tr');
+        row.className = 'hover:bg-slate-50/80 transition-colors';
+        row.innerHTML = `
+          <td class="p-4 font-bold text-nova">${p.nombre}</td>
+          <td class="p-4"><span class="bg-slate-100 text-slate-700 text-xs font-bold px-2.5 py-1 rounded-lg">${p.categoria}</span></td>
+          <td class="p-4 font-black text-electric">RD$ ${p.precio.toLocaleString('es-DO')}</td>
+          <td class="p-4">
+            <button onclick="toggleEstadoProduct(${index})" class="${p.activo ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'} text-xs font-bold px-2.5 py-1 rounded-full border border-transparent transition-all">
+              ${p.activo ? '● Activo' : '○ Inactivo'}
+            </button>
+          </td>
+          <td class="p-4 text-right">
+            <button onclick="eliminarProducto(${index})" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-600 transition-colors inline-flex items-center justify-center">
+              <i class="fa-solid fa-trash-can text-xs"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function toggleFormulario() {
+      const form = document.getElementById('formulario');
+      form.classList.toggle('hidden');
+    }
+
+    function guardarNuevoProducto(e) {
+      e.preventDefault();
+      const nombre = document.getElementById('prodNombre').value;
+      const precio = parseFloat(document.getElementById('prodPrecio').value);
+      const categoria = document.getElementById('prodCategoria').value;
+
+      productosAdmin.push({
+        id: Date.now(),
+        nombre,
+        categoria,
+        precio,
+        activo: true
+      });
+
+      guardarLocal();
+      toggleFormulario();
+      e.target.reset();
+      showToast('Producto añadido al inventario');
+    }
+
+    function toggleEstadoProduct(index) {
+      productosAdmin[index].activo = !productosAdmin[index].activo;
+      guardarLocal();
+      showToast('Estado del producto actualizado');
+    }
+
+    function eliminarProducto(index) {
+      if (confirm('¿Deseas eliminar este producto del inventario?')) {
+        productosAdmin.splice(index, 1);
+        guardarLocal();
+        showToast('Producto eliminado');
+      }
+    }
+
+    function showToast(mensaje) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      
+      toastMsg.textContent = mensaje;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
