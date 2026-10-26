@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accesorios | Nuestra Tienda</title>
+  <style>
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --azul: #2862f4;
+  --azul-oscuro: #071d49;
+  --fondo: #f6f8fb;
+  --texto: #081b3c;
+  --muted: #6c7a91;
+  --tarjeta: #ffffff;
+  --sombra: 0 2px 5px rgba(14, 35, 68, 0.05);
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: "Poppins", Arial, sans-serif;
+}
+
+.catalogo {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 28px 28px 44px;
+}
+
+.catalogo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 0 0 24px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid #dce3ed;
+}
+
+.eyebrow {
+  margin: 0 0 5px;
+  color: var(--azul);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+h1 {
+  margin: 0;
+  color: var(--azul-oscuro);
+  font-size: clamp(25px, 3vw, 34px);
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.subtitulo {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.filtros {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filtro {
+  border: 0;
+  border-radius: 12px;
+  padding: 11px 16px;
+  background: #e8edf5;
+  color: #172b4d;
+  font: 600 12px "Poppins", Arial, sans-serif;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+
+.filtro:hover {
+  transform: translateY(-1px);
+}
+
+.filtro.activo {
+  background: var(--azul);
+  color: #fff;
+}
+
+.productos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.producto {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--tarjeta);
+  border: 1px solid #edf0f5;
+  border-radius: 22px;
+  box-shadow: var(--sombra);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.producto:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(14, 35, 68, .10);
+}
+
+.producto[hidden] {
+  display: none;
+}
+
+.producto-imagen {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+  background: #e9edf3;
+}
+
+.producto-imagen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+
+.producto:hover .producto-imagen img {
+  transform: scale(1.04);
+}
+
+.etiqueta {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 10px;
+  border-radius: 7px;
+  background: var(--azul-oscuro);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+
+.etiqueta.oferta {
+  background: #fff;
+  color: var(--azul-oscuro);
+}
+
+.favorito {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .96);
+  color: #17305a;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .08);
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.favorito.seleccionado {
+  color: #e6395b;
+}
+
+.producto-info {
+  padding: 16px 18px 18px;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+  color: var(--azul);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.rating {
+  color: #ff9417;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rating small {
+  color: #8994a7;
+  font-size: 10px;
+}
+
+.producto h2 {
+  margin: 0;
+  color: #142747;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.precio {
+  margin: 9px 0 17px;
+  color: #071a3a;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.agregar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  border: 0;
+  border-radius: 12px;
+  background: #f0f4f9;
+  color: #142747;
+  font: 600 11px "Poppins", Arial, sans-serif;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease;
+}
+
+.agregar:hover,
+.agregar.agregado {
+  background: var(--azul);
+  color: #fff;
+}
+
+@media (max-width: 1100px) {
+  .productos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .catalogo-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filtros {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 760px) {
+  .catalogo {
+    padding: 22px 16px 32px;
+  }
+
+  .productos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .producto-imagen {
+    height: 210px;
+  }
+
+  .producto-info {
+    padding: 13px;
+  }
+
+  .precio {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .productos {
+    grid-template-columns: 1fr;
+  }
+
+  .producto-imagen {
+    height: 270px;
+  }
+
+  .filtro {
+    padding: 9px 12px;
+  }
+}
+
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+  <main class="catalogo">
+    <header class="catalogo-header">
+      <div>
+        <p class="eyebrow">NUESTRA TIENDA</p>
+        <h1>Catálogo de Accesorios</h1>
+        <p class="subtitulo">Los detalles que completan tu estilo.</p>
+      </div>
+
+      <nav class="filtros" aria-label="Filtrar accesorios">
+        <button class="filtro activo" data-categoria="Todos">Todos</button>
+        <button class="filtro" data-categoria="Gorras">Gorras</button>
+        <button class="filtro" data-categoria="Bolsos">Bolsos</button>
+        <button class="filtro" data-categoria="Relojes">Relojes</button>
+        <button class="filtro" data-categoria="Otros">Otros</button>
+      </nav>
+    </header>
+  
+    <!-- Botón para volver a la página de inicio -->
+<a href="index.html" class="btn-volver">
+    <i class="fa-solid fa-arrow-left"></i>
+    Volver al inicio
+</a>
+  
+
+    <section class="productos" id="productos">
+      <article class="producto" data-categoria="Gorras">
+        <div class="producto-imagen">
+          <img src="https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=900&q=85" alt="Gorra negra estilo urbano">
+          <span class="etiqueta">MÁS VENDIDO</span>
+          <button class="favorito" aria-label="Añadir gorra a favoritos"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <div class="producto-info">
+          <div class="meta"><span>GORRAS</span><span class="rating">★ 4.9 <small>(36)</small></span></div>
+          <h2>Gorra Urban Classic</h2>
+          <p class="precio">RD$ 750</p>
+          <button class="agregar"><i class="fa-solid fa-cart-shopping"></i> Agregar al carrito</button>
+        </div>
+      </article>
+
+      <article class="producto" data-categoria="Bolsos">
+        <div class="producto-imagen">
+          <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=85" alt="Mochila casual para uso diario">
+          <button class="favorito" aria-label="Añadir mochila a favoritos"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <div class="producto-info">
+          <div class="meta"><span>BOLSOS</span><span class="rating">★ 4.8 <small>(24)</small></span></div>
+          <h2>Mochila Street Daily</h2>
+          <p class="precio">RD$ 1,650</p>
+          <button class="agregar"><i class="fa-solid fa-cart-shopping"></i> Agregar al carrito</button>
+        </div>
+      </article>
+
+      <article class="producto" data-categoria="Relojes">
+        <div class="producto-imagen">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=85" alt="Reloj moderno de pulsera">
+          <span class="etiqueta">NUEVO</span>
+          <button class="favorito" aria-label="Añadir reloj a favoritos"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <div class="producto-info">
+          <div class="meta"><span>RELOJES</span><span class="rating">★ 4.9 <small>(41)</small></span></div>
+          <h2>Reloj Minimal Pro</h2>
+          <p class="precio">RD$ 2,400</p>
+          <button class="agregar"><i class="fa-solid fa-cart-shopping"></i> Agregar al carrito</button>
+        </div>
+      </article>
+
+      <article class="producto" data-categoria="Otros">
+        <div class="producto-imagen">
+          <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=85" alt="Gafas de sol modernas">
+          <span class="etiqueta oferta">TOP OFERTA</span>
+          <button class="favorito" aria-label="Añadir gafas a favoritos"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <div class="producto-info">
+          <div class="meta"><span>OTROS</span><span class="rating">★ 4.7 <small>(19)</small></span></div>
+          <h2>Gafas Retro Black</h2>
+          <p class="precio">RD$ 950</p>
+          <button class="agregar"><i class="fa-solid fa-cart-shopping"></i> Agregar al carrito</button>
+        </div>
+      </article>
+
+      <article class="producto" data-categoria="Bolsos">
+        <div class="producto-imagen">
+          <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=900&q=85" alt="Bolso de estilo moderno">
+          <button class="favorito" aria-label="Añadir bolso a favoritos"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <div class="producto-info">
+          <div class="meta"><span>BOLSOS</span><span class="rating">★ 4.8 <small>(27)</small></span></div>
+          <h2>Bolso Essential</h2>
+          <p class="precio">RD$ 1,200</p>
+          <button class="agregar"><i class="fa-solid fa-cart-shopping"></i> Agregar al carrito</button>
+        </div>
+      </article>
+
+      <article class="producto" data-categoria="Otros">
+        <div class="producto-imagen">
+          <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=900&q=85" alt="Accesorios de joyería">
+          <button class="favorito" aria-label="Añadir accesorio a favoritos"><i class="fa-regular fa-heart"></i></button>
+        </div>
+        <div class="producto-info">
+          <div class="meta"><span>OTROS</span><span class="rating">★ 4.8 <small>(22)</small></span></div>
+          <h2>Cadena Silver Style</h2>
+          <p class="precio">RD$ 600</p>
+          <button class="agregar"><i class="fa-solid fa-cart-shopping"></i> Agregar al carrito</button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    // Filtros visuales por categoría
+    const filtros = document.querySelectorAll(".filtro");
+    const productos = document.querySelectorAll(".producto");
+
+    filtros.forEach((filtro) => {
+      filtro.addEventListener("click", () => {
+        filtros.forEach((item) => item.classList.remove("activo"));
+        filtro.classList.add("activo");
+
+        const categoria = filtro.dataset.categoria;
+        productos.forEach((producto) => {
+          producto.hidden = categoria !== "Todos" && producto.dataset.categoria !== categoria;
+        });
+      });
+    });
+
+    // Activar/desactivar favoritos
+    document.querySelectorAll(".favorito").forEach((boton) => {
+      boton.addEventListener("click", () => {
+        boton.classList.toggle("seleccionado");
+        const icono = boton.querySelector("i");
+        icono.classList.toggle("fa-regular");
+        icono.classList.toggle("fa-solid");
+      });
+    });
+
+    // Demostración visual del botón de carrito
+    document.querySelectorAll(".agregar").forEach((boton) => {
+      boton.addEventListener("click", () => {
+        const textoOriginal = boton.innerHTML;
+        boton.innerHTML = '<i class="fa-solid fa-check"></i> Agregado';
+        boton.classList.add("agregado");
+        setTimeout(() => {
+          boton.innerHTML = textoOriginal;
+          boton.classList.remove("agregado");
+        }, 1200);
+      });
+    });
+  </script>
+</body>
+</html>

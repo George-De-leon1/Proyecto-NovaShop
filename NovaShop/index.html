@@ -35,10 +35,16 @@
   <!-- Header Fijo / Sticky Navigation -->
   <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 transition-all duration-300 border-b border-slate-200/80">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
-      <a href="index.html" class="text-3xl font-black text-nova tracking-tight flex items-center gap-2 group">
-        <span class="bg-electric text-white w-9 h-9 rounded-xl flex items-center justify-center text-xl font-bold shadow-md group-hover:scale-105 transition-transform">N</span>
+      <a href="index.html" class="flex items-center gap-2">
+    <img src="img/logo..png" 
+         alt="Logo de NovaShop"
+         class="w-12 h-10 object-contain">
+
+    <span class="text-3xl font-black text-nova tracking-tight">
         Nova<span class="text-electric">Shop</span>
-      </a>
+    </span>
+</a>
+
 
       <!-- Barra de Búsqueda Header -->
       <div class="hidden lg:flex items-center flex-grow max-w-md mx-6">
@@ -172,38 +178,41 @@
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <a href="#catalogo" onclick="filterCategory('casual')" class="group relative overflow-hidden rounded-3xl bg-blue-50 p-8 border border-blue-100 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="#catalogo" onclick="filterCategory('casual')" class="group relative overflow-hidden rounded-3xl bg-blue-50 p-7 border border-blue-100 hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300">
           <div class="flex justify-between items-start">
             <span class="text-5xl group-hover:scale-125 transition-transform duration-300">👕</span>
-            <span class="w-10 h-10 rounded-full bg-white text-nova flex items-center justify-center shadow-md group-hover:bg-electric group-hover:text-white transition-colors">
-              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </span>
+            <span class="w-9 h-9 rounded-full bg-white text-nova flex items-center justify-center shadow-md group-hover:bg-electric group-hover:text-white transition-colors"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></span>
           </div>
-          <h3 class="font-black text-2xl mt-8 text-nova">Casual</h3>
+          <h3 class="font-black text-xl mt-6 text-nova">Casual</h3>
           <p class="text-slate-600 mt-2 text-sm">Comodidad y elegancia versátil para tu día a día.</p>
         </a>
 
-        <a href="#catalogo" onclick="filterCategory('deportiva')" class="group relative overflow-hidden rounded-3xl bg-slate-100 p-8 border border-slate-200 hover:shadow-xl hover:shadow-slate-500/10 transition-all duration-300">
+        <a href="#catalogo" onclick="filterCategory('deportiva')" class="group relative overflow-hidden rounded-3xl bg-slate-100 p-7 border border-slate-200 hover:shadow-xl hover:shadow-slate-500/10 transition-all duration-300">
           <div class="flex justify-between items-start">
             <span class="text-5xl group-hover:scale-125 transition-transform duration-300">🏃</span>
-            <span class="w-10 h-10 rounded-full bg-white text-nova flex items-center justify-center shadow-md group-hover:bg-electric group-hover:text-white transition-colors">
-              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </span>
+            <span class="w-9 h-9 rounded-full bg-white text-nova flex items-center justify-center shadow-md group-hover:bg-electric group-hover:text-white transition-colors"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></span>
           </div>
-          <h3 class="font-black text-2xl mt-8 text-nova">Deportiva</h3>
+          <h3 class="font-black text-xl mt-6 text-nova">Deportiva</h3>
           <p class="text-slate-600 mt-2 text-sm">Alto rendimiento y libertad de movimiento para entrenar.</p>
         </a>
 
-        <a href="#catalogo" onclick="filterCategory('streetwear')" class="group relative overflow-hidden rounded-3xl bg-indigo-50 p-8 border border-indigo-100 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300">
+        <a href="#catalogo" onclick="filterCategory('streetwear')" class="group relative overflow-hidden rounded-3xl bg-indigo-50 p-7 border border-indigo-100 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300">
           <div class="flex justify-between items-start">
             <span class="text-5xl group-hover:scale-125 transition-transform duration-300">🧢</span>
-            <span class="w-10 h-10 rounded-full bg-white text-nova flex items-center justify-center shadow-md group-hover:bg-electric group-hover:text-white transition-colors">
-              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </span>
+            <span class="w-9 h-9 rounded-full bg-white text-nova flex items-center justify-center shadow-md group-hover:bg-electric group-hover:text-white transition-colors"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></span>
           </div>
-          <h3 class="font-black text-2xl mt-8 text-nova">Streetwear</h3>
+          <h3 class="font-black text-xl mt-6 text-nova">Streetwear</h3>
           <p class="text-slate-600 mt-2 text-sm">Moda urbana, juvenil y vanguardista que marca tendencia.</p>
+        </a>
+
+        <a href="#catalogo" onclick="filterCategory('accesorios')" class="group relative overflow-hidden rounded-3xl bg-amber-50 p-7 border border-amber-100 hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300">
+          <div class="flex justify-between items-start">
+            <span class="text-5xl group-hover:scale-125 transition-transform duration-300">🕶️</span>
+            <span class="w-9 h-9 rounded-full bg-white text-nova flex items-center justify-center shadow-md group-hover:bg-electric group-hover:text-white transition-colors"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></span>
+          </div>
+          <h3 class="font-black text-xl mt-6 text-nova">Accesorios</h3>
+          <p class="text-slate-600 mt-2 text-sm">Gorras, bolsos, relojes y detalles que completan tu estilo.</p>
         </a>
       </div>
     </section>
@@ -218,11 +227,12 @@
         
         <!-- Filtros Rápidos -->
         <div class="flex flex-wrap gap-2" id="filterButtons">
-          <button onclick="renderProducts('all')" class="filter-btn active bg-nova text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-sm">Todos</button>
-          <button onclick="renderProducts('casual')" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Casual</button>
-          <button onclick="renderProducts('streetwear')" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Streetwear</button>
-          <button onclick="renderProducts('deportiva')" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Deportiva</button>
-          <button onclick="renderProducts('calzado')" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Calzado</button>
+          <button data-category="all" onclick="renderProducts('all')" class="filter-btn active bg-nova text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-sm">Todos</button>
+          <button data-category="casual" onclick="renderProducts('casual')" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Casual</button>
+          <button data-category="streetwear" onclick="renderProducts('streetwear')" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Streetwear</button>
+          <button data-category="deportiva" onclick="renderProducts('deportiva')" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Deportiva</button>
+          <button data-category="calzado" onclick="renderProducts('calzado')" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Calzado</button>
+          <button data-category="accesorios" onclick="renderProducts('accesorios')" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Accesorios</button>
         </div>
       </div>
 
@@ -365,7 +375,11 @@
       { id: 5, nombre: 'Pantalón Jogger Fit', categoria: 'deportiva', categoriaLabel: 'DEPORTIVA', precio: 1400, rating: 4.6, reviews: 28, imagen: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=700&q=80' },
       { id: 6, nombre: 'Gorra Nova Curved Cap', categoria: 'streetwear', categoriaLabel: 'STREETWEAR', precio: 650, rating: 4.9, reviews: 14, imagen: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=80' },
       { id: 7, nombre: 'Camiseta Dry-Fit Pro', categoria: 'deportiva', categoriaLabel: 'DEPORTIVA', precio: 950, rating: 4.8, reviews: 22, imagen: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=700&q=80' },
-      { id: 8, nombre: 'Sneakers Retro White', categoria: 'calzado', categoriaLabel: 'CALZADO', precio: 3600, rating: 4.9, reviews: 38, imagen: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=700&q=80', badge: 'Top Oferta' }
+      { id: 8, nombre: 'Sneakers Retro White', categoria: 'calzado', categoriaLabel: 'CALZADO', precio: 3600, rating: 4.9, reviews: 38, imagen: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=700&q=80', badge: 'Top Oferta' },
+      { id: 9, nombre: 'Gorra Urban Classic', categoria: 'accesorios', categoriaLabel: 'ACCESORIOS', precio: 750, rating: 4.9, reviews: 36, imagen: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=80', badge: 'Más Vendido' },
+      { id: 10, nombre: 'Mochila Street Daily', categoria: 'accesorios', categoriaLabel: 'ACCESORIOS', precio: 1650, rating: 4.8, reviews: 24, imagen: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80' },
+      { id: 11, nombre: 'Reloj Minimal Pro', categoria: 'accesorios', categoriaLabel: 'ACCESORIOS', precio: 2400, rating: 4.9, reviews: 41, imagen: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80', badge: 'Nuevo' },
+      { id: 12, nombre: 'Gafas Retro Black', categoria: 'accesorios', categoriaLabel: 'ACCESORIOS', precio: 950, rating: 4.7, reviews: 19, imagen: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80', badge: 'Top Oferta' }
     ];
 
     let currentCategory = 'all';
@@ -432,15 +446,16 @@
         grid.appendChild(card);
       });
 
-      if (!searchTerm) {
-        const buttons = document.querySelectorAll('#filterButtons button');
-        buttons.forEach(btn => {
-          btn.classList.remove('bg-nova', 'text-white', 'shadow-sm');
-          btn.classList.add('bg-slate-200', 'text-slate-700');
-        });
-        event?.target?.classList?.remove('bg-slate-200', 'text-slate-700');
-        event?.target?.classList?.add('bg-nova', 'text-white', 'shadow-sm');
-      }
+      const buttons = document.querySelectorAll('#filterButtons button');
+      buttons.forEach(btn => {
+        const isActive = btn.dataset.category === categoria;
+        btn.classList.toggle('bg-nova', isActive);
+        btn.classList.toggle('text-white', isActive);
+        btn.classList.toggle('shadow-sm', isActive);
+        btn.classList.toggle('bg-slate-200', !isActive);
+        btn.classList.toggle('text-slate-700', !isActive);
+        btn.classList.toggle('active', isActive);
+      });
     }
 
     function handleSearch() {
@@ -621,7 +636,16 @@
     }
 
     function filterCategory(cat) {
-      renderProducts(cat);
+      // Filtra el catálogo por la categoría seleccionada desde las tarjetas.
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) searchInput.value = '';
+
+      renderProducts(cat, '');
+
+      const catalogo = document.getElementById('catalogo');
+      if (catalogo) {
+        catalogo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   </script>
 </body>
