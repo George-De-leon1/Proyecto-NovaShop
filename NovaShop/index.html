@@ -34,8 +34,15 @@
   <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 transition-all duration-300 border-b border-slate-200/80">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
       <a href="index.html" class="flex items-center gap-2">
-        <img src="img/logo..png" alt="Logo de NovaShop" class="w-12 h-10 object-contain">
-      </a>
+    <img src="img/logo..png" 
+         alt="Logo de NovaShop"
+         class="w-12 h-10 object-contain">
+
+    <span class="text-3xl font-black text-nova tracking-tight">
+        Nova<span class="text-electric">Shop</span>
+    </span>
+</a>
+
 
       <!-- Barra de Búsqueda Header -->
       <div class="hidden lg:flex items-center flex-grow max-w-md mx-6">
@@ -153,14 +160,14 @@
           
           <!-- Filtros del Catálogo -->
           <div class="flex flex-wrap gap-2" id="filterButtons">
-            <button onclick="renderProducts('all', event)" class="filter-btn active bg-nova text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-sm">Todos</button>
-            <button onclick="renderProducts('ninos', event)" class="filter-btn bg-amber-500 text-white hover:bg-amber-600 px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1.5 shadow-sm">
+            <button data-category="all" onclick="renderProducts('all', event)" class="filter-btn active bg-nova text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-sm">Todos</button>
+            <button data-category="ninos" onclick="renderProducts('ninos', event)" class="filter-btn bg-amber-500 text-white hover:bg-amber-600 px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1.5 shadow-sm">
               <i class="fa-solid fa-child"></i> Ropa de Niños y Niñas
             </button>
-            <button onclick="renderProducts('casual', event)" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Casual</button>
-            <button onclick="renderProducts('streetwear', event)" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Streetwear</button>
-            <button onclick="renderProducts('deportiva', event)" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Deportiva</button>
-            <button onclick="renderProducts('calzado', event)" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Calzado</button>
+            <button data-category="casual" onclick="renderProducts('casual', event)" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Casual</button>
+            <button data-category="streetwear" onclick="renderProducts('streetwear', event)" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Streetwear</button>
+            <button data-category="deportiva" onclick="renderProducts('deportiva', event)" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Deportiva</button>
+            <button data-category="calzado" onclick="renderProducts('calzado', event)" class="filter-btn bg-slate-200 text-slate-700 hover:bg-slate-300 px-4 py-2 rounded-xl text-sm font-bold transition-all">Calzado</button>
           </div>
         </div>
 
@@ -230,9 +237,8 @@
           <button onclick="agregarDesdeDetalle()" class="w-full bg-electric hover:bg-electric-hover text-white py-4 rounded-2xl font-bold text-base transition-all shadow-xl shadow-electric/25 flex items-center justify-center gap-2">
             <i class="fa-solid fa-cart-plus"></i> Agregar al carrito con estas especificaciones
           </button>
+          </div>
         </div>
-      </div>
-
       <!-- APARTADO DE COMENTARIOS Y RESEÑAS (ESTILO TEMU) -->
       <section class="mt-12 bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-slate-100 gap-4">
@@ -328,6 +334,7 @@
   <!-- Script Principal y Lógica JavaScript -->
   <script>
     const productos = [
+
       // --- ROPA DE NIÑOS Y NIÑAS ---
       {
         id: 101,
@@ -636,6 +643,7 @@
         grid.appendChild(card);
       });
 
+
       if (event && event.target) {
         document.querySelectorAll('#filterButtons button').forEach(btn => {
           btn.classList.remove('bg-nova', 'bg-amber-500', 'text-white', 'shadow-sm');
@@ -647,6 +655,18 @@
           clickedBtn.classList.add(categoria === 'ninos' ? 'bg-amber-500' : 'bg-nova', 'text-white', 'shadow-sm');
         }
       }
+
+      const buttons = document.querySelectorAll('#filterButtons button');
+      buttons.forEach(btn => {
+        const isActive = btn.dataset.category === categoria;
+        btn.classList.toggle('bg-nova', isActive);
+        btn.classList.toggle('text-white', isActive);
+        btn.classList.toggle('shadow-sm', isActive);
+        btn.classList.toggle('bg-slate-200', !isActive);
+        btn.classList.toggle('text-slate-700', !isActive);
+        btn.classList.toggle('active', isActive);
+      });
+
     }
 
     function abrirDetalleCompleto(id) {
@@ -812,6 +832,7 @@
       const grid = document.getElementById('productsGrid');
       grid.innerHTML = '';
 
+
       const filtrados = productos.filter(p => 
         p.nombre.toLowerCase().includes(query) || 
         p.categoriaLabel.toLowerCase().includes(query)
@@ -833,6 +854,20 @@
         `;
         grid.appendChild(card);
       });
+    }
+
+    function filterCategory(cat) {
+      // Filtra el catálogo por la categoría seleccionada desde las tarjetas.
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) searchInput.value = '';
+
+      renderProducts(cat, '');
+
+      const catalogo = document.getElementById('catalogo');
+      if (catalogo) {
+        catalogo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
     }
   </script>
 </body>
