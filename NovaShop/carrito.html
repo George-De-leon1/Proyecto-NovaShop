@@ -31,10 +31,22 @@
         Nova<span class="text-electric">Shop</span>
       </a>
 
-      <div class="flex items-center gap-3">
-        <a href="catalogo.html" class="border border-nova/20 hover:border-nova text-nova font-bold px-4 py-2 rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2">
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Botón de Mis Pedidos -->
+        <button onclick="toggleVista('pedidos')" class="bg-slate-100 hover:bg-slate-200 text-nova font-bold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2">
+          <i class="fa-solid fa-box-archive text-electric"></i>
+          <span>Mis Pedidos</span>
+        </button>
+
+        <!-- Botón de Carrito (si está en la vista de pedidos) -->
+        <button id="btnVolverCarrito" onclick="toggleVista('carrito')" class="hidden border border-nova/20 hover:border-nova text-nova font-bold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2">
+          <i class="fa-solid fa-cart-shopping text-xs"></i>
+          <span>Ver Carrito</span>
+        </button>
+
+        <a href="catalogo.html" class="border border-nova/20 hover:border-nova text-nova font-bold px-3.5 py-2 rounded-xl text-xs sm:text-sm transition-all flex items-center gap-2">
           <i class="fa-solid fa-arrow-left text-xs"></i>
-          <span>Seguir comprando</span>
+          <span class="hidden sm:inline">Seguir comprando</span>
         </a>
       </div>
     </nav>
@@ -43,99 +55,214 @@
   <!-- Contenido Principal -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 flex-grow w-full">
     
-    <!-- Migas de pan / Breadcrumbs -->
-    <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-6">
-      <a href="index.html" class="hover:text-electric">Inicio</a>
-      <i class="fa-solid fa-chevron-right text-[10px]"></i>
-      <span class="text-nova">Mi Carrito</span>
-    </div>
-
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
-      <div>
-        <h1 class="text-3xl sm:text-4xl font-black text-nova tracking-tight">Mi Carrito</h1>
-        <p class="text-slate-500 text-sm mt-1">Revisa los artículos que has seleccionado antes de procesar tu compra.</p>
+    <!-- VISTA: CARRITO DE COMPRAS -->
+    <div id="vistaCarrito">
+      <!-- Migas de pan -->
+      <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-6">
+        <a href="index.html" class="hover:text-electric">Inicio</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <span class="text-nova">Mi Carrito</span>
       </div>
 
-      <button id="btnClearCart" onclick="vaciarTodo()" class="hidden text-xs font-bold text-slate-500 hover:text-red-600 transition-colors flex items-center gap-1.5 w-fit">
-        <i class="fa-regular fa-trash-can"></i> Vaciar carrito
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
+        <div>
+          <h1 class="text-3xl sm:text-4xl font-black text-nova tracking-tight">Mi Carrito</h1>
+          <p class="text-slate-500 text-sm mt-1">Revisa los artículos que has seleccionado antes de procesar tu compra.</p>
+        </div>
+
+        <button id="btnClearCart" onclick="vaciarTodo()" class="hidden text-xs font-bold text-slate-500 hover:text-red-600 transition-colors flex items-center gap-1.5 w-fit">
+          <i class="fa-regular fa-trash-can"></i> Vaciar carrito
+        </button>
+      </div>
+
+      <!-- Layout Grid -->
+      <div class="grid lg:grid-cols-12 gap-8 items-start">
+        <!-- Lista de Productos en el Carrito -->
+        <section class="lg:col-span-8">
+          <div id="lista" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
+            <!-- Generado dinámicamente con JavaScript -->
+          </div>
+        </section>
+
+        <!-- Resumen de Compra Sidebar -->
+        <aside class="lg:col-span-4 bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 sticky top-24">
+          <h2 class="text-xl font-black text-nova mb-6 pb-4 border-b border-slate-100 flex items-center justify-between">
+            <span>Resumen de compra</span>
+            <i class="fa-solid fa-receipt text-electric"></i>
+          </h2>
+
+          <!-- Aplicar Cupón -->
+          <div class="mb-6">
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">¿Tienes un cupón?</label>
+            <div class="flex gap-2">
+              <input type="text" id="couponInput" placeholder="NOVA2026" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold uppercase focus:outline-none focus:border-electric focus:bg-white transition-all">
+              <button onclick="aplicarCupon()" class="bg-nova hover:bg-nova-dark text-white px-4 py-2.5 rounded-xl font-bold text-xs transition-all shrink-0">Aplicar</button>
+            </div>
+            <span id="couponMsg" class="hidden text-[11px] font-bold mt-1.5 block"></span>
+          </div>
+
+          <div class="space-y-3.5 text-sm font-medium border-t border-slate-100 pt-5">
+            <div class="flex justify-between text-slate-600">
+              <span>Subtotal</span>
+              <span id="subtotal" class="font-bold text-nova">RD$ 0</span>
+            </div>
+
+            <div id="discountRow" class="hidden flex justify-between text-emerald-600 font-bold">
+              <span>Descuento (20%)</span>
+              <span id="discountAmount">-RD$ 0</span>
+            </div>
+
+            <div class="flex justify-between text-slate-600">
+              <span>Envío estimado</span>
+              <span id="envio" class="font-bold text-emerald-600">Gratis</span>
+            </div>
+
+            <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 text-[11px] text-slate-500 flex items-center gap-2">
+              <i class="fa-solid fa-truck-fast text-electric text-sm"></i>
+              <span>Envío gratis en compras mayores a <strong>RD$ 3,000</strong></span>
+            </div>
+
+            <hr class="border-slate-100 my-4">
+
+            <div class="flex justify-between text-lg font-black text-nova pt-1">
+              <span>Total final</span>
+              <span id="total" class="text-electric">RD$ 0</span>
+            </div>
+          </div>
+
+          <a id="btnCheckout" href="pago.html" class="block text-center bg-electric hover:bg-electric-hover text-white py-4 rounded-xl mt-6 font-bold text-sm shadow-lg shadow-electric/20 transition-all flex items-center justify-center gap-2">
+            <span>Continuar al pago</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </aside>
+      </div>
+    </div>
+
+    <!-- VISTA: MIS PEDIDOS -->
+    <div id="vistaPedidos" class="hidden">
+      <!-- Migas de pan -->
+      <div class="flex items-center gap-2 text-xs font-bold text-slate-400 mb-6">
+        <a href="index.html" class="hover:text-electric">Inicio</a>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        <span class="text-nova">Mis Pedidos Realizados</span>
+      </div>
+
+      <div class="mb-8 pb-4 border-b border-slate-200">
+        <h1 class="text-3xl sm:text-4xl font-black text-nova tracking-tight">Mis Pedidos</h1>
+        <p class="text-slate-500 text-sm mt-1">Rastrea tus compras en tiempo real y gestiona tus envíos activos.</p>
+      </div>
+
+      <!-- Contenedor de la Lista de Pedidos -->
+      <div id="pedidosLista" class="space-y-6">
+        <!-- Renderizado dinámicamente con JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- MODAL / RASTREO ESTILO TEMU -->
+  <div id="trackingModal" class="fixed inset-0 bg-nova/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative transform scale-95 transition-transform duration-300 overflow-hidden" id="modalContent">
+      
+      <!-- Encabezado Modal -->
+      <div class="flex justify-between items-start pb-4 border-b border-slate-100">
+        <div>
+          <span class="text-[11px] font-black tracking-wider uppercase text-electric bg-blue-50 px-2.5 py-1 rounded-md">Seguimiento en Vivo</span>
+          <h3 class="text-xl font-black text-nova mt-1" id="modalOrderCode">Pedido #NOV-83921</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Llegada estimada: <strong id="modalFechaEntrega" class="text-slate-700">28 Oct - 30 Oct</strong></p>
+        </div>
+        <button onclick="cerrarTrackingModal()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center transition-colors">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- BARRA DE PROGRESO DE ESTADO TIPO TEMU -->
+      <div class="py-6">
+        <div class="relative flex items-center justify-between">
+          <!-- Línea de fondo -->
+          <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-1.5 bg-slate-100 rounded-full z-0"></div>
+          <!-- Línea activa de progreso -->
+          <div id="progressBar" class="absolute left-0 top-1/2 -translate-y-1/2 h-1.5 bg-electric rounded-full transition-all duration-700 z-0" style="width: 65%;"></div>
+
+          <!-- Paso 1: Pagado -->
+          <div class="relative z-10 flex flex-col items-center">
+            <div id="step1" class="w-9 h-9 rounded-full bg-electric text-white font-bold flex items-center justify-center text-xs shadow-md">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <span class="text-[10px] font-bold text-nova mt-2">Pagado</span>
+          </div>
+
+          <!-- Paso 2: Procesado / Carga -->
+          <div class="relative z-10 flex flex-col items-center">
+            <div id="step2" class="w-9 h-9 rounded-full bg-electric text-white font-bold flex items-center justify-center text-xs shadow-md">
+              <i class="fa-solid fa-box"></i>
+            </div>
+            <span class="text-[10px] font-bold text-nova mt-2">Empacado</span>
+          </div>
+
+          <!-- Paso 3: En el Avión / Tránsito -->
+          <div class="relative z-10 flex flex-col items-center">
+            <div id="step3" class="w-9 h-9 rounded-full bg-electric text-white font-bold flex items-center justify-center text-xs shadow-md ring-4 ring-blue-100">
+              <i class="fa-solid fa-plane"></i>
+            </div>
+            <span class="text-[10px] font-bold text-electric mt-2">En tránsito</span>
+          </div>
+
+          <!-- Paso 4: En aduana / País -->
+          <div class="relative z-10 flex flex-col items-center">
+            <div id="step4" class="w-9 h-9 rounded-full bg-slate-200 text-slate-400 font-bold flex items-center justify-center text-xs">
+              <i class="fa-solid fa-warehouse"></i>
+            </div>
+            <span class="text-[10px] font-bold text-slate-400 mt-2">En país</span>
+          </div>
+
+          <!-- Paso 5: Entregado -->
+          <div class="relative z-10 flex flex-col items-center">
+            <div id="step5" class="w-9 h-9 rounded-full bg-slate-200 text-slate-400 font-bold flex items-center justify-center text-xs">
+              <i class="fa-solid fa-house font-bold"></i>
+            </div>
+            <span class="text-[10px] font-bold text-slate-400 mt-2">Entregado</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DETALLES DE LA LÍNEA DE TIEMPO DEL ENVÍO -->
+      <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 max-h-52 overflow-y-auto space-y-4 text-xs">
+        <div class="flex gap-3">
+          <div class="text-electric font-bold shrink-0"><i class="fa-solid fa-circle-dot"></i></div>
+          <div>
+            <p class="font-bold text-nova">El vuelo ha despegado hacia la ciudad de destino</p>
+            <p class="text-[11px] text-slate-400">Hoy, 02:45 PM - Logística Internacional</p>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <div class="text-slate-400 shrink-0"><i class="fa-solid fa-circle"></i></div>
+          <div>
+            <p class="font-semibold text-slate-700">Paquete inspeccionado y cargado en el vuelo</p>
+            <p class="text-[11px] text-slate-400">Ayer, 09:20 AM - Centro de Clasificación</p>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <div class="text-slate-400 shrink-0"><i class="fa-solid fa-circle"></i></div>
+          <div>
+            <p class="font-semibold text-slate-700">Empacado y procesado exitosamente</p>
+            <p class="text-[11px] text-slate-400">24 Oct, 04:10 PM - Almacén Central</p>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <div class="text-slate-400 shrink-0"><i class="fa-solid fa-circle"></i></div>
+          <div>
+            <p class="font-semibold text-slate-700">Pago confirmado / Orden recibida</p>
+            <p class="text-[11px] text-slate-400">24 Oct, 02:00 PM</p>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="cerrarTrackingModal()" class="w-full bg-nova hover:bg-nova-dark text-white font-bold py-3 rounded-xl text-xs mt-5 transition-colors">
+        Entendido
       </button>
     </div>
-
-    <!-- Layout Grid -->
-    <div class="grid lg:grid-cols-12 gap-8 items-start">
-      
-      <!-- Lista de Productos en el Carrito -->
-      <section class="lg:col-span-8">
-        <div id="lista" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6">
-          <!-- Generado dinámicamente con JavaScript -->
-        </div>
-      </section>
-
-      <!-- Resumen de Compra Sidebar -->
-      <aside class="lg:col-span-4 bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 sticky top-24">
-        <h2 class="text-xl font-black text-nova mb-6 pb-4 border-b border-slate-100 flex items-center justify-between">
-          <span>Resumen de compra</span>
-          <i class="fa-solid fa-receipt text-electric"></i>
-        </h2>
-
-        <!-- Aplicar Cupón -->
-        <div class="mb-6">
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">¿Tienes un cupón?</label>
-          <div class="flex gap-2">
-            <input type="text" id="couponInput" placeholder="NOVA2026" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold uppercase focus:outline-none focus:border-electric focus:bg-white transition-all">
-            <button onclick="aplicarCupon()" class="bg-nova hover:bg-nova-dark text-white px-4 py-2.5 rounded-xl font-bold text-xs transition-all shrink-0">Aplicar</button>
-          </div>
-          <span id="couponMsg" class="hidden text-[11px] font-bold mt-1.5 block"></span>
-        </div>
-
-        <div class="space-y-3.5 text-sm font-medium border-t border-slate-100 pt-5">
-          <div class="flex justify-between text-slate-600">
-            <span>Subtotal</span>
-            <span id="subtotal" class="font-bold text-nova">RD$ 0</span>
-          </div>
-
-          <div id="discountRow" class="hidden flex justify-between text-emerald-600 font-bold">
-            <span>Descuento (20%)</span>
-            <span id="discountAmount">-RD$ 0</span>
-          </div>
-
-          <div class="flex justify-between text-slate-600">
-            <span>Envío estimado</span>
-            <span id="envio" class="font-bold text-emerald-600">Gratis</span>
-          </div>
-
-          <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 text-[11px] text-slate-500 flex items-center gap-2">
-            <i class="fa-solid fa-truck-fast text-electric text-sm"></i>
-            <span>Envío gratis en compras mayores a <strong>RD$ 3,000</strong></span>
-          </div>
-
-          <hr class="border-slate-100 my-4">
-
-          <div class="flex justify-between text-lg font-black text-nova pt-1">
-            <span>Total final</span>
-            <span id="total" class="text-electric">RD$ 0</span>
-          </div>
-        </div>
-
-        <a id="btnCheckout" href="pago.html" class="block text-center bg-electric hover:bg-electric-hover text-white py-4 rounded-xl mt-6 font-bold text-sm shadow-lg shadow-electric/20 transition-all flex items-center justify-center gap-2">
-          <span>Continuar al pago</span>
-          <i class="fa-solid fa-arrow-right text-xs"></i>
-        </a>
-
-        <!-- Métodos de pago e insignias -->
-        <div class="mt-6 pt-6 border-t border-slate-100 text-center">
-          <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Aceptamos todos los medios de pago</p>
-          <div class="flex justify-center gap-4 text-slate-400 text-xl">
-            <i class="fa-brands fa-cc-visa hover:text-blue-600 transition-colors"></i>
-            <i class="fa-brands fa-cc-mastercard hover:text-red-500 transition-colors"></i>
-            <i class="fa-solid fa-hand-holding-dollar hover:text-emerald-600 transition-colors"></i>
-            <i class="fa-solid fa-building-columns hover:text-nova transition-colors"></i>
-          </div>
-        </div>
-      </aside>
-
-    </div>
-  </main>
+  </div>
 
   <!-- Notification Toast -->
   <div id="toast" class="fixed bottom-6 right-6 z-50 bg-nova text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
@@ -154,6 +281,157 @@
   <script>
     let descuentoAplicado = 0;
 
+    // Datos simulados de pedidos realizados (Pagados)
+    const misPedidosData = [
+      {
+        id: "NOV-92841",
+        fecha: "25 de Octubre, 2026",
+        estado: "En tránsito",
+        entregado: false,
+        pasoActual: 3, // 1: Pagado, 2: Empacado, 3: En tránsito, 4: En País, 5: Entregado
+        progreso: 62,
+        estimado: "28 Oct - 30 Oct",
+        total: 4250,
+        articulos: [
+          { nombre: "Camiseta Oversize Nova Blue", cantidad: 2, precio: 1500 },
+          { nombre: "Gorra Urbana Black", cantidad: 1, precio: 1250 }
+        ]
+      },
+      {
+        id: "NOV-71029",
+        fecha: "12 de Octubre, 2026",
+        estado: "Entregado",
+        entregado: true,
+        pasoActual: 5,
+        progreso: 100,
+        estimado: "15 Oct - 17 Oct",
+        total: 2800,
+        articulos: [
+          { nombre: "Chaqueta Denim Classic", cantidad: 1, precio: 2800 }
+        ]
+      }
+    ];
+
+    // Cambiar entre vistas Carrito / Pedidos
+    function toggleVista(vista) {
+      const vistaCarrito = document.getElementById('vistaCarrito');
+      const vistaPedidos = document.getElementById('vistaPedidos');
+      const btnVolverCarrito = document.getElementById('btnVolverCarrito');
+
+      if (vista === 'pedidos') {
+        vistaCarrito.classList.add('hidden');
+        vistaPedidos.classList.remove('hidden');
+        btnVolverCarrito.classList.remove('hidden');
+        renderizarPedidos();
+      } else {
+        vistaPedidos.classList.add('hidden');
+        vistaCarrito.classList.remove('hidden');
+        btnVolverCarrito.classList.add('hidden');
+      }
+    }
+
+    // Renderizar la lista de Pedidos
+    function renderizarPedidos() {
+      const contenedor = document.getElementById('pedidosLista');
+
+      if (!misPedidosData.length) {
+        contenedor.innerHTML = `
+          <div class="text-center py-12 bg-white rounded-3xl border border-slate-200">
+            <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-3 block"></i>
+            <h3 class="text-lg font-bold text-nova">Aún no has hecho ningún pedido</h3>
+            <p class="text-xs text-slate-500 mt-1">Tus compras confirmadas aparecerán en esta sección.</p>
+          </div>
+        `;
+        return;
+      }
+
+      contenedor.innerHTML = misPedidosData.map(pedido => `
+        <article class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+          <!-- Encabezado del Pedido -->
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-5 border-b border-slate-100 gap-3">
+            <div>
+              <div class="flex items-center gap-3">
+                <span class="font-black text-lg text-nova">Pedido #${pedido.id}</span>
+                <span class="text-[11px] font-bold px-3 py-1 rounded-full ${pedido.entregado ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-electric'} flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full ${pedido.entregado ? 'bg-emerald-500' : 'bg-electric animate-ping'}"></span>
+                  ${pedido.estado}
+                </span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">Realizado el ${pedido.fecha}</p>
+            </div>
+
+            <!-- Acciones -->
+            ${!pedido.entregado ? `
+              <button onclick="abrirTrackingModal('${pedido.id}')" class="w-full sm:w-auto bg-electric hover:bg-electric-hover text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-electric/20">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Rastrear pedido</span>
+              </button>
+            ` : `
+              <span class="text-xs font-bold text-slate-400 flex items-center gap-1">
+                <i class="fa-solid fa-circle-check text-emerald-500"></i> Entregado
+              </span>
+            `}
+          </div>
+
+          <!-- Lista de Productos dentro del Pedido -->
+          <div class="py-5 space-y-3">
+            ${pedido.articulos.map(art => `
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600 font-bold">
+                    <i class="fa-solid fa-shirt"></i>
+                  </div>
+                  <div>
+                    <p class="font-bold text-nova">${art.nombre}</p>
+                    <p class="text-slate-400">Cantidad: ${art.cantidad}</p>
+                  </div>
+                </div>
+                <span class="font-bold text-nova">RD$ ${(art.precio * art.cantidad).toLocaleString('es-DO')}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Pie del Pedido -->
+          <div class="pt-4 border-t border-slate-100 flex justify-between items-center text-sm font-bold text-nova">
+            <span>Total Pagado:</span>
+            <span class="text-lg text-electric">RD$ ${pedido.total.toLocaleString('es-DO')}</span>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Abrir Modal estilo TEMU
+    function abrirTrackingModal(orderId) {
+      const modal = document.getElementById('trackingModal');
+      const modalContent = document.getElementById('modalContent');
+      const pedido = misPedidosData.find(p => p.id === orderId);
+
+      if (pedido) {
+        document.getElementById('modalOrderCode').textContent = `Pedido #${pedido.id}`;
+        document.getElementById('modalFechaEntrega').textContent = pedido.estimado;
+        document.getElementById('progressBar').style.width = `${pedido.progreso}%`;
+      }
+
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        modalContent.classList.remove('scale-95');
+      }, 10);
+    }
+
+    // Cerrar Modal estilo TEMU
+    function cerrarTrackingModal() {
+      const modal = document.getElementById('trackingModal');
+      const modalContent = document.getElementById('modalContent');
+
+      modal.classList.add('opacity-0');
+      modalContent.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    // MOSTRAR Y GESTIONAR CARRITO
     function mostrar() {
       const carrito = JSON.parse(localStorage.getItem('novashop') || '[]');
       const lista = document.getElementById('lista');
@@ -297,6 +575,7 @@
       }, 3000);
     }
 
+    // Corregido el bug de la multiplicación que tenías en la vista previa del carrito
     mostrar();
   </script>
 </body>
