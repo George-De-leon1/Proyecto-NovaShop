@@ -23,26 +23,22 @@
   <style>
     @keyframes pulse-badge {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.25); }
+      50% { transform: scale(1.08); }
     }
-    .animate-badge { animation: pulse-badge 0.3s ease-in-out; }
+    .animate-badge { animation: pulse-badge 2s infinite ease-in-out; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased flex flex-col min-h-screen">
 
-  <!-- Header Fijo / Navigation con el nuevo Logo de la imagen -->
+  <!-- Header Fijo / Navigation (Original e Intacto) -->
   <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 transition-all duration-300 border-b border-slate-200/80">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
       <a href="index.html" class="flex items-center gap-2">
-    <img src="img/logo..png" 
-         alt="Logo de NovaShop"
-         class="w-12 h-10 object-contain">
-
-    <span class="text-3xl font-black text-nova tracking-tight">
-        Nova<span class="text-electric">Shop</span>
-    </span>
-</a>
-
+        <img src="img/logo..png" alt="Logo de NovaShop" class="w-12 h-10 object-contain">
+        <span class="text-3xl font-black text-nova tracking-tight">
+          Nova<span class="text-electric">Shop</span>
+        </span>
+      </a>
 
       <!-- Barra de Búsqueda Header -->
       <div class="hidden lg:flex items-center flex-grow max-w-md mx-6">
@@ -66,7 +62,7 @@
         <a href="cuenta.html" class="border border-nova/20 hover:border-nova text-nova font-bold px-4 py-2.5 rounded-xl text-sm transition-all hover:bg-slate-50 flex items-center gap-1.5">
           <i class="fa-regular font-bold fa-user"></i> <span class="hidden sm:inline">Mi cuenta</span>
         </a>
-        
+
         <button onclick="toggleCart()" class="relative bg-nova hover:bg-nova-dark text-white px-4 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-nova/10 transition-all flex items-center gap-2 transform active:scale-95">
           <i class="fa-solid fa-cart-shopping text-electric"></i>
           <span class="hidden sm:inline">Carrito</span>
@@ -77,48 +73,95 @@
   </header>
 
   <main class="flex-grow">
-    
+
     <!-- VISTA 1: INICIO Y CATÁLOGO PRINCIPAL -->
     <div id="vistaPrincipal">
-      <!-- Hero Section -->
-      <section class="bg-nova text-white relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#2563EB_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        
-        <div class="max-w-7xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center relative z-10">
-          <div>
-            <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 mb-6 shadow-sm">
-              <span class="w-2 h-2 rounded-full bg-electric animate-ping"></span>
-              <span class="text-xs font-bold tracking-widest uppercase text-blue-200">Colección Primavera / Verano 2026</span>
+
+      <!-- Hero Section: Carrusel de imágenes NovaShop -->
+      <section id="inicioCarrusel" class="relative isolate h-[430px] sm:h-[520px] md:h-[600px] w-full overflow-hidden bg-nova m-0 p-0">
+        <div class="absolute inset-0 w-full h-full m-0 p-0" aria-label="Carrusel de estilos NovaShop">
+          <img
+            src="../Img/Formal, para el inicio.png"
+            alt="Estilo formal de NovaShop"
+            class="inicio-slide absolute inset-0 h-full w-full object-cover object-center opacity-100 transition-opacity duration-1000 block"
+            fetchpriority="high">
+          <img
+            src="../Img/Urbano, para el inicio.png"
+            alt="Estilo urbano de NovaShop"
+            class="inicio-slide absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-opacity duration-1000 block"
+            aria-hidden="true">
+          <img
+            src="../Img/Tropical, para el inicio.png"
+            alt="Estilo casual y tropical de NovaShop"
+            class="inicio-slide absolute inset-0 h-full w-full object-cover object-center opacity-0 transition-opacity duration-1000 block"
+            aria-hidden="true">
+        </div>
+
+        <div class="absolute bottom-6 left-6 z-10 flex flex-wrap items-center gap-4 sm:bottom-10 sm:left-10 md:bottom-12 md:left-[60px]">
+          <a href="#catalogo" class="inline-flex items-center gap-2 rounded-xl bg-electric px-8 py-4 font-bold text-white shadow-xl shadow-black/20 transition-all hover:bg-electric-hover">
+            Explorar Catálogo <i class="fa-solid fa-arrow-right"></i>
+          </a>
+
+          <div class="bg-nova/95 backdrop-blur-md text-white p-3.5 rounded-xl border border-electric/40 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm">
+            <div class="w-8 h-8 rounded-lg bg-electric/20 text-electric border border-electric/30 flex items-center justify-center shrink-0">
+              <i class="fa-solid fa-truck-fast text-sm"></i>
             </div>
-
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-black leading-none tracking-tight">
-              Tu estilo,<br>
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-electric">tu esencia.</span>
-            </h1>
-
-            <p class="text-slate-300 mt-6 text-lg max-w-xl font-normal leading-relaxed">
-              Descubre ropa casual, deportiva, infantil y streetwear de alta calidad. Encuentra prendas únicas diseñadas para resaltar tu personalidad.
-            </p>
-
-            <div class="mt-8 flex flex-wrap gap-4 items-center">
-              <a href="#catalogo" class="bg-electric hover:bg-electric-hover text-white px-8 py-4 rounded-xl font-bold shadow-lg shadow-electric/30 transition-all flex items-center gap-2">
-                Explorar Catálogo <i class="fa-solid fa-arrow-right"></i>
-              </a>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                <span class="text-[9px] uppercase font-black tracking-wider text-emerald-400">Promoción</span>
+              </div>
+              <p class="text-[11px] font-bold text-slate-100 leading-tight">
+                Compra <span class="text-amber-400">RD$ 3,000</span> y el <span class="underline decoration-electric">envío es gratis</span>.
+              </p>
             </div>
-          </div>
-
-          <div class="relative">
-            <div class="absolute -inset-4 bg-electric/20 rounded-3xl blur-2xl"></div>
-            <img 
-              src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=80" 
-              alt="Moda NovaShop" 
-              class="relative rounded-3xl shadow-2xl w-full h-[450px] object-cover border border-white/10">
           </div>
         </div>
       </section>
 
+      <!-- SECCIÓN DE OFERTAS FLASH -->
+      <section id="ofertas" class="max-w-7xl mx-auto px-6 pt-16 pb-8">
+        <div class="bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 rounded-3xl p-8 sm:p-10 text-white shadow-2xl relative overflow-hidden mb-12">
+          <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-black pointer-events-none select-none">OFFER</div>
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+            <div>
+              <span class="bg-white/20 text-white text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider inline-flex items-center gap-1.5 backdrop-blur-md">
+                <i class="fa-solid fa-bolt text-amber-300"></i> Descuentos de Temporada
+              </span>
+              <h2 class="text-3xl sm:text-5xl font-black mt-3 text-white tracking-tight">Ofertas Exclusivas NovaShop</h2>
+              <p class="text-red-100 text-sm mt-2 max-w-xl font-medium">Prendas seleccionadas con hasta un 40% de descuento. ¡Aprovecha antes de que se agoten las existencias!</p>
+            </div>
+            <a href="#ofertasGrid" class="bg-white text-red-600 font-black px-6 py-3.5 rounded-2xl hover:bg-slate-100 transition-all shadow-lg text-sm text-center shrink-0">
+              Ver Todas las Ofertas
+            </a>
+          </div>
+        </div>
+
+        <div id="ofertasGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+      </section>
+
+      <!-- SECCIÓN: TENDENCIAS NOVASHOP (CON NUEVO ESTILO DE FONDO Y PRENDAS 100% DISTINTAS) -->
+      <section id="tendencias" class="max-w-7xl mx-auto px-6 py-12">
+        <div class="bg-gradient-to-r from-nova via-indigo-950 to-nova rounded-3xl p-8 sm:p-10 text-white shadow-2xl border border-electric/30 relative overflow-hidden mb-10">
+          <div class="absolute -left-10 -bottom-10 opacity-10 text-9xl font-black pointer-events-none select-none">HOT</div>
+          <div class="flex flex-col md:flex-row md:items-end justify-between relative z-10 gap-4">
+            <div>
+              <span class="bg-electric text-white font-black text-xs tracking-widest uppercase px-3.5 py-1.5 rounded-xl inline-flex items-center gap-1.5 shadow-md">
+                <i class="fa-solid fa-fire text-amber-300"></i> Lo más exclusivo de la temporada
+              </span>
+              <h2 class="text-3xl sm:text-4xl font-black mt-3 text-white tracking-tight">Ropa en Tendencia</h2>
+            </div>
+            <p class="text-slate-300 text-sm max-w-md font-medium">
+              Colección recién llegada con diseños vanguardistas, estilos únicos y máxima exclusividad que marcan tendencia.
+            </p>
+          </div>
+        </div>
+
+        <div id="tendenciasGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+      </section>
+
       <!-- Sección de Categorías -->
-      <section id="categorias" class="max-w-7xl mx-auto px-6 py-20">
+      <section id="categorias" class="max-w-7xl mx-auto px-6 py-12">
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
           <div>
             <span class="text-electric font-bold text-xs tracking-widest uppercase">Explora por Estilo</span>
@@ -157,8 +200,7 @@
             <span class="text-electric font-bold text-xs tracking-widest uppercase">Nuestra Tienda</span>
             <h2 class="text-3xl md:text-4xl font-black text-nova mt-1">Catálogo de Productos</h2>
           </div>
-          
-          <!-- Filtros del Catálogo -->
+
           <div class="flex flex-wrap gap-2" id="filterButtons">
             <button data-category="all" onclick="renderProducts('all', event)" class="filter-btn active bg-nova text-white px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-sm">Todos</button>
             <button data-category="ninos" onclick="renderProducts('ninos', event)" class="filter-btn bg-amber-500 text-white hover:bg-amber-600 px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1.5 shadow-sm">
@@ -171,22 +213,17 @@
           </div>
         </div>
 
-        <!-- Grid de Productos Dinámico -->
         <div id="productsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"></div>
       </section>
     </div>
 
-    <!-- VISTA 2: PANTALLA COMPLETA DE DETALLE DE PRODUCTO (ESTILO TEMU) -->
+    <!-- VISTA 2: PANTALLA COMPLETA DE DETALLE DE PRODUCTO -->
     <div id="vistaDetalle" class="hidden max-w-7xl mx-auto px-6 py-10">
-      <!-- Botón Superior para Volver al Catálogo -->
       <button onclick="volverAlCatalogo()" class="mb-6 inline-flex items-center gap-2 bg-slate-200 hover:bg-slate-300 text-nova font-bold px-4 py-2.5 rounded-xl text-xs transition-all">
         <i class="fa-solid fa-arrow-left"></i> Volver al Catálogo
       </button>
 
-      <!-- Contenedor Principal del Detalle -->
       <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 grid lg:grid-cols-12 gap-10 items-start">
-        
-        <!-- Columna Izquierda: Imagen Dinámica -->
         <div class="lg:col-span-5">
           <div class="aspect-square bg-slate-100 rounded-3xl overflow-hidden shadow-inner border border-slate-200 sticky top-28">
             <img id="detalleImg" src="" class="w-full h-full object-cover transition-all duration-300" alt="Producto">
@@ -194,7 +231,6 @@
           <p class="text-center text-xs text-slate-400 font-medium mt-3">Color seleccionado: <strong id="detalleColorNombre" class="text-nova"></strong></p>
         </div>
 
-        <!-- Columna Derecha: Opciones y Especificaciones Estilo Temu -->
         <div class="lg:col-span-7 space-y-6">
           <div>
             <span id="detalleCategoria" class="text-electric font-black text-xs tracking-wider uppercase bg-blue-50 px-3 py-1 rounded-md"></span>
@@ -203,28 +239,28 @@
               <span class="text-amber-500 font-bold text-sm">★ <span id="detalleRating"></span></span>
               <span class="text-slate-400 text-xs">(<span id="detalleReviews"></span> reseñas verificadas)</span>
             </div>
-            <p id="detallePrecio" class="text-3xl font-black text-electric mt-3"></p>
+            <div class="flex items-center gap-3 mt-3">
+              <p id="detallePrecio" class="text-3xl font-black text-electric"></p>
+              <p id="detallePrecioOriginal" class="text-lg text-slate-400 line-through font-bold hidden"></p>
+              <span id="detalleBadgeOferta" class="hidden bg-red-500 text-white text-xs font-black px-2.5 py-1 rounded-lg"></span>
+            </div>
           </div>
 
-          <!-- Materiales y Descripción -->
           <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-xs space-y-2 text-slate-600">
             <p class="font-bold text-nova uppercase tracking-wider text-[11px]"><i class="fa-solid fa-circle-info text-electric mr-1"></i> Materiales y Composición:</p>
             <p id="detalleMateriales">Confección premium de alta durabilidad, algodón transpirable y costuras reforzadas para un uso confortable durante todo el día.</p>
           </div>
 
-          <!-- Selector de Colores -->
           <div>
             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2.5">Selecciona Color:</label>
             <div id="detalleColoresContainer" class="flex gap-3"></div>
           </div>
 
-          <!-- Selector de Tallas / Size -->
           <div>
             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2.5">Selecciona Talla (Size):</label>
             <div id="detalleTallasContainer" class="flex flex-wrap gap-2"></div>
           </div>
 
-          <!-- Guía de Tallas Interactiva -->
           <div class="bg-blue-50/50 border border-blue-100 p-4 rounded-2xl">
             <div class="flex items-center gap-2 text-xs font-bold text-nova mb-1">
               <i class="fa-solid fa-ruler-horizontal text-electric"></i>
@@ -233,13 +269,12 @@
             <p id="guiaMedidasTexto" class="text-xs text-slate-600 font-medium"></p>
           </div>
 
-          <!-- Botón de Añadir al Carrito -->
           <button onclick="agregarDesdeDetalle()" class="w-full bg-electric hover:bg-electric-hover text-white py-4 rounded-2xl font-bold text-base transition-all shadow-xl shadow-electric/25 flex items-center justify-center gap-2">
             <i class="fa-solid fa-cart-plus"></i> Agregar al carrito con estas especificaciones
           </button>
-          </div>
         </div>
-      <!-- APARTADO DE COMENTARIOS Y RESEÑAS (ESTILO TEMU) -->
+      </div>
+
       <section class="mt-12 bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200">
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-slate-100 gap-4">
           <div>
@@ -254,7 +289,6 @@
           </div>
         </div>
 
-        <!-- Lista de Comentarios Estilo Temu -->
         <div class="divide-y divide-slate-100 space-y-6 pt-6">
           <div class="space-y-2">
             <div class="flex items-center justify-between">
@@ -272,27 +306,9 @@
             <p class="text-xs text-slate-600">"Me encantó la calidad de la tela, el color coincide exactamente con la foto del producto y la entrega fue muy rápida. ¡Totalmente recomendado!"</p>
             <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md inline-block">Color seleccionado | Talla estándar</span>
           </div>
-
-          <div class="space-y-2 pt-4">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-blue-100 text-electric font-bold flex items-center justify-center text-xs">JR</div>
-                <div>
-                  <p class="font-bold text-xs text-nova">Jessica R.</p>
-                  <div class="text-amber-400 text-[10px]">
-                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                  </div>
-                </div>
-              </div>
-              <span class="text-[10px] text-slate-400">Hace 1 semana</span>
-            </div>
-            <p class="text-xs text-slate-600">"El ajuste es perfecto gracias a la guía de medidas. Muy suave, fresca y resistente al lavado."</p>
-            <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md inline-block">Compra Verificada</span>
-          </div>
         </div>
       </section>
 
-      <!-- Botón Inferior para Volver al Catálogo -->
       <div class="mt-8 text-center">
         <button onclick="volverAlCatalogo()" class="inline-flex items-center gap-2 bg-nova hover:bg-nova-dark text-white font-bold px-6 py-3 rounded-xl text-xs transition-all shadow-md">
           <i class="fa-solid fa-arrow-left"></i> Volver al Catálogo Principal
@@ -331,11 +347,321 @@
     <span id="toastMsg" class="font-bold text-sm">Acción realizada</span>
   </div>
 
+  <!-- Footer -->
+  <footer class="bg-nova text-white pt-16 pb-12 mt-20 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-800/80">
+      <div class="md:col-span-1">
+        <a href="index.html" class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+          <span class="bg-electric text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg font-bold">N</span>
+          Nova<span class="text-electric">Shop</span>
+        </a>
+        <p class="text-slate-400 text-sm mt-4 leading-relaxed">
+          Tu destino definitivo para moda urbana, casual y deportiva. Vístete con actitud y calidad garantizada.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-black text-white text-base mb-4">Navegación</h4>
+        <ul class="space-y-2.5 text-sm text-slate-400">
+          <li><a href="index.html" class="hover:text-electric transition-colors">Inicio</a></li>
+          <li><a href="catalogo.html" class="hover:text-electric transition-colors">Catálogo Completo</a></li>
+          <li><a href="nosotros.html" class="hover:text-electric transition-colors">Sobre Nosotros</a></li>
+          <li><a href="contacto.html" class="hover:text-electric transition-colors">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-black text-white text-base mb-4">Soporte</h4>
+        <ul class="space-y-2.5 text-sm text-slate-400">
+          <li><a href="contacto.html" class="hover:text-electric transition-colors">Atención al cliente</a></li>
+          <li><a href="politicas.html" class="hover:text-electric transition-colors">Políticas de envío</a></li>
+          <li><a href="politicas.html" class="hover:text-electric transition-colors">Devoluciones</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-black text-white text-base mb-4">Contacto Directo</h4>
+        <p class="text-xs text-slate-400 mb-2">San Pedro de Macorís, República Dominicana.</p>
+        <p class="text-xs text-slate-400">Correo: contacto@novashop.com</p>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 pt-8 text-center text-slate-500 text-xs">
+      <p>© 2026 NovaShop. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
   <!-- Script Principal y Lógica JavaScript -->
   <script>
-    const productos = [
+    // 9 PRODUCTOS EN OFERTA
+    const ofertasEspeciales = [
+      {
+        id: 201,
+        nombre: 'Chaqueta Puffer Ultra-Warm',
+        tipo: 'superior',
+        categoria: 'streetwear',
+        categoriaLabel: 'STREETWEAR',
+        precioOriginal: 3800,
+        precio: 2280,
+        descuentoPct: 40,
+        rating: 4.9,
+        reviews: 58,
+        tallas: ['M', 'L', 'XL'],
+        colores: [
+          { nombre: 'Negro Mate', hex: '#111827', img: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=700&q=80' },
+          { nombre: 'Gris Oscuro', hex: '#374151', img: 'https://images.unsplash.com/photo-1578587018452-892bacefd3f2?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 202,
+        nombre: 'Sudadera Hoodie Pastel Mint',
+        tipo: 'superior',
+        categoria: 'casual',
+        categoriaLabel: 'CASUAL',
+        precioOriginal: 2200,
+        precio: 1540,
+        descuentoPct: 30,
+        rating: 4.8,
+        reviews: 42,
+        tallas: ['S', 'M', 'L', 'XL'],
+        colores: [
+          { nombre: 'Verde Menta', hex: '#6EE7B7', img: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=700&q=80' },
+          { nombre: 'Crema', hex: '#FDF6E2', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 203,
+        nombre: 'Zapatillas Retro High Top',
+        tipo: 'calzado',
+        categoria: 'calzado',
+        categoriaLabel: 'CALZADO',
+        precioOriginal: 4500,
+        precio: 2925,
+        descuentoPct: 35,
+        rating: 5.0,
+        reviews: 89,
+        tallas: ['39', '40', '41', '42'],
+        colores: [
+          { nombre: 'Blanco / Negro', hex: '#000000', img: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=80' },
+          { nombre: 'Rojo Pasión', hex: '#EF4444', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 204,
+        nombre: 'Camisa Playera Tropical Summer',
+        tipo: 'superior',
+        categoria: 'casual',
+        categoriaLabel: 'CASUAL',
+        precioOriginal: 1800,
+        precio: 1170,
+        descuentoPct: 35,
+        rating: 4.7,
+        reviews: 31,
+        tallas: ['S', 'M', 'L'],
+        colores: [
+          { nombre: 'Estampado Azul', hex: '#2563EB', img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 205,
+        nombre: 'Pantalon Cargo Tactical Street',
+        tipo: 'pantalon',
+        categoria: 'streetwear',
+        categoriaLabel: 'STREETWEAR',
+        precioOriginal: 2600,
+        precio: 1820,
+        descuentoPct: 30,
+        rating: 4.9,
+        reviews: 64,
+        tallas: ['S', 'M', 'L', 'XL'],
+        colores: [
+          { nombre: 'Verde Caqui', hex: '#4B5563', img: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=700&q=80' },
+          { nombre: 'Negro', hex: '#000000', img: 'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 206,
+        nombre: 'Set Deportivo Dry-Flex Pro',
+        tipo: 'superior',
+        categoria: 'deportiva',
+        categoriaLabel: 'DEPORTIVA',
+        precioOriginal: 2900,
+        precio: 1885,
+        descuentoPct: 35,
+        rating: 4.8,
+        reviews: 37,
+        tallas: ['S', 'M', 'L', 'XL'],
+        colores: [
+          { nombre: 'Gris Grafito', hex: '#374151', img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 207,
+        nombre: 'Vestido Casual Floral Breeze',
+        tipo: 'superior',
+        categoria: 'casual',
+        categoriaLabel: 'CASUAL',
+        precioOriginal: 2100,
+        precio: 1470,
+        descuentoPct: 30,
+        rating: 4.9,
+        reviews: 51,
+        tallas: ['S', 'M', 'L'],
+        colores: [
+          { nombre: 'Amarillo Sol', hex: '#F59E0B', img: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 208,
+        nombre: 'Camiseta Oversized Acid Wash',
+        tipo: 'superior',
+        categoria: 'streetwear',
+        categoriaLabel: 'STREETWEAR',
+        precioOriginal: 1400,
+        precio: 910,
+        descuentoPct: 35,
+        rating: 4.7,
+        reviews: 29,
+        tallas: ['M', 'L', 'XL'],
+        colores: [
+          { nombre: 'Gris Lavado', hex: '#6B7280', img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 209,
+        nombre: 'Chaqueta Cortavientos Sport Running',
+        tipo: 'superior',
+        categoria: 'deportiva',
+        categoriaLabel: 'DEPORTIVA',
+        precioOriginal: 2500,
+        precio: 1625,
+        descuentoPct: 35,
+        rating: 4.8,
+        reviews: 44,
+        tallas: ['S', 'M', 'L', 'XL'],
+        colores: [
+          { nombre: 'Azul Electric', hex: '#2563EB', img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=700&q=80' }
+        ]
+      }
+    ];
 
-      // --- ROPA DE NIÑOS Y NIÑAS ---
+    // 8 PRENDAS EN TENDENCIA 100% NUEVAS, DIFERENTES Y CON IMÁGENES ÚNICAS
+    const tendenciasEspeciales = [
+      {
+        id: 301,
+        nombre: 'Gorra Snapback Cyber Nova',
+        tipo: 'superior',
+        categoria: 'streetwear',
+        categoriaLabel: 'EXCLUSIVO TENDENCIA',
+        precio: 850,
+        rating: 4.9,
+        reviews: 38,
+        tallas: ['Única'],
+        colores: [
+          { nombre: 'Negro / Naranja', hex: '#f97316', img: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 302,
+        nombre: 'Lentes de Sol Aviator Tech Gold',
+        tipo: 'superior',
+        categoria: 'casual',
+        categoriaLabel: 'EXCLUSIVO TENDENCIA',
+        precio: 1350,
+        rating: 5.0,
+        reviews: 42,
+        tallas: ['Única'],
+        colores: [
+          { nombre: 'Oro / Oscuro', hex: '#eab308', img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 303,
+        nombre: 'Camisa Lino Estilo Resort',
+        tipo: 'superior',
+        categoria: 'casual',
+        categoriaLabel: 'EXCLUSIVO TENDENCIA',
+        precio: 1950,
+        rating: 4.8,
+        reviews: 29,
+        tallas: ['S', 'M', 'L', 'XL'],
+        colores: [
+          { nombre: 'Blanco Lino', hex: '#f8fafc', img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 304,
+        nombre: 'Pantalón Chino Slim Luxury',
+        tipo: 'pantalon',
+        categoria: 'casual',
+        categoriaLabel: 'EXCLUSIVO TENDENCIA',
+        precio: 2100,
+        rating: 4.9,
+        reviews: 55,
+        tallas: ['S', 'M', 'L', 'XL'],
+        colores: [
+          { nombre: 'Azul Marino', hex: '#071A42', img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 305,
+        nombre: 'Mochila Urbana Minimalist Pro',
+        tipo: 'superior',
+        categoria: 'streetwear',
+        categoriaLabel: 'EXCLUSIVO TENDENCIA',
+        precio: 2600,
+        rating: 4.9,
+        reviews: 64,
+        tallas: ['Única'],
+        colores: [
+          { nombre: 'Gris Grafito', hex: '#475569', img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 306,
+        nombre: 'Botines Chelsea Urban Leather',
+        tipo: 'calzado',
+        categoria: 'calzado',
+        categoriaLabel: 'EXCLUSIVO TENDENCIA',
+        precio: 4500,
+        rating: 4.9,
+        reviews: 49,
+        tallas: ['39', '40', '41', '42'],
+        colores: [
+          { nombre: 'Café Cuero', hex: '#78350f', img: 'https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 307,
+        nombre: 'Chaqueta Bomber Aviator Classic',
+        tipo: 'superior',
+        categoria: 'streetwear',
+        categoriaLabel: 'EXCLUSIVO TENDENCIA',
+        precio: 3400,
+        rating: 4.8,
+        reviews: 31,
+        tallas: ['M', 'L', 'XL'],
+        colores: [
+          { nombre: 'Verde Militar', hex: '#365314', img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=700&q=80' }
+        ]
+      },
+      {
+        id: 308,
+        nombre: 'Cangurera Riñonera Sport Reflex',
+        tipo: 'superior',
+        categoria: 'deportiva',
+        categoriaLabel: 'EXCLUSIVO TENDENCIA',
+        precio: 1100,
+        rating: 4.7,
+        reviews: 24,
+        tallas: ['Única'],
+        colores: [
+          { nombre: 'Negro Reflectivo', hex: '#000000', img: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=700&q=80' }
+        ]
+      }
+    ];
+
+    const productos = [
       {
         id: 101,
         nombre: 'Conjunto Deportivo Niños Active',
@@ -426,8 +752,6 @@
           { nombre: 'Azul', hex: '#2563EB', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=700&q=80' }
         ]
       },
-
-      // --- ROPA DE ADULTOS ---
       {
         id: 1,
         nombre: 'Camiseta Essential Basic Cotton',
@@ -571,6 +895,7 @@
         'M': 'Pecho: 96-100 cm | Cintura: 82-86 cm | Largo: 71 cm',
         'L': 'Pecho: 104-108 cm | Cintura: 90-94 cm | Largo: 74 cm',
         'XL': 'Pecho: 112-116 cm | Cintura: 98-102 cm | Largo: 77 cm',
+        'Única': 'Ajuste estándar adaptable para cualquier silueta.',
         '4Y': 'Pecho: 56 cm | Longitud: 42 cm | Edad sugerida: 3-4 Años',
         '6Y': 'Pecho: 60 cm | Longitud: 46 cm | Edad sugerida: 5-6 Años',
         '8Y': 'Pecho: 64 cm | Longitud: 50 cm | Edad sugerida: 7-8 Años',
@@ -603,26 +928,111 @@
     let tallaSeleccionada = null;
 
     document.addEventListener('DOMContentLoaded', () => {
+      renderOfertas();
+      renderTendencias();
       renderProducts('all');
       actualizarCarritoUI();
     });
+
+    function renderOfertas() {
+      const ofertasGrid = document.getElementById('ofertasGrid');
+      if (!ofertasGrid) return;
+      ofertasGrid.innerHTML = '';
+
+      ofertasEspeciales.forEach(prod => {
+        const card = document.createElement('article');
+        card.className = 'bg-white rounded-3xl border-2 border-red-100 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden group flex flex-col justify-between relative';
+
+        card.innerHTML = `
+          <div>
+            <div class="absolute top-4 left-4 z-20 bg-red-600 text-white font-black text-xs px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-1 animate-badge">
+              <i class="fa-solid fa-fire text-amber-300"></i> -${prod.descuentoPct}% OFF
+            </div>
+
+            <div class="relative overflow-hidden aspect-square bg-slate-100 cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'oferta')">
+              <img src="${prod.colores[0].img}" alt="${prod.nombre}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+
+            <div class="p-5">
+              <div class="flex justify-between items-center text-xs mb-1">
+                <span class="text-red-600 font-black tracking-wider uppercase">${prod.categoriaLabel}</span>
+                <span class="text-amber-500 font-bold">★ ${prod.rating} (${prod.reviews})</span>
+              </div>
+              <h3 onclick="abrirDetalleCompleto(${prod.id}, 'oferta')" class="text-base font-bold text-nova group-hover:text-red-600 transition-colors line-clamp-1 cursor-pointer">${prod.nombre}</h3>
+
+              <div class="flex items-baseline gap-2.5 mt-3">
+                <span class="text-2xl font-black text-red-600">RD$ ${prod.precio.toLocaleString('es-DO')}</span>
+                <span class="text-xs text-slate-400 line-through font-bold">RD$ ${prod.precioOriginal.toLocaleString('es-DO')}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-5 pb-5 pt-0">
+            <button onclick="abrirDetalleCompleto(${prod.id}, 'oferta')" class="w-full bg-red-600 hover:bg-red-700 text-white rounded-xl py-3 font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-red-600/20">
+              <i class="fa-solid fa-tag"></i> Ver Oferta y Comprar
+            </button>
+          </div>
+        `;
+        ofertasGrid.appendChild(card);
+      });
+    }
+
+    // Renderizar Tendencias (Con imágenes 100% únicas y exclusivas)
+    function renderTendencias() {
+      const tendenciasGrid = document.getElementById('tendenciasGrid');
+      if (!tendenciasGrid) return;
+      tendenciasGrid.innerHTML = '';
+
+      tendenciasEspeciales.forEach(prod => {
+        const card = document.createElement('article');
+        card.className = 'bg-white rounded-3xl border border-blue-100 shadow-sm hover:shadow-2xl hover:border-electric transition-all duration-300 overflow-hidden group flex flex-col justify-between relative';
+
+        card.innerHTML = `
+          <div>
+            <div class="absolute top-4 left-4 z-20 bg-electric text-white font-black text-[10px] px-3 py-1 rounded-xl shadow-lg flex items-center gap-1 uppercase tracking-wider animate-badge">
+              <i class="fa-solid fa-bolt text-amber-300"></i> ${prod.categoriaLabel}
+            </div>
+
+            <div class="relative overflow-hidden aspect-square bg-slate-100 cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'tendencia')">
+              <img src="${prod.colores[0].img}" alt="${prod.nombre}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+
+            <div class="p-5">
+              <div class="flex justify-between items-center text-xs mb-1">
+                <span class="text-electric font-black tracking-wider uppercase">TENDENCIA</span>
+                <span class="text-amber-500 font-bold">★ ${prod.rating} (${prod.reviews})</span>
+              </div>
+              <h3 onclick="abrirDetalleCompleto(${prod.id}, 'tendencia')" class="text-base font-bold text-slate-800 group-hover:text-electric transition-colors line-clamp-1 cursor-pointer">${prod.nombre}</h3>
+              <p class="text-xl font-black text-nova mt-2">RD$ ${prod.precio.toLocaleString('es-DO')}</p>
+            </div>
+          </div>
+
+          <div class="px-5 pb-5 pt-0">
+            <button onclick="abrirDetalleCompleto(${prod.id}, 'tendencia')" class="w-full bg-nova hover:bg-electric text-white rounded-xl py-3 font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-sm">
+              <i class="fa-solid fa-fire"></i> Ver Tendencia Exclusiva
+            </button>
+          </div>
+        `;
+        tendenciasGrid.appendChild(card);
+      });
+    }
 
     function renderProducts(categoria, event = null) {
       currentCategory = categoria;
       const grid = document.getElementById('productsGrid');
       grid.innerHTML = '';
 
-      let filtrados = categoria === 'all' 
-        ? productos 
+      let filtrados = categoria === 'all'
+        ? productos
         : productos.filter(p => p.categoria === categoria);
 
       filtrados.forEach(prod => {
         const card = document.createElement('article');
         card.className = 'bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col justify-between';
-        
+
         card.innerHTML = `
           <div>
-            <div class="relative overflow-hidden aspect-square bg-slate-100 cursor-pointer" onclick="abrirDetalleCompleto(${prod.id})">
+            <div class="relative overflow-hidden aspect-square bg-slate-100 cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')">
               <img src="${prod.colores[0].img}" alt="${prod.nombre}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
             <div class="p-5">
@@ -630,19 +1040,18 @@
                 <span class="text-electric font-black">${prod.categoriaLabel}</span>
                 <span class="text-amber-500 font-bold">★ ${prod.rating} (${prod.reviews})</span>
               </div>
-              <h3 onclick="abrirDetalleCompleto(${prod.id})" class="text-base font-bold text-slate-800 group-hover:text-electric transition-colors line-clamp-1 cursor-pointer">${prod.nombre}</h3>
+              <h3 onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')" class="text-base font-bold text-slate-800 group-hover:text-electric transition-colors line-clamp-1 cursor-pointer">${prod.nombre}</h3>
               <p class="text-xl font-black text-nova mt-2">RD$ ${prod.precio.toLocaleString('es-DO')}</p>
             </div>
           </div>
           <div class="px-5 pb-5 pt-0">
-            <button onclick="abrirDetalleCompleto(${prod.id})" class="w-full bg-slate-100 hover:bg-electric hover:text-white text-slate-800 rounded-xl py-3 font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-sm">
+            <button onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')" class="w-full bg-slate-100 hover:bg-electric hover:text-white text-slate-800 rounded-xl py-3 font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-sm">
               <i class="fa-solid fa-eye"></i> Ver Detalle Completo
             </button>
           </div>
         `;
         grid.appendChild(card);
       });
-
 
       if (event && event.target) {
         document.querySelectorAll('#filterButtons button').forEach(btn => {
@@ -655,45 +1064,48 @@
           clickedBtn.classList.add(categoria === 'ninos' ? 'bg-amber-500' : 'bg-nova', 'text-white', 'shadow-sm');
         }
       }
-
-      const buttons = document.querySelectorAll('#filterButtons button');
-      buttons.forEach(btn => {
-        const isActive = btn.dataset.category === categoria;
-        btn.classList.toggle('bg-nova', isActive);
-        btn.classList.toggle('text-white', isActive);
-        btn.classList.toggle('shadow-sm', isActive);
-        btn.classList.toggle('bg-slate-200', !isActive);
-        btn.classList.toggle('text-slate-700', !isActive);
-        btn.classList.toggle('active', isActive);
-      });
-
     }
 
-    function abrirDetalleCompleto(id) {
-      const prod = productos.find(p => p.id === id);
+    function abrirDetalleCompleto(id, tipoOrigen) {
+      let lista = productos;
+      if (tipoOrigen === 'oferta') lista = ofertasEspeciales;
+      if (tipoOrigen === 'tendencia') lista = tendenciasEspeciales;
+
+      const prod = lista.find(p => p.id === id);
       if (!prod) return;
 
       productoSeleccionado = prod;
       colorSeleccionado = prod.colores[0];
       tallaSeleccionada = prod.tallas[0];
 
-      // Cambiar de la vista de catálogo a la pantalla completa de detalle
       document.getElementById('vistaPrincipal').classList.add('hidden');
       document.getElementById('vistaDetalle').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // Cargar datos
       document.getElementById('detalleCategoria').textContent = prod.categoriaLabel;
       document.getElementById('detalleTitulo').textContent = prod.nombre;
       document.getElementById('detalleRating').textContent = prod.rating;
       document.getElementById('detalleReviews').textContent = prod.reviews;
       document.getElementById('detallePrecio').textContent = 'RD$ ' + prod.precio.toLocaleString('es-DO');
+
+      const elemOriginal = document.getElementById('detallePrecioOriginal');
+      const elemBadge = document.getElementById('detalleBadgeOferta');
+
+      if (prod.precioOriginal) {
+        elemOriginal.textContent = 'RD$ ' + prod.precioOriginal.toLocaleString('es-DO');
+        elemOriginal.classList.remove('hidden');
+        elemBadge.textContent = `-${prod.descuentoPct}% OFF`;
+        elemBadge.classList.remove('hidden');
+      } else {
+        elemOriginal.classList.add('hidden');
+        elemBadge.classList.add('hidden');
+      }
+
       document.getElementById('detalleImg').src = colorSeleccionado.img;
       document.getElementById('detalleColorNombre').textContent = colorSeleccionado.nombre;
       document.getElementById('tallaActivaLabel').textContent = tallaSeleccionada;
       document.getElementById('guiaMedidasTexto').textContent = guiaMedidasData[prod.tipo][tallaSeleccionada];
 
-      // Renderizar Botones de Color
       const coloresContainer = document.getElementById('detalleColoresContainer');
       coloresContainer.innerHTML = prod.colores.map((c, i) => `
         <button onclick="seleccionarColorDetalle(${i})" class="color-btn-det w-10 h-10 rounded-full border-2 transition-all flex items-center justify-center ${i === 0 ? 'border-electric scale-110 shadow-md' : 'border-slate-300'}" style="background-color: ${c.hex};" title="${c.nombre}">
@@ -701,7 +1113,6 @@
         </button>
       `).join('');
 
-      // Renderizar Botones de Talla
       const tallasContainer = document.getElementById('detalleTallasContainer');
       tallasContainer.innerHTML = prod.tallas.map((t, i) => `
         <button onclick="seleccionarTallaDetalle('${t}', this)" class="talla-btn-det px-5 py-2.5 rounded-xl border-2 text-xs font-black transition-all ${i === 0 ? 'border-electric bg-blue-50 text-electric shadow-sm' : 'border-slate-200 text-slate-700 hover:border-slate-300'}">
@@ -832,9 +1243,8 @@
       const grid = document.getElementById('productsGrid');
       grid.innerHTML = '';
 
-
-      const filtrados = productos.filter(p => 
-        p.nombre.toLowerCase().includes(query) || 
+      const filtrados = productos.filter(p =>
+        p.nombre.toLowerCase().includes(query) ||
         p.categoriaLabel.toLowerCase().includes(query)
       );
 
@@ -847,28 +1257,31 @@
         const card = document.createElement('article');
         card.className = 'bg-white rounded-3xl border border-slate-100 shadow-sm p-4';
         card.innerHTML = `
-          <img src="${prod.colores[0].img}" class="w-full h-48 object-cover rounded-2xl cursor-pointer" onclick="abrirDetalleCompleto(${prod.id})">
-          <h3 class="font-bold text-sm mt-3 cursor-pointer" onclick="abrirDetalleCompleto(${prod.id})">${prod.nombre}</h3>
+          <img src="${prod.colores[0].img}" class="w-full h-48 object-cover rounded-2xl cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')">
+          <h3 class="font-bold text-sm mt-3 cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')">${prod.nombre}</h3>
           <p class="font-black text-electric mt-1">RD$ ${prod.precio.toLocaleString('es-DO')}</p>
-          <button onclick="abrirDetalleCompleto(${prod.id})" class="w-full bg-slate-100 hover:bg-electric hover:text-white font-bold py-2 rounded-xl text-xs mt-3">Ver Detalle Completo</button>
+          <button onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')" class="w-full bg-slate-100 hover:bg-electric hover:text-white font-bold py-2 rounded-xl text-xs mt-3">Ver Detalle Completo</button>
         `;
         grid.appendChild(card);
       });
     }
-
-    function filterCategory(cat) {
-      // Filtra el catálogo por la categoría seleccionada desde las tarjetas.
-      const searchInput = document.getElementById('searchInput');
-      if (searchInput) searchInput.value = '';
-
-      renderProducts(cat, '');
-
-      const catalogo = document.getElementById('catalogo');
-      if (catalogo) {
-        catalogo.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-
-    }
   </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slides = document.querySelectorAll('#inicioCarrusel .inicio-slide');
+      if (slides.length < 2) return;
+
+      let slideActual = 0;
+      window.setInterval(() => {
+        slides[slideActual].classList.remove('opacity-100');
+        slides[slideActual].classList.add('opacity-0');
+        slideActual = (slideActual + 1) % slides.length;
+        slides[slideActual].classList.remove('opacity-0');
+        slides[slideActual].classList.add('opacity-100');
+      }, 5000);
+    });
+  </script>
+
 </body>
 </html>

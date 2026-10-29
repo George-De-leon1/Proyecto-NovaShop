@@ -280,7 +280,7 @@
 
   <!-- Script JavaScript -->
   <script>
-    let descuentoAplicado = 0;
+    window.descuentoAplicado = 0;
 
     // Datos simulados de pedidos realizados (Pagados)
     const misPedidosData = [
@@ -742,7 +742,7 @@
 
   <!-- Script JavaScript -->
   <script>
-    let descuentoAplicado = 0;
+    window.descuentoAplicado = 0;
 
     function mostrar() {
       const carrito = JSON.parse(localStorage.getItem('novashop') || '[]');
