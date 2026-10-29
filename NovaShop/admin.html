@@ -3,417 +3,1354 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panel de Administración | NovaShop</title>
+  <title>NovaShop | Panel de Administración Enterprise</title>
+  
+  <!-- Tailwind CSS v3 CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            nova: '#071A42',
-            electric: '#2563EB',
-            'nova-dark': '#040f28',
-            'electric-hover': '#1d4ed8'
+            nova: {
+              50: '#f0f4fd',
+              100: '#e1e9fb',
+              200: '#c7d7f8',
+              500: '#2563eb',
+              700: '#1d4ed8',
+              800: '#071A42',
+              900: '#040F28',
+              card: '#0B2256',
+            },
+            electric: {
+              DEFAULT: '#3B82F6',
+              glow: 'rgba(59, 130, 246, 0.4)',
+              accent: '#60A5FA'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
+          },
+          animation: {
+            'pulse-subtle': 'pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'bounce-short': 'bounce 1s ease-in-out 1'
           }
         }
       }
     }
   </script>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 Pro CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-slate-100 text-slate-900 font-sans antialiased min-h-screen flex flex-col md:flex-row">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Sidebar Lateral Fijo -->
-  <aside class="w-full md:w-64 bg-nova text-white p-6 flex flex-col justify-between shrink-0 shadow-2xl md:min-h-screen z-30">
-    <div>
-      <!-- Brand Logo -->
-      <a href="index.html" class="flex items-center gap-2">
-    <img src="img/logo..png"
-         alt="Logo de NovaShop"
-         class="w-10 h-10 object-contain">
-
-    <span class="text-3xl font-black text-nova tracking-tight">
-        Nova<span class="text-electric">Shop</span>
-    </span>
-</a>
-
-      <span class="bg-white/10 text-blue-200 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider block w-fit mb-8 border border-white/10">
-        Panel Administrativo
-      </span>
-
-      <!-- Navegación Dashboard -->
-      <nav class="space-y-1.5 font-bold text-sm">
-        <a href="#resumen" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-electric text-white shadow-lg shadow-electric/20 transition-all">
-          <i class="fa-solid fa-chart-pie text-base"></i> Resumen
-        </a>
-        <a href="#productos" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-all">
-          <i class="fa-solid fa-shirt text-base"></i> Productos
-        </a>
-        <a href="#pedidos" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-all">
-          <i class="fa-solid fa-cart-flatbed text-base"></i> Pedidos
-        </a>
-        <a href="#clientes" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-white/10 hover:text-white transition-all">
-          <i class="fa-solid fa-users text-base"></i> Clientes
-        </a>
-      </nav>
-    </div>
-
-    <!-- Enlace Volver a la Tienda -->
-    <div class="pt-6 border-t border-white/10 mt-6 md:mt-0">
-      <a href="index.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-bold transition-all border border-white/5">
-        <span class="flex items-center gap-2"><i class="fa-solid fa-store"></i> Ver tienda online</span>
-        <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
-      </a>
-    </div>
-  </aside>
-
-  <!-- Área de Contenido Principal -->
-  <main class="flex-grow p-4 sm:p-8 md:p-10 max-w-7xl mx-auto w-full overflow-x-hidden">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
     
-    <!-- Top Header del Dashboard -->
-    <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 mb-8 border-b border-slate-200">
-      <div>
-        <h1 id="resumen" class="text-3xl font-black text-nova tracking-tight">Dashboard</h1>
-        <p class="text-slate-500 text-sm mt-0.5">Resumen general y analítica de ventas de NovaShop.</p>
-      </div>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #334155;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
 
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2 bg-white px-3.5 py-2 rounded-xl shadow-sm border border-slate-200 text-xs font-bold text-slate-600">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>Servidor Activo</span>
-        </div>
-        <div class="w-10 h-10 rounded-xl bg-nova text-white flex items-center justify-center font-bold text-sm shadow-md">
-          AD
-        </div>
-      </div>
-    </header>
+    /* Glassmorphism Styles */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+    .dark .glass-panel {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(30, 41, 59, 0.8);
+    }
 
-    <!-- Cards de Métricas Principales -->
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      
-      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Ventas Totales</span>
-          <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg font-bold">
-            <i class="fa-solid fa-sack-dollar"></i>
+    .glass-nav {
+      background: rgba(7, 26, 66, 0.95);
+      backdrop-filter: blur(12px);
+    }
+    
+    .fade-in-up {
+      animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Custom Toggle Switch Styling */
+    .toggle-checkbox:checked {
+      right: 0;
+      border-color: #10B981;
+    }
+    .toggle-checkbox:checked + .toggle-label {
+      background-color: #10B981;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased min-h-screen flex flex-col md:flex-row transition-colors duration-300">
+
+  <!-- BACKDROP FOR MOBILE SIDEBAR -->
+  <div id="sidebarBackdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden md:hidden transition-opacity"></div>
+
+  <!-- ==================== SIDEBAR LATERAL ==================== -->
+  <aside id="sidebar" class="fixed md:static inset-y-0 left-0 w-72 bg-nova-800 dark:bg-slate-900 text-white p-5 flex flex-col justify-between shrink-0 shadow-2xl z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out border-r border-slate-800/50">
+    <div>
+      <!-- Brand & Header -->
+      <div class="flex items-center justify-between mb-8 px-2">
+        <a href="#" class="flex items-center gap-3.5 group">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-electric to-indigo-500 flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
+            N
           </div>
-        </div>
-        <div class="mt-4">
-          <h2 class="text-3xl font-black text-nova">RD$ 48,250</h2>
-          <p class="text-xs text-emerald-600 font-bold mt-1 flex items-center gap-1">
-            <i class="fa-solid fa-arrow-trend-up"></i> +12.5% este mes
-          </p>
-        </div>
-      </article>
-
-      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pedidos</span>
-          <div class="w-10 h-10 rounded-2xl bg-blue-50 text-electric flex items-center justify-center text-lg font-bold">
-            <i class="fa-solid fa-boxes-packing"></i>
+          <div>
+            <span class="text-2xl font-black tracking-tight text-white block leading-none">
+              Nova<span class="text-electric">Shop</span>
+            </span>
+            <span class="text-[10px] text-blue-300/70 font-bold tracking-widest uppercase mt-1 block">Enterprise Admin</span>
           </div>
-        </div>
-        <div class="mt-4">
-          <h2 class="text-3xl font-black text-nova" id="totalOrdersCount">24</h2>
-          <p class="text-xs text-slate-500 font-medium mt-1">4 pendientes por enviar</p>
-        </div>
-      </article>
-
-      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Productos</span>
-          <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-lg font-bold">
-            <i class="fa-solid fa-shirt"></i>
-          </div>
-        </div>
-        <div class="mt-4">
-          <h2 class="text-3xl font-black text-nova" id="totalProductsCount">8</h2>
-          <p class="text-xs text-slate-500 font-medium mt-1">4 categorías activas</p>
-        </div>
-      </article>
-
-      <article class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Clientes Registrados</span>
-          <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg font-bold">
-            <i class="fa-solid fa-users"></i>
-          </div>
-        </div>
-        <div class="mt-4">
-          <h2 class="text-3xl font-black text-nova">18</h2>
-          <p class="text-xs text-emerald-600 font-bold mt-1 flex items-center gap-1">
-            <i class="fa-solid fa-user-plus"></i> +3 esta semana
-          </p>
-        </div>
-      </article>
-
-    </div>
-
-    <!-- Sección de Gestión de Productos -->
-    <section id="productos" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 mt-8">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
-        <div>
-          <h2 class="text-2xl font-black text-nova">Gestión de Productos</h2>
-          <p class="text-xs text-slate-500 mt-1">Añade o administra el inventario de la tienda.</p>
-        </div>
-        <button onclick="toggleFormulario()" class="bg-electric hover:bg-electric-hover text-white px-5 py-3 rounded-xl font-bold text-xs shadow-lg shadow-electric/20 transition-all flex items-center justify-center gap-2 w-fit">
-          <i class="fa-solid fa-plus"></i>
-          <span>Agregar Producto</span>
+        </a>
+        <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-400 hover:text-white text-xl">
+          <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
-      <!-- Formulario para agregar producto -->
-      <form id="formulario" class="hidden bg-slate-50 p-6 rounded-2xl border border-slate-200 mt-6 space-y-4" onsubmit="guardarNuevoProducto(event)">
-        <h3 class="font-black text-nova text-sm uppercase tracking-wider mb-2">Nuevo Producto</h3>
-        <div class="grid sm:grid-cols-3 gap-4">
+      <!-- Quick Server Status Badge -->
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-3 mb-6 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="relative flex h-3 w-3">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+          </span>
           <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nombre</label>
-            <input id="prodNombre" required placeholder="Ej. Chaqueta Varsity Nova" class="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-electric">
+            <p class="text-xs font-bold text-white leading-tight">Servidor Online</p>
+            <p class="text-[10px] text-slate-400">v3.8.4 • San Pedro de Macoris </p>
           </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Precio (RD$)</label>
-            <input id="prodPrecio" required type="number" placeholder="1500" class="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-electric">
+        </div>
+        <i class="fa-solid fa-cloud-check text-slate-400 text-xs"></i>
+      </div>
+
+      <!-- Menú de Navegación por Pestañas -->
+      <nav class="space-y-1.5 font-semibold text-sm">
+        <button onclick="switchTab('resumen')" id="nav-resumen" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl bg-electric text-white shadow-lg shadow-blue-600/30 transition-all text-left group">
+          <i class="fa-solid fa-chart-pie text-base w-5 text-center group-hover:scale-110 transition-transform"></i>
+          <span>Dashboard</span>
+        </button>
+        <button onclick="switchTab('productos')" id="nav-productos" class="nav-btn w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition-all text-left group">
+          <span class="flex items-center gap-3.5">
+            <i class="fa-solid fa-boxes-stacked text-base w-5 text-center group-hover:scale-110 transition-transform"></i>
+            <span>Inventario</span>
+          </span>
+          <span id="badgeLowStock" class="bg-amber-500/20 text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-500/30 hidden">0</span>
+        </button>
+        <button onclick="switchTab('pedidos')" id="nav-pedidos" class="nav-btn w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition-all text-left group">
+          <span class="flex items-center gap-3.5">
+            <i class="fa-solid fa-bag-shopping text-base w-5 text-center group-hover:scale-110 transition-transform"></i>
+            <span>Pedidos</span>
+          </span>
+          <span id="badgePendingOrders" class="bg-blue-500/20 text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-500/30">0</span>
+        </button>
+        <button onclick="switchTab('clientes')" id="nav-clientes" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition-all text-left group">
+          <i class="fa-solid fa-users text-base w-5 text-center group-hover:scale-110 transition-transform"></i>
+          <span>Clientes</span>
+        </button>
+        <button onclick="switchTab('reportes')" id="nav-reportes" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition-all text-left group">
+          <i class="fa-solid fa-chart-line text-base w-5 text-center group-hover:scale-110 transition-transform"></i>
+          <span>Reportes & Analytics</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Footer Sidebar: Utilidades & Reset -->
+    <div class="pt-6 border-t border-white/10 space-y-3">
+      <button onclick="exportarBackupJSON()" class="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all border border-white/5">
+        <span class="flex items-center gap-2"><i class="fa-solid fa-download text-electric"></i> Backup Sistema</span>
+        <span class="text-[10px] bg-white/10 px-1.5 py-0.5 rounded">JSON</span>
+      </button>
+      <button onclick="restablecerDatos()" class="w-full flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-rose-400 hover:bg-rose-500/10 transition-all">
+        <i class="fa-solid fa-rotate-left"></i> Restablecer Data Demo
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==================== ÁREA PRINCIPAL DE CONTENIDO ==================== -->
+  <main class="flex-grow p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full overflow-x-hidden flex flex-col justify-between">
+    <div>
+      <!-- TOP HEADER (Buscador Global, Dark Mode Toggle & Perfil Admin) -->
+      <header class="glass-panel p-4 rounded-3xl mb-8 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <button onclick="toggleMobileSidebar()" class="md:hidden w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+          <!-- Buscador Global -->
+          <div class="relative w-full sm:w-80 lg:w-96">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+            <input type="text" id="globalSearchInput" onkeyup="handleGlobalSearch(event)" placeholder="Buscar productos, órdenes o clientes (Press Enter)..." class="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-transparent focus:border-electric text-xs sm:text-sm focus:outline-none transition-all">
           </div>
+        </div>
+
+        <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+          <!-- Dark Mode Toggle Button -->
+          <button onclick="toggleDarkMode()" id="darkModeBtn" class="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-amber-400 flex items-center justify-center hover:scale-105 transition-all shadow-sm" title="Cambiar Tema">
+            <i class="fa-solid fa-moon text-lg dark:hidden"></i>
+            <i class="fa-solid fa-sun text-lg hidden dark:block"></i>
+          </button>
+
+          <!-- Dropdown Notificaciones -->
+          <div class="relative">
+            <button onclick="toggleNotifications()" class="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 flex items-center justify-center hover:scale-105 transition-all shadow-sm relative">
+              <i class="fa-solid fa-bell"></i>
+              <span id="notifBadge" class="absolute top-2 right-2 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-white dark:ring-slate-900"></span>
+            </button>
+
+            <div id="notifDropdown" class="hidden absolute right-0 mt-3 w-80 sm:w-96 bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 z-50 p-4 fade-in-up">
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
+                <span class="font-bold text-sm text-slate-800 dark:text-white">Notificaciones de la Tienda</span>
+                <span class="text-[10px] bg-electric/10 text-electric font-bold px-2 py-0.5 rounded-full">Al día</span>
+              </div>
+              <div id="notifList" class="space-y-3 max-h-64 overflow-y-auto">
+                <!-- Se poblará por JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Badge -->
+          <div class="flex items-center gap-3 pl-3 border-l border-slate-200 dark:border-slate-800">
+            <div class="text-right hidden lg:block">
+              <p class="text-xs font-bold text-slate-800 dark:text-white leading-tight">Admin NovaShop</p>
+              <p class="text-[10px] text-slate-400 font-medium">Director General</p>
+            </div>
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-nova-800 to-electric text-white font-black flex items-center justify-center text-xs shadow-md ring-2 ring-electric/30">
+              AD
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ================= TAB 1: RESUMEN GENERAL (DASHBOARD) ================= -->
+      <div id="tab-resumen" class="tab-content space-y-8 fade-in-up">
+        <!-- Header Top Dashboard & Date Range Filter -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Categoría</label>
-            <select id="prodCategoria" class="w-full bg-white border border-slate-200 rounded-xl p-3 text-sm focus:outline-none focus:border-electric font-medium">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Panel de Control General</h1>
+            <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">Resumen en tiempo real y métricas financieras de NovaShop.</p>
+          </div>
+          <!-- Time Range Selector -->
+          <div class="flex items-center gap-2 bg-slate-200/60 dark:bg-slate-800/60 p-1.5 rounded-2xl self-start sm:self-auto">
+            <button onclick="setFilterPeriod('hoy')" id="btnPeriodHoy" class="period-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 transition-all">Hoy</button>
+            <button onclick="setFilterPeriod('semana')" id="btnPeriodSemana" class="period-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 transition-all">Semana</button>
+            <button onclick="setFilterPeriod('mes')" id="btnPeriodMes" class="period-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-slate-700 text-electric dark:text-white shadow-sm transition-all">Este Mes</button>
+            <button onclick="setFilterPeriod('anio')" id="btnPeriodAnio" class="period-btn px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 transition-all">Año</button>
+          </div>
+        </div>
+
+        <!-- Cards KPIs Principales -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- KPI Ventas Totales -->
+          <article class="glass-panel p-6 rounded-3xl shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Ventas Totales</span>
+              <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xl font-bold">
+                <i class="fa-solid fa-sack-dollar"></i>
+              </div>
+            </div>
+            <div class="mt-4">
+              <h2 id="kpiTotalSales" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">RD$ 0</h2>
+              <p id="kpiSalesGrowth" class="text-xs text-emerald-600 dark:text-emerald-400 font-bold mt-1.5 flex items-center gap-1">
+                <i class="fa-solid fa-arrow-trend-up"></i> +16.4% comparado al periodo anterior
+              </p>
+            </div>
+          </article>
+
+          <!-- KPI Pedidos Registrados -->
+          <article class="glass-panel p-6 rounded-3xl shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Pedidos</span>
+              <div class="w-11 h-11 rounded-2xl bg-blue-500/10 text-electric flex items-center justify-center text-xl font-bold">
+                <i class="fa-solid fa-boxes-packing"></i>
+              </div>
+            </div>
+            <div class="mt-4">
+              <h2 id="kpiTotalOrders" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">0</h2>
+              <p id="kpiPendingSubtext" class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1.5">0 en procesamiento</p>
+            </div>
+          </article>
+
+          <!-- KPI Inventario Activo & Alertas -->
+          <article class="glass-panel p-6 rounded-3xl shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Productos en Catálogo</span>
+              <div class="w-11 h-11 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center text-xl font-bold">
+                <i class="fa-solid fa-shirt"></i>
+              </div>
+            </div>
+            <div class="mt-4">
+              <h2 id="kpiTotalProducts" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">0</h2>
+              <p id="kpiLowStockSubtext" class="text-xs text-amber-600 dark:text-amber-400 font-bold mt-1.5 flex items-center gap-1">
+                <i class="fa-solid fa-triangle-exclamation"></i> 0 alertados con stock crítico
+              </p>
+            </div>
+          </article>
+
+          <!-- KPI Clientes -->
+          <article class="glass-panel p-6 rounded-3xl shadow-sm hover:shadow-md transition-all">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Clientes Registrados</span>
+              <div class="w-11 h-11 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl font-bold">
+                <i class="fa-solid fa-users"></i>
+              </div>
+            </div>
+            <div class="mt-4">
+              <h2 id="kpiTotalCustomers" class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">0</h2>
+              <p class="text-xs text-emerald-600 dark:text-emerald-400 font-bold mt-1.5 flex items-center gap-1">
+                <i class="fa-solid fa-user-check"></i> 98% de satisfacción general
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <!-- Secciones de Gráficos e Historial -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Chart Principal: Ventas Mensuales -->
+          <div class="lg:col-span-2 glass-panel p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="font-extrabold text-slate-900 dark:text-white text-lg">Curva de Ingresos (RD$)</h3>
+                <p class="text-xs text-slate-400">Desempeño acumulado proyectado</p>
+              </div>
+              <span class="text-xs font-bold text-electric bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">Actualizado Hoy</span>
+            </div>
+            <div class="h-64 sm:h-72 w-full">
+              <canvas id="chartVentas"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart Secundario: Categorías -->
+          <div class="glass-panel p-6 rounded-3xl shadow-sm flex flex-col justify-between">
+            <div class="mb-4">
+              <h3 class="font-extrabold text-slate-900 dark:text-white text-lg">Distribución por Categorías</h3>
+              <p class="text-xs text-slate-400">Porcentaje de inventario activo</p>
+            </div>
+            <div class="h-56 w-full flex items-center justify-center">
+              <canvas id="chartCategorias"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fila Inferior: Pedidos Recientes y Top Productos -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Tabla Resumen Pedidos Recientes -->
+          <div class="lg:col-span-2 glass-panel p-6 rounded-3xl shadow-sm">
+            <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-200 dark:border-slate-800">
+              <h3 class="font-extrabold text-slate-900 dark:text-white text-base">Últimas Órdenes Procesadas</h3>
+              <button onclick="switchTab('pedidos')" class="text-xs font-bold text-electric hover:underline">Ver Todos los Pedidos</button>
+            </div>
+            <div class="space-y-3" id="dashRecentOrdersList">
+              <!-- Render dinámico -->
+            </div>
+          </div>
+
+          <!-- Top Productos Más Vendidos -->
+          <div class="glass-panel p-6 rounded-3xl shadow-sm">
+            <div class="pb-4 mb-4 border-b border-slate-200 dark:border-slate-800">
+              <h3 class="font-extrabold text-slate-900 dark:text-white text-base">Top Productos Vendidos</h3>
+              <p class="text-xs text-slate-400">Artículos con mayor demanda</p>
+            </div>
+            <div class="space-y-4" id="dashTopProductsList">
+              <!-- Render dinámico -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TAB 2: INVENTARIO COMPLETO (CRUD) ================= -->
+      <div id="tab-productos" class="tab-content hidden space-y-6 fade-in-up">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Gestión Integral de Inventario</h1>
+            <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">Control de catálogo, stock crítico, estado y variaciones de precio.</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="exportarTablaProductosCSV()" class="px-4 py-3 rounded-2xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs hover:bg-slate-300 transition-all flex items-center gap-2">
+              <i class="fa-solid fa-file-csv text-emerald-500"></i> Exportar CSV
+            </button>
+            <button onclick="abrirModalProducto()" class="bg-electric hover:bg-blue-600 text-white px-5 py-3 rounded-2xl font-bold text-xs shadow-lg shadow-blue-500/30 transition-all flex items-center gap-2">
+              <i class="fa-solid fa-plus"></i> Nuevo Producto
+            </button>
+          </div>
+        </div>
+
+        <!-- Filtros Combinados, Ordenamiento y Buscador -->
+        <div class="glass-panel p-4 rounded-3xl shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3 w-full md:w-auto">
+            <!-- Categoría -->
+            <select id="filterCategory" onchange="renderTablaProductos()" class="bg-slate-100 dark:bg-slate-900 border border-transparent text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-2xl p-2.5 focus:outline-none focus:border-electric">
+              <option value="TODAS">Todas las Categorías</option>
               <option value="Casual">Casual</option>
-              <option value="Deportiva">Deportiva</option>
               <option value="Streetwear">Streetwear</option>
               <option value="Calzado">Calzado</option>
+              <option value="Deportiva">Deportiva</option>
+              <option value="Accesorios">Accesorios</option>
+            </select>
+
+            <!-- Estado -->
+            <select id="filterStatus" onchange="renderTablaProductos()" class="bg-slate-100 dark:bg-slate-900 border border-transparent text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-2xl p-2.5 focus:outline-none focus:border-electric">
+              <option value="TODOS">Todos los Estados</option>
+              <option value="activo">Solo Activos</option>
+              <option value="inactivo">Solo Inactivos</option>
+              <option value="low_stock">⚠️ Stock Bajo (&lt; 5)</option>
+            </select>
+
+            <!-- Ordenar Por -->
+            <select id="sortProductsBy" onchange="renderTablaProductos()" class="bg-slate-100 dark:bg-slate-900 border border-transparent text-slate-700 dark:text-slate-200 text-xs font-semibold rounded-2xl p-2.5 focus:outline-none focus:border-electric col-span-2 md:col-span-1">
+              <option value="nombre">Ordenar: Nombre</option>
+              <option value="precio_desc">Precio: Mayor a Menor</option>
+              <option value="precio_asc">Precio: Menor a Mayor</option>
+              <option value="stock_asc">Stock: Menor a Mayor</option>
             </select>
           </div>
-        </div>
-        <div class="flex justify-end gap-3 pt-2">
-          <button type="button" onclick="toggleFormulario()" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-xs hover:bg-slate-100">Cancelar</button>
-          <button type="submit" class="bg-nova text-white px-6 py-2.5 rounded-xl font-bold text-xs hover:bg-nova-dark">Guardar Producto</button>
-        </div>
-      </form>
 
-      <!-- Tabla de Productos -->
-      <div class="overflow-x-auto mt-6">
-        <table class="w-full text-left text-sm border-collapse">
-          <thead>
-            <tr class="bg-slate-50 text-slate-400 text-xs font-black uppercase tracking-wider border-b border-slate-200">
-              <th class="p-4">Producto</th>
-              <th class="p-4">Categoría</th>
-              <th class="p-4">Precio</th>
-              <th class="p-4">Estado</th>
-              <th class="p-4 text-right">Acción</th>
-            </tr>
-          </thead>
-          <tbody id="tablaProductosBody" class="divide-y divide-slate-100">
-            <!-- Renderizado dinámico -->
-          </tbody>
-        </table>
+          <!-- Buscador Específico -->
+          <div class="relative w-full md:w-72">
+            <input type="text" id="searchProductInput" onkeyup="renderTablaProductos()" placeholder="Filtrar por nombre o SKU..." class="w-full pl-9 pr-3 py-2.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-transparent text-xs focus:outline-none focus:border-electric text-slate-800 dark:text-slate-100">
+            <i class="fa-solid fa-filter absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+          </div>
+        </div>
+
+        <!-- Tabla de Inventario -->
+        <div class="glass-panel rounded-3xl shadow-sm overflow-hidden border border-slate-200 dark:border-slate-800">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr class="bg-slate-100/70 dark:bg-slate-900/80 text-slate-400 text-[11px] font-black uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+                  <th class="p-4">Producto / SKU</th>
+                  <th class="p-4">Categoría</th>
+                  <th class="p-4">Precio (RD$)</th>
+                  <th class="p-4">Stock Dispon.</th>
+                  <th class="p-4">Estado (Switch)</th>
+                  <th class="p-4 text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tablaProductosBody" class="divide-y divide-slate-200/60 dark:divide-slate-800/60">
+                <!-- Se renderiza dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Controles de Paginación -->
+          <div class="p-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
+            <span id="paginationInfo">Mostrando 0 de 0 productos</span>
+            <div class="flex items-center gap-2">
+              <button onclick="prevPage()" id="btnPrevPage" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold hover:bg-slate-200 disabled:opacity-50">Anterior</button>
+              <span id="currentPageNum" class="font-bold text-slate-800 dark:text-white px-2">1</span>
+              <button onclick="nextPage()" id="btnNextPage" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold hover:bg-slate-200 disabled:opacity-50">Siguiente</button>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <!-- Grid Inferior: Pedidos y Clientes -->
-    <section class="grid lg:grid-cols-2 gap-8 mt-8">
-      
-      <!-- Gestión de Pedidos Recientes -->
-      <article id="pedidos" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
-          <h2 class="text-xl font-black text-nova">Pedidos Recientes</h2>
-          <span class="text-xs font-bold text-electric cursor-pointer hover:underline">Ver todos</span>
+      <!-- ================= TAB 3: GESTIÓN DE PEDIDOS ================= -->
+      <div id="tab-pedidos" class="tab-content hidden space-y-6 fade-in-up">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Gestión de Pedidos & Logística</h1>
+            <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">Control de estados de entrega, facturación y clientes solicitantes.</p>
+          </div>
+          <button onclick="exportarPedidosCSV()" class="px-4 py-3 rounded-2xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-bold text-xs hover:bg-slate-300 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-file-export text-electric"></i> Exportar Órdenes CSV
+          </button>
         </div>
 
-        <div class="space-y-4">
-          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
-            <div>
-              <p class="font-black text-nova">#NS-84920</p>
-              <p class="text-slate-400 font-medium mt-0.5">Freduard Rojas • 2 items</p>
-            </div>
-            <div class="text-right">
-              <p class="font-black text-electric">RD$ 2,700</p>
-              <span class="inline-block mt-1 bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-md text-[10px]">En preparación</span>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
-            <div>
-              <p class="font-black text-nova">#NS-73109</p>
-              <p class="text-slate-400 font-medium mt-0.5">Camila Pérez • 1 item</p>
-            </div>
-            <div class="text-right">
-              <p class="font-black text-electric">RD$ 1,850</p>
-              <span class="inline-block mt-1 bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-md text-[10px]">Entregado</span>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
-            <div>
-              <p class="font-black text-nova">#NS-62045</p>
-              <p class="text-slate-400 font-medium mt-0.5">Gabriel Reyes • 3 items</p>
-            </div>
-            <div class="text-right">
-              <p class="font-black text-electric">RD$ 5,900</p>
-              <span class="inline-block mt-1 bg-blue-100 text-blue-800 font-bold px-2 py-0.5 rounded-md text-[10px]">En camino</span>
-            </div>
+        <div class="glass-panel rounded-3xl shadow-sm overflow-hidden border border-slate-200 dark:border-slate-800">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm border-collapse">
+              <thead>
+                <tr class="bg-slate-100/70 dark:bg-slate-900/80 text-slate-400 text-[11px] font-black uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+                  <th class="p-4">ID Pedido</th>
+                  <th class="p-4">Cliente / Contacto</th>
+                  <th class="p-4">Artículos</th>
+                  <th class="p-4">Monto Total</th>
+                  <th class="p-4">Estado Logístico</th>
+                  <th class="p-4 text-right">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tablaPedidosBody" class="divide-y divide-slate-200/60 dark:divide-slate-800/60">
+                <!-- Se renderiza dinámicamente -->
+              </tbody>
+            </table>
           </div>
         </div>
-      </article>
+      </div>
 
-      <!-- Gestión de Clientes Registrados -->
-      <article id="clientes" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
-        <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
-          <h2 class="text-xl font-black text-nova">Clientes Recientes</h2>
-          <span class="text-xs font-bold text-electric cursor-pointer hover:underline">Gestionar</span>
+      <!-- ================= TAB 4: CLIENTES REGISTRADOS ================= -->
+      <div id="tab-clientes" class="tab-content hidden space-y-6 fade-in-up">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Directorio de Clientes VIP</h1>
+          <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">Historial acumulado de compras y perfiles interactivos.</p>
         </div>
 
-        <div class="space-y-4">
-          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-blue-100 text-electric flex items-center justify-center font-bold">FR</div>
-              <div>
-                <p class="font-bold text-nova">Freduard Rojas</p>
-                <p class="text-slate-400">freduard@ejemplo.com</p>
-              </div>
-            </div>
-            <span class="text-slate-500 font-semibold">3 compras</span>
-          </div>
+        <div id="clientesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Render dinámico -->
+        </div>
+      </div>
 
-          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold">CP</div>
-              <div>
-                <p class="font-bold text-nova">Camila Pérez</p>
-                <p class="text-slate-400">camila@ejemplo.com</p>
-              </div>
-            </div>
-            <span class="text-slate-500 font-semibold">1 compra</span>
-          </div>
+      <!-- ================= TAB 5: REPORTES & ANALYTICS ================= -->
+      <div id="tab-reportes" class="tab-content hidden space-y-6 fade-in-up">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Reportes Avanzados & Analytics</h1>
+          <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">Inteligencia de negocios y proyección de ventas para NovaShop.</p>
+        </div>
 
-          <div class="flex items-center justify-between p-3.5 bg-slate-50 rounded-2xl border border-slate-100 text-xs">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">GR</div>
-              <div>
-                <p class="font-bold text-nova">Gabriel Reyes</p>
-                <p class="text-slate-400">gabriel@ejemplo.com</p>
-              </div>
-            </div>
-            <span class="text-slate-500 font-semibold">5 compras</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-panel p-6 rounded-3xl space-y-2">
+            <span class="text-xs font-bold text-slate-400 uppercase">Ticket Promedio</span>
+            <h3 id="reportTicketPromedio" class="text-3xl font-black text-slate-900 dark:text-white">RD$ 0</h3>
+            <p class="text-xs text-emerald-500 font-semibold"><i class="fa-solid fa-arrow-up"></i> +4.2% este mes</p>
+          </div>
+          <div class="glass-panel p-6 rounded-3xl space-y-2">
+            <span class="text-xs font-bold text-slate-400 uppercase">Tasa de Conversión</span>
+            <h3 class="text-3xl font-black text-slate-900 dark:text-white">3.82%</h3>
+            <p class="text-xs text-emerald-500 font-semibold"><i class="fa-solid fa-check"></i> Meta mensual superada</p>
+          </div>
+          <div class="glass-panel p-6 rounded-3xl space-y-2">
+            <span class="text-xs font-bold text-slate-400 uppercase">Valor Total del Inventario</span>
+            <h3 id="reportValorInventario" class="text-3xl font-black text-electric">RD$ 0</h3>
+            <p class="text-xs text-slate-400 font-semibold">Basado en precio de venta actual</p>
           </div>
         </div>
-      </article>
 
-    </section>
+        <div class="glass-panel p-6 rounded-3xl shadow-sm">
+          <h3 class="font-bold text-slate-900 dark:text-white text-base mb-4">Resumen de Proyección Anual</h3>
+          <p class="text-xs text-slate-500 mb-6">Gráfico comparativo de objetivos financieros alcanzados vs esperados.</p>
+          <div class="h-72 w-full">
+            <canvas id="chartReporteProyeccion"></canvas>
+          </div>
+        </div>
+      </div>
 
+    </div>
+
+    <!-- FOOTER GENERAL -->
+    <footer class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>© 2026 NovaShop Enterprise. Desarrollado con tecnología Ultra-Fast.</p>
+      <div class="flex items-center gap-4">
+        <a href="#" class="hover:underline">Soporte Técnico</a>
+        <a href="#" class="hover:underline">Documentación API</a>
+      </div>
+    </footer>
   </main>
 
-  <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-nova text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-    <div class="w-8 h-8 rounded-full bg-electric/20 text-electric flex items-center justify-center">
-      <i class="fa-solid fa-check"></i>
+  <!-- ==================== MODAL FORMULARIO PRODUCTO (CRUD) ==================== -->
+  <div id="modalProducto" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden fade-in-up">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div class="bg-nova-800 text-white p-6 flex items-center justify-between">
+        <h3 id="modalTitle" class="font-extrabold text-lg">Agregar Producto</h3>
+        <button onclick="cerrarModalProducto()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="formProducto" onsubmit="guardarProducto(event)" class="p-6 space-y-4">
+        <input type="hidden" id="prodIndex">
+
+        <div>
+          <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase mb-1">Nombre del Producto *</label>
+          <input type="text" id="prodNombre" required placeholder="Ej. Hoodie Streetwear Nova" class="w-full bg-slate-100 dark:bg-slate-800 border border-transparent rounded-2xl p-3 text-sm focus:outline-none focus:border-electric dark:text-white">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase mb-1">Precio Venta (RD$) *</label>
+            <input type="number" id="prodPrecio" min="1" step="0.01" required placeholder="1850" class="w-full bg-slate-100 dark:bg-slate-800 border border-transparent rounded-2xl p-3 text-sm focus:outline-none focus:border-electric dark:text-white">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase mb-1">Stock Inicial *</label>
+            <input type="number" id="prodStock" min="0" required placeholder="12" class="w-full bg-slate-100 dark:bg-slate-800 border border-transparent rounded-2xl p-3 text-sm focus:outline-none focus:border-electric dark:text-white">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase mb-1">Categoría *</label>
+            <select id="prodCategoria" class="w-full bg-slate-100 dark:bg-slate-800 border border-transparent rounded-2xl p-3 text-sm focus:outline-none focus:border-electric dark:text-white font-medium">
+              <option value="Casual">Casual</option>
+              <option value="Streetwear">Streetwear</option>
+              <option value="Calzado">Calzado</option>
+              <option value="Deportiva">Deportiva</option>
+              <option value="Accesorios">Accesorios</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 uppercase mb-1">SKU Personalizado</label>
+            <input type="text" id="prodSKU" placeholder="NS-PROD-001" class="w-full bg-slate-100 dark:bg-slate-800 border border-transparent rounded-2xl p-3 text-sm focus:outline-none focus:border-electric dark:text-white">
+          </div>
+        </div>
+
+        <div class="pt-4 flex justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" onclick="cerrarModalProducto()" class="px-5 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">Cancelar</button>
+          <button type="submit" class="bg-electric hover:bg-blue-600 text-white px-6 py-2.5 rounded-2xl font-bold text-xs shadow-lg shadow-blue-500/30 transition-all">Guardar Cambios</button>
+        </div>
+      </form>
     </div>
-    <span id="toastMsg" class="font-bold text-sm">Notificación</span>
   </div>
 
-  <!-- Javascript para administrar productos -->
+  <!-- ==================== MODAL DETALLE DE PEDIDO ==================== -->
+  <div id="modalPedido" class="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden fade-in-up">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div class="bg-nova-800 text-white p-6 flex items-center justify-between">
+        <div>
+          <h3 id="modalPedidoTitle" class="font-extrabold text-lg">Detalle del Pedido</h3>
+          <p id="modalPedidoSub" class="text-xs text-blue-200">#NS-00000</p>
+        </div>
+        <button onclick="cerrarModalPedido()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4" id="modalPedidoBody">
+        <!-- Detalle cargado por JS -->
+      </div>
+      <div class="p-4 bg-slate-50 dark:bg-slate-800/50 flex justify-end">
+        <button onclick="cerrarModalPedido()" class="px-5 py-2 rounded-xl bg-electric text-white font-bold text-xs">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION FLOTANTE ==================== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-nova-800 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3.5 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div id="toastIcon" class="w-9 h-9 rounded-xl bg-blue-500/20 text-electric flex items-center justify-center text-base shrink-0">
+      <i class="fa-solid fa-check"></i>
+    </div>
+    <div>
+      <p id="toastTitle" class="font-bold text-xs text-white leading-snug">Notificación</p>
+      <p id="toastMsg" class="text-[11px] text-slate-300">Mensaje de confirmación del sistema.</p>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT MOTOR DE LA APLICACIÓN ==================== -->
   <script>
-    // Inventario por defecto
-    let productosAdmin = [
-      { id: 1, nombre: 'Camiseta Essential', categoria: 'Casual', precio: 850, activo: true },
-      { id: 2, nombre: 'Hoodie Urban', categoria: 'Streetwear', precio: 1850, activo: true },
-      { id: 3, nombre: 'Zapatillas Nova', categoria: 'Calzado', precio: 3200, activo: true },
-      { id: 4, nombre: 'Pantalón Jogger Fit', categoria: 'Deportiva', precio: 1400, activo: false }
+    // DATA DEMO INICIAL
+    const DEFAULT_PRODUCTS = [
+      { id: 101, nombre: 'Camiseta Essential White', categoria: 'Casual', precio: 850, stock: 24, sku: 'NS-TSH-01', activo: true, ventas: 142 },
+      { id: 102, nombre: 'Hoodie Urban Streetwear', categoria: 'Streetwear', precio: 1850, stock: 3, sku: 'NS-HD-02', activo: true, ventas: 89 },
+      { id: 103, nombre: 'Zapatillas Nova Runner 2.0', categoria: 'Calzado', precio: 3400, stock: 15, sku: 'NS-SNK-03', activo: true, ventas: 210 },
+      { id: 104, nombre: 'Pantalón Jogger Fit Black', categoria: 'Deportiva', precio: 1400, stock: 0, sku: 'NS-JOG-04', activo: false, ventas: 65 },
+      { id: 105, nombre: 'Gorra Nova Snapback Edition', categoria: 'Accesorios', precio: 650, stock: 45, sku: 'NS-CAP-05', activo: true, ventas: 178 },
+      { id: 106, nombre: 'Chaqueta Varsity Vintage', categoria: 'Streetwear', precio: 4200, stock: 4, sku: 'NS-JKT-06', activo: true, ventas: 34 }
     ];
 
+    const DEFAULT_ORDERS = [
+      { id: 'NS-84920', cliente: 'Freduard Rojas', email: 'freduard@ejemplo.com', items: 2, total: 2700, estado: 'En preparación', fecha: 'Hoy, 10:30 AM', productos: ['Camiseta Essential White', 'Hoodie Urban'] },
+      { id: 'NS-73109', cliente: 'Camila Pérez', email: 'camila@ejemplo.com', items: 1, total: 1850, estado: 'Entregado', fecha: 'Ayer, 4:15 PM', productos: ['Hoodie Urban Streetwear'] },
+      { id: 'NS-62045', cliente: 'Gabriel Reyes', email: 'gabriel@ejemplo.com', items: 3, total: 5900, estado: 'En camino', fecha: 'Hace 2 días', productos: ['Zapatillas Nova Runner', 'Gorra Nova Snapback'] },
+      { id: 'NS-51290', cliente: 'Laura Gómez', email: 'laura@ejemplo.com', items: 1, total: 850, estado: 'Entregado', fecha: 'Hace 3 días', productos: ['Camiseta Essential White'] }
+    ];
+
+    const DEFAULT_CUSTOMERS = [
+      { id: 1, nombre: 'Freduard Rojas', email: 'freduard@ejemplo.com', compras: 4, totalGastado: 9850, iniciales: 'FR', color: 'bg-blue-500/20 text-electric' },
+      { id: 2, nombre: 'Camila Pérez', email: 'camila@ejemplo.com', compras: 2, totalGastado: 3400, iniciales: 'CP', color: 'bg-purple-500/20 text-purple-500' },
+      { id: 3, nombre: 'Gabriel Reyes', email: 'gabriel@ejemplo.com', compras: 6, totalGastado: 17200, iniciales: 'GR', color: 'bg-emerald-500/20 text-emerald-500' }
+    ];
+
+    // ESTADO DE APLICACIÓN Y PAGINACIÓN
+    let productos = [];
+    let pedidos = [];
+    let clientes = [];
+    let currentPage = 1;
+    const itemsPerPage = 5;
+    let selectedPeriod = 'mes';
+
+    // OBJETOS DE GRÁFICOS
+    let chartVentasObj = null;
+    let chartCatObj = null;
+    let chartReporteObj = null;
+
+    // INICIALIZACIÓN COMPLETA
     document.addEventListener('DOMContentLoaded', () => {
-      // Cargar inventario guardado si existe
-      const guardados = localStorage.getItem('novashop_admin_products');
-      if (guardados) {
-        productosAdmin = JSON.parse(guardados);
-      }
-      renderTablaProductos();
+      initDarkMode();
+      cargarStorage();
+      renderAll();
+      initCharts();
     });
 
-    function guardarLocal() {
-      localStorage.setItem('novashop_admin_products', JSON.stringify(productosAdmin));
-      renderTablaProductos();
+    // SISTEMA DE DARK MODE CON PERSISTENCIA
+    function initDarkMode() {
+      const isDark = localStorage.getItem('novashop_theme') === 'dark' || 
+        (!('novashop_theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
     }
 
+    function toggleDarkMode() {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('novashop_theme', 'light');
+        showToast('Modo Claro Activado', 'Tema visual cambiado', 'fa-sun');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('novashop_theme', 'dark');
+        showToast('Modo Oscuro Activado', 'Tema visual cambiado', 'fa-moon');
+      }
+      actualizarGraficos();
+    }
+
+    // PERSISTENCIA LOCALSTORAGE
+    function cargarStorage() {
+      const p = localStorage.getItem('novashop_pro_products_v2');
+      const o = localStorage.getItem('novashop_pro_orders_v2');
+      const c = localStorage.getItem('novashop_pro_customers_v2');
+
+      productos = p ? JSON.parse(p) : [...DEFAULT_PRODUCTS];
+      pedidos = o ? JSON.parse(o) : [...DEFAULT_ORDERS];
+      clientes = c ? JSON.parse(c) : [...DEFAULT_CUSTOMERS];
+    }
+
+    function guardarStorage() {
+      localStorage.setItem('novashop_pro_products_v2', JSON.stringify(productos));
+      localStorage.setItem('novashop_pro_orders_v2', JSON.stringify(pedidos));
+      localStorage.setItem('novashop_pro_customers_v2', JSON.stringify(clientes));
+      renderAll();
+    }
+
+    function restablecerDatos() {
+      if (confirm('¿Deseas restablecer todos los datos a la demostración inicial?')) {
+        localStorage.removeItem('novashop_pro_products_v2');
+        localStorage.removeItem('novashop_pro_orders_v2');
+        localStorage.removeItem('novashop_pro_customers_v2');
+        cargarStorage();
+        renderAll();
+        showToast('Sistema Restablecido', 'Se restauraron los datos demo', 'fa-rotate-left');
+      }
+    }
+
+    // RENDERIZADO GLOBAL
+    function renderAll() {
+      renderKPIs();
+      renderTablaProductos();
+      renderTablaPedidos();
+      renderClientes();
+      renderDashRecentOrders();
+      renderDashTopProducts();
+      renderNotificaciones();
+      renderReportes();
+      actualizarGraficos();
+    }
+
+    // FILTRO DE PERIODO DE TIEMPO
+    function setFilterPeriod(period) {
+      selectedPeriod = period;
+      document.querySelectorAll('.period-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'dark:bg-slate-700', 'text-electric', 'dark:text-white', 'shadow-sm');
+        btn.classList.add('text-slate-600', 'dark:text-slate-400');
+      });
+
+      const activeBtn = document.getElementById(`btnPeriod${period.charAt(0).toUpperCase() + period.slice(1)}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'dark:bg-slate-700', 'text-electric', 'dark:text-white', 'shadow-sm');
+        activeBtn.classList.remove('text-slate-600', 'dark:text-slate-400');
+      }
+      renderKPIs();
+      showToast('Filtro Aplicado', `Mostrando datos de: ${period.toUpperCase()}`, 'fa-calendar-check');
+    }
+
+    // RENDER KPIS DE DASHBOARD
+    function renderKPIs() {
+      let multiplier = 1;
+      if (selectedPeriod === 'hoy') multiplier = 0.15;
+      if (selectedPeriod === 'semana') multiplier = 0.45;
+      if (selectedPeriod === 'anio') multiplier = 3.2;
+
+      const baseVentas = pedidos.reduce((sum, p) => sum + p.total, 0);
+      const totalVentas = baseVentas * multiplier;
+      document.getElementById('kpiTotalSales').textContent = `RD$ ${Math.round(totalVentas).toLocaleString('es-DO')}`;
+
+      document.getElementById('kpiTotalOrders').textContent = Math.round(pedidos.length * (multiplier > 1 ? multiplier * 0.8 : 1));
+      const pendientes = pedidos.filter(p => p.estado === 'En preparación' || p.estado === 'En camino').length;
+      document.getElementById('kpiPendingSubtext').textContent = `${pendientes} pendientes de envío`;
+      document.getElementById('badgePendingOrders').textContent = pendientes;
+
+      document.getElementById('kpiTotalProducts').textContent = productos.length;
+      const lowStockCount = productos.filter(p => p.stock < 5).length;
+      document.getElementById('kpiLowStockSubtext').innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${lowStockCount} alertados con stock crítico`;
+      
+      const badgeLow = document.getElementById('badgeLowStock');
+      if (lowStockCount > 0) {
+        badgeLow.textContent = lowStockCount;
+        badgeLow.classList.remove('hidden');
+      } else {
+        badgeLow.classList.add('hidden');
+      }
+
+      document.getElementById('kpiTotalCustomers').textContent = clientes.length;
+    }
+
+    // RENDER TABLA DE INVENTARIO CON PAGINACIÓN Y SWITCH DÍNAMICO
     function renderTablaProductos() {
       const tbody = document.getElementById('tablaProductosBody');
-      const countEl = document.getElementById('totalProductsCount');
-      
-      tbody.innerHTML = '';
-      countEl.textContent = productosAdmin.length;
+      const categoryFilter = document.getElementById('filterCategory').value;
+      const statusFilter = document.getElementById('filterStatus').value;
+      const sortBy = document.getElementById('sortProductsBy').value;
+      const searchText = document.getElementById('searchProductInput').value.toLowerCase();
 
-      productosAdmin.forEach((p, index) => {
-        const row = document.createElement('tr');
-        row.className = 'hover:bg-slate-50/80 transition-colors';
-        row.innerHTML = `
-          <td class="p-4 font-bold text-nova">${p.nombre}</td>
-          <td class="p-4"><span class="bg-slate-100 text-slate-700 text-xs font-bold px-2.5 py-1 rounded-lg">${p.categoria}</span></td>
-          <td class="p-4 font-black text-electric">RD$ ${p.precio.toLocaleString('es-DO')}</td>
+      tbody.innerHTML = '';
+
+      // Filtrado
+      let filtrados = productos.filter(p => {
+        const matchCat = (categoryFilter === 'TODAS' || p.categoria === categoryFilter);
+        let matchStat = true;
+        if (statusFilter === 'activo') matchStat = p.activo;
+        if (statusFilter === 'inactivo') matchStat = !p.activo;
+        if (statusFilter === 'low_stock') matchStat = p.stock < 5;
+
+        const matchSearch = p.nombre.toLowerCase().includes(searchText) || p.sku.toLowerCase().includes(searchText);
+
+        return matchCat && matchStat && matchSearch;
+      });
+
+      // Ordenamiento
+      filtrados.sort((a, b) => {
+        if (sortBy === 'nombre') return a.nombre.localeCompare(b.nombre);
+        if (sortBy === 'precio_desc') return b.precio - a.precio;
+        if (sortBy === 'precio_asc') return a.precio - b.precio;
+        if (sortBy === 'stock_asc') return a.stock - b.stock;
+        return 0;
+      });
+
+      // Paginación
+      const totalItems = filtrados.length;
+      const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const paginatedItems = filtrados.slice(startIndex, startIndex + itemsPerPage);
+
+      document.getElementById('paginationInfo').textContent = `Mostrando ${paginatedItems.length} de ${totalItems} productos`;
+      document.getElementById('currentPageNum').textContent = currentPage;
+      document.getElementById('btnPrevPage').disabled = (currentPage === 1);
+      document.getElementById('btnNextPage').disabled = (currentPage === totalPages);
+
+      if (paginatedItems.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-semibold text-xs">No hay productos que coincidan con la búsqueda.</td></tr>`;
+        return;
+      }
+
+      paginatedItems.forEach((p) => {
+        const realIndex = productos.findIndex(prod => prod.id === p.id);
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-100/50 dark:hover:bg-slate-800/40 transition-colors';
+
+        // Badge Stock con Alerta Parpadeante
+        let stockBadge = `<span class="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold px-2.5 py-1 rounded-lg text-xs">${p.stock} unids</span>`;
+        if (p.stock === 0) {
+          stockBadge = `<span class="bg-rose-500/10 text-rose-500 font-bold px-2.5 py-1 rounded-lg text-xs border border-rose-500/20">Agotado</span>`;
+        } else if (p.stock < 5) {
+          stockBadge = `<span class="bg-amber-500/20 text-amber-500 font-bold px-2 py-1 rounded-lg text-xs border border-amber-500/30 animate-pulse flex items-center gap-1 w-fit">
+            <i class="fa-solid fa-bell"></i> ¡Crítico! (${p.stock})
+          </span>`;
+        }
+
+        tr.innerHTML = `
           <td class="p-4">
-            <button onclick="toggleEstadoProduct(${index})" class="${p.activo ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800'} text-xs font-bold px-2.5 py-1 rounded-full border border-transparent transition-all">
-              ${p.activo ? '● Activo' : '○ Inactivo'}
-            </button>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold flex items-center justify-center text-xs shrink-0 border border-slate-200 dark:border-slate-700">
+                <i class="fa-solid fa-box"></i>
+              </div>
+              <div>
+                <p class="font-bold text-slate-800 dark:text-white text-xs sm:text-sm leading-snug">${p.nombre}</p>
+                <p class="text-[10px] text-slate-400 font-mono">${p.sku}</p>
+              </div>
+            </div>
           </td>
-          <td class="p-4 text-right">
-            <button onclick="eliminarProducto(${index})" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-600 transition-colors inline-flex items-center justify-center">
+          <td class="p-4"><span class="bg-electric/10 text-electric text-xs font-bold px-2.5 py-1 rounded-lg">${p.categoria}</span></td>
+          <td class="p-4 font-black text-slate-900 dark:text-white">RD$ ${p.precio.toLocaleString('es-DO')}</td>
+          <td class="p-4">${stockBadge}</td>
+          <td class="p-4">
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" onchange="toggleEstadoProducto(${realIndex})" class="sr-only peer" ${p.activo ? 'checked' : ''}>
+              <div class="w-9 h-5 bg-slate-300 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+            </label>
+          </td>
+          <td class="p-4 text-right space-x-1">
+            <button onclick="editarProducto(${realIndex})" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-electric/20 text-slate-500 hover:text-electric transition-colors inline-flex items-center justify-center">
+              <i class="fa-solid fa-pen text-xs"></i>
+            </button>
+            <button onclick="eliminarProducto(${realIndex})" class="w-8 h-8 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-500 transition-colors inline-flex items-center justify-center">
               <i class="fa-solid fa-trash-can text-xs"></i>
             </button>
           </td>
         `;
-        tbody.appendChild(row);
+        tbody.appendChild(tr);
       });
     }
 
-    function toggleFormulario() {
-      const form = document.getElementById('formulario');
-      form.classList.toggle('hidden');
+    function prevPage() { if (currentPage > 1) { currentPage--; renderTablaProductos(); } }
+    function nextPage() { currentPage++; renderTablaProductos(); }
+
+    // RENDER TABLA DE PEDIDOS Y CAMBIO DE ESTADOS
+    function renderTablaPedidos() {
+      const tbody = document.getElementById('tablaPedidosBody');
+      tbody.innerHTML = '';
+
+      pedidos.forEach((ped, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-100/50 dark:hover:bg-slate-800/40 transition-colors';
+
+        let statusStyle = 'bg-amber-500/10 text-amber-500 border-amber-500/20';
+        if (ped.estado === 'Entregado') statusStyle = 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
+        if (ped.estado === 'En camino') statusStyle = 'bg-blue-500/10 text-blue-500 border-blue-500/20';
+        if (ped.estado === 'Cancelado') statusStyle = 'bg-rose-500/10 text-rose-500 border-rose-500/20';
+
+        tr.innerHTML = `
+          <td class="p-4 font-black text-slate-800 dark:text-white text-xs sm:text-sm">${ped.id}</td>
+          <td class="p-4">
+            <p class="font-bold text-slate-800 dark:text-slate-100 text-xs">${ped.cliente}</p>
+            <p class="text-[10px] text-slate-400">${ped.email}</p>
+          </td>
+          <td class="p-4 text-xs font-semibold text-slate-500">${ped.items} artículos</td>
+          <td class="p-4 font-black text-electric">RD$ ${ped.total.toLocaleString('es-DO')}</td>
+          <td class="p-4">
+            <select onchange="cambiarEstadoPedido(${idx}, this.value)" class="text-xs font-bold px-3 py-1.5 rounded-xl border ${statusStyle} bg-transparent focus:outline-none cursor-pointer dark:bg-slate-900">
+              <option value="En espera" ${ped.estado === 'En espera' ? 'selected' : ''}>En espera</option>
+              <option value="En preparación" ${ped.estado === 'En preparación' ? 'selected' : ''}>En preparación</option>
+              <option value="En camino" ${ped.estado === 'En camino' ? 'selected' : ''}>En camino</option>
+              <option value="Entregado" ${ped.estado === 'Entregado' ? 'selected' : ''}>Entregado</option>
+              <option value="Cancelado" ${ped.estado === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+            </select>
+          </td>
+          <td class="p-4 text-right">
+            <button onclick="verDetallePedido('${ped.id}')" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold text-electric hover:bg-electric hover:text-white transition-all">Ver Detalle</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
     }
 
-    function guardarNuevoProducto(e) {
+    // RENDER CLIENTES
+    function renderClientes() {
+      const grid = document.getElementById('clientesGrid');
+      grid.innerHTML = '';
+
+      clientes.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'glass-panel p-6 rounded-3xl shadow-sm flex items-center justify-between hover:shadow-md transition-shadow';
+        card.innerHTML = `
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl ${c.color} font-black flex items-center justify-center text-sm shadow-sm">
+              ${c.iniciales}
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-800 dark:text-white text-sm">${c.nombre}</h4>
+              <p class="text-xs text-slate-400">${c.email}</p>
+              <span class="inline-block mt-2 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold text-[10px] px-2.5 py-0.5 rounded-full">
+                ${c.compras} compras acumuladas
+              </span>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="text-[10px] uppercase font-bold text-slate-400">Total Comprado</p>
+            <p class="font-black text-emerald-500 text-sm">RD$ ${c.totalGastado.toLocaleString('es-DO')}</p>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // RENDER SECCIONES DASHBOARD SECUNDARIAS
+    function renderDashRecentOrders() {
+      const container = document.getElementById('dashRecentOrdersList');
+      container.innerHTML = '';
+      pedidos.slice(0, 3).forEach(p => {
+        const item = document.createElement('div');
+        item.className = 'flex items-center justify-between p-3.5 bg-slate-100/60 dark:bg-slate-800/50 rounded-2xl text-xs';
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-electric/10 text-electric flex items-center justify-center font-bold">
+              <i class="fa-solid fa-receipt"></i>
+            </div>
+            <div>
+              <p class="font-bold text-slate-800 dark:text-white">${p.id} • ${p.cliente}</p>
+              <p class="text-[10px] text-slate-400">${p.fecha}</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p class="font-black text-electric">RD$ ${p.total.toLocaleString('es-DO')}</p>
+            <span class="text-[10px] font-bold text-slate-500">${p.estado}</span>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function renderDashTopProducts() {
+      const container = document.getElementById('dashTopProductsList');
+      container.innerHTML = '';
+      const sorted = [...productos].sort((a,b) => b.ventas - a.ventas).slice(0, 3);
+      sorted.forEach((p, idx) => {
+        const item = document.createElement('div');
+        item.className = 'flex items-center justify-between';
+        item.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="font-black text-slate-400 text-xs">#${idx + 1}</span>
+            <div>
+              <p class="font-bold text-slate-800 dark:text-white text-xs">${p.nombre}</p>
+              <p class="text-[10px] text-slate-400">${p.ventas} unidades vendidas</p>
+            </div>
+          </div>
+          <span class="font-black text-xs text-slate-800 dark:text-slate-200">RD$ ${p.precio.toLocaleString('es-DO')}</span>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function renderNotificaciones() {
+      const container = document.getElementById('notifList');
+      container.innerHTML = `
+        <div class="flex gap-3 items-start p-2 rounded-2xl bg-slate-100 dark:bg-slate-800/60">
+          <i class="fa-solid fa-cart-arrow-down text-electric text-sm mt-0.5"></i>
+          <div>
+            <p class="font-bold text-slate-800 dark:text-white text-xs">Nuevo Pedido Registrado #NS-84920</p>
+            <p class="text-slate-400 text-[10px]">Hace 10 minutos por Freduard Rojas</p>
+          </div>
+        </div>
+        <div class="flex gap-3 items-start p-2 rounded-2xl bg-amber-500/10">
+          <i class="fa-solid fa-triangle-exclamation text-amber-500 text-sm mt-0.5"></i>
+          <div>
+            <p class="font-bold text-amber-600 dark:text-amber-400 text-xs">Alerta de Stock Bajo</p>
+            <p class="text-slate-400 text-[10px]">Hoodie Urban Streetwear tiene menos de 5 unidades</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderReportes() {
+      const totalVentas = pedidos.reduce((sum, p) => sum + p.total, 0);
+      const ticketProm = pedidos.length ? (totalVentas / pedidos.length) : 0;
+      document.getElementById('reportTicketPromedio').textContent = `RD$ ${Math.round(ticketProm).toLocaleString('es-DO')}`;
+
+      const valInv = productos.reduce((sum, p) => sum + (p.precio * p.stock), 0);
+      document.getElementById('reportValorInventario').textContent = `RD$ ${valInv.toLocaleString('es-DO')}`;
+    }
+
+    // OPERACIONES CRUD PRODUCTOS
+    function abrirModalProducto(isEdit = false) {
+      const modal = document.getElementById('modalProducto');
+      const form = document.getElementById('formProducto');
+      const title = document.getElementById('modalTitle');
+
+      if (!isEdit) {
+        form.reset();
+        document.getElementById('prodIndex').value = '';
+        title.textContent = 'Agregar Producto al Catálogo';
+      } else {
+        title.textContent = 'Editar Especificaciones de Producto';
+      }
+      modal.classList.remove('hidden');
+    }
+
+    function cerrarModalProducto() {
+      document.getElementById('modalProducto').classList.add('hidden');
+    }
+
+    function guardarProducto(e) {
       e.preventDefault();
+      const idx = document.getElementById('prodIndex').value;
       const nombre = document.getElementById('prodNombre').value;
       const precio = parseFloat(document.getElementById('prodPrecio').value);
+      const stock = parseInt(document.getElementById('prodStock').value);
       const categoria = document.getElementById('prodCategoria').value;
+      const sku = document.getElementById('prodSKU').value || `NS-${Math.floor(1000 + Math.random() * 9000)}`;
 
-      productosAdmin.push({
-        id: Date.now(),
-        nombre,
-        categoria,
-        precio,
-        activo: true
-      });
+      if (idx === '') {
+        productos.push({ id: Date.now(), nombre, categoria, precio, stock, sku, activo: true, ventas: 0 });
+        showToast('Producto Creado', 'El artículo fue registrado exitosamente', 'fa-box');
+      } else {
+        productos[idx].nombre = nombre;
+        productos[idx].precio = precio;
+        productos[idx].stock = stock;
+        productos[idx].categoria = categoria;
+        productos[idx].sku = sku;
+        showToast('Producto Actualizado', 'Los datos se guardaron correctamente', 'fa-pen');
+      }
 
-      guardarLocal();
-      toggleFormulario();
-      e.target.reset();
-      showToast('Producto añadido al inventario');
+      cerrarModalProducto();
+      guardarStorage();
     }
 
-    function toggleEstadoProduct(index) {
-      productosAdmin[index].activo = !productosAdmin[index].activo;
-      guardarLocal();
-      showToast('Estado del producto actualizado');
+    function editarProducto(index) {
+      const p = productos[index];
+      document.getElementById('prodIndex').value = index;
+      document.getElementById('prodNombre').value = p.nombre;
+      document.getElementById('prodPrecio').value = p.precio;
+      document.getElementById('prodStock').value = p.stock;
+      document.getElementById('prodCategoria').value = p.categoria;
+      document.getElementById('prodSKU').value = p.sku;
+
+      abrirModalProducto(true);
+    }
+
+    function toggleEstadoProducto(index) {
+      productos[index].activo = !productos[index].activo;
+      guardarStorage();
+      showToast('Estado Modificado', `Producto ahora ${productos[index].activo ? 'Activo' : 'Inactivo'}`, 'fa-toggle-on');
     }
 
     function eliminarProducto(index) {
-      if (confirm('¿Deseas eliminar este producto del inventario?')) {
-        productosAdmin.splice(index, 1);
-        guardarLocal();
-        showToast('Producto eliminado');
+      if (confirm('¿Eliminar permanentemente este producto?')) {
+        productos.splice(index, 1);
+        guardarStorage();
+        showToast('Producto Eliminado', 'Se retiró del inventario', 'fa-trash');
       }
     }
 
-    function showToast(mensaje) {
+    // ACCIONES DE PEDIDOS
+    function cambiarEstadoPedido(index, nuevoEstado) {
+      pedidos[index].estado = nuevoEstado;
+      guardarStorage();
+      showToast('Pedido Actualizado', `Estado cambiado a: ${nuevoEstado}`, 'fa-truck-ramp-box');
+    }
+
+    function verDetallePedido(id) {
+      const ped = pedidos.find(p => p.id === id);
+      if (!ped) return;
+
+      document.getElementById('modalPedidoTitle').textContent = `Cliente: ${ped.cliente}`;
+      document.getElementById('modalPedidoSub').textContent = `Orden ${ped.id} • ${ped.fecha}`;
+
+      const body = document.getElementById('modalPedidoBody');
+      body.innerHTML = `
+        <div class="space-y-3">
+          <div class="p-3 bg-slate-100 dark:bg-slate-800 rounded-2xl text-xs space-y-1">
+            <p class="font-bold text-slate-800 dark:text-white">Correo: ${ped.email}</p>
+            <p class="text-slate-400">Estado de Entrega: <span class="font-bold text-electric">${ped.estado}</span></p>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-slate-400 uppercase mb-2">Artículos Solicitados:</p>
+            <ul class="space-y-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
+              ${ped.productos.map(item => `<li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> ${item}</li>`).join('')}
+            </ul>
+          </div>
+          <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+            <span class="font-bold text-xs text-slate-400">Monto Total Facturado:</span>
+            <span class="font-black text-electric text-base">RD$ ${ped.total.toLocaleString('es-DO')}</span>
+          </div>
+        </div>
+      `;
+      document.getElementById('modalPedido').classList.remove('hidden');
+    }
+
+    function cerrarModalPedido() {
+      document.getElementById('modalPedido').classList.add('hidden');
+    }
+
+    // EXPORTACIÓN DE DATOS (CSV Y JSON)
+    function exportarTablaProductosCSV() {
+      let csv = 'ID,Nombre,Categoria,Precio_RD,Stock,SKU,Activo\n';
+      productos.forEach(p => {
+        csv += `"${p.id}","${p.nombre}","${p.categoria}",${p.precio},${p.stock},"${p.sku}",${p.activo}\n`;
+      });
+      descargarArchivo(csv, 'novashop_inventario.csv', 'text/csv');
+      showToast('Exportación Exitosa', 'Inventario descargado en CSV', 'fa-file-csv');
+    }
+
+    function exportarPedidosCSV() {
+      let csv = 'ID_Pedido,Cliente,Email,Items,Total_RD,Estado,Fecha\n';
+      pedidos.forEach(p => {
+        csv += `"${p.id}","${p.cliente}","${p.email}",${p.items},${p.total},"${p.estado}","${p.fecha}"\n`;
+      });
+      descargarArchivo(csv, 'novashop_pedidos.csv', 'text/csv');
+      showToast('Exportación Exitosa', 'Pedidos descargados en CSV', 'fa-file-csv');
+    }
+
+    function exportarBackupJSON() {
+      const backup = { productos, pedidos, clientes, fecha: new Date().toISOString() };
+      descargarArchivo(JSON.stringify(backup, null, 2), 'novashop_backup_full.json', 'application/json');
+      showToast('Backup Generado', 'Copia completa del sistema guardada', 'fa-download');
+    }
+
+    function descargarArchivo(contenido, nombreArchivo, tipo) {
+      const blob = new Blob([contenido], { type: tipo });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = nombreArchivo;
+      link.click();
+    }
+
+    // NAVEGACIÓN Y CAMBIO DE PESTAÑAS
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.nav-btn').forEach(el => {
+        el.classList.remove('bg-electric', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
+        el.classList.add('text-slate-300');
+      });
+
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      const activeNav = document.getElementById(`nav-${tabId}`);
+      if (activeNav) {
+        activeNav.classList.add('bg-electric', 'text-white', 'shadow-lg', 'shadow-blue-600/30');
+        activeNav.classList.remove('text-slate-300');
+      }
+
+      // Cerrar sidebar móvil al cambiar
+      document.getElementById('sidebar').classList.add('-translate-x-full');
+      document.getElementById('sidebarBackdrop').classList.add('hidden');
+    }
+
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      sidebar.classList.toggle('-translate-x-full');
+      backdrop.classList.toggle('hidden');
+    }
+
+    function handleGlobalSearch(e) {
+      if (e.key === 'Enter') {
+        const query = e.target.value.toLowerCase();
+        switchTab('productos');
+        document.getElementById('searchProductInput').value = query;
+        renderTablaProductos();
+      }
+    }
+
+    function toggleNotifications() {
+      document.getElementById('notifDropdown').classList.toggle('hidden');
+    }
+
+    // TOAST NOTIFICATIONS
+    function showToast(title, msg, icon = 'fa-check') {
       const toast = document.getElementById('toast');
-      const toastMsg = document.getElementById('toastMsg');
-      
-      toastMsg.textContent = mensaje;
-      toast.classList.remove('translate-y-20', 'opacity-0');
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastMsg').textContent = msg;
+      document.getElementById('toastIcon').innerHTML = `<i class="fa-solid ${icon}"></i>`;
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
 
       setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }, 3000);
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3200);
+    }
+
+    // CHART.JS INICIALIZACIÓN
+    function initCharts() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#94a3b8' : '#64748b';
+
+      // Gráfico de Ventas Mensuales
+      const ctxVentas = document.getElementById('chartVentas').getContext('2d');
+      const gradient = ctxVentas.createLinearGradient(0, 0, 0, 300);
+      gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+      gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
+
+      chartVentasObj = new Chart(ctxVentas, {
+        type: 'line',
+        data: {
+          labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+          datasets: [{
+            label: 'Ingresos Mensuales (RD$)',
+            data: [18000, 24000, 21000, 32000, 29000, 41000, 38000, 49000, 56000, 68000, 0, 0],
+            borderColor: '#3B82F6',
+            backgroundColor: gradient,
+            fill: true,
+            tension: 0.4,
+            borderWidth: 3,
+            pointBackgroundColor: '#3B82F6',
+            pointRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: { grid: { color: isDark ? '#1e293b' : '#f1f5f9' }, ticks: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 10 } } },
+            x: { grid: { display: false }, ticks: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 10 } } }
+          }
+        }
+      });
+
+      // Gráfico de Categorías (Donut)
+      const ctxCat = document.getElementById('chartCategorias').getContext('2d');
+      chartCatObj = new Chart(ctxCat, {
+        type: 'doughnut',
+        data: {
+          labels: ['Casual', 'Streetwear', 'Calzado', 'Deportiva', 'Accesorios'],
+          datasets: [{
+            data: [10, 5, 3, 4, 8],
+            backgroundColor: ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#64748B'],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 10 } } }
+          }
+        }
+      });
+
+      // Gráfico Reporte Proyección
+      const ctxRep = document.getElementById('chartReporteProyeccion').getContext('2d');
+      chartReporteObj = new Chart(ctxRep, {
+        type: 'bar',
+        data: {
+          labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+          datasets: [
+            { label: 'Objetivo Real (RD$)', data: [80000, 110000, 140000, 190000], backgroundColor: '#3B82F6', borderRadius: 8 },
+            { label: 'Meta Proyectada (RD$)', data: [75000, 100000, 130000, 180000], backgroundColor: '#cbd5e1', borderRadius: 8 }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'top', labels: { color: textColor } } },
+          scales: {
+            y: { grid: { color: isDark ? '#1e293b' : '#f1f5f9' }, ticks: { color: textColor } },
+            x: { grid: { display: false }, ticks: { color: textColor } }
+          }
+        }
+      });
+    }
+
+    function actualizarGraficos() {
+      if (!chartCatObj) return;
+
+      const catCounts = { Casual: 0, Streetwear: 0, Calzado: 0, Deportiva: 0, Accesorios: 0 };
+      productos.forEach(p => {
+        if (catCounts[p.categoria] !== undefined) catCounts[p.categoria]++;
+      });
+
+      chartCatObj.data.datasets[0].data = Object.values(catCounts);
+      chartCatObj.update();
     }
   </script>
-
 </body>
 </html>
