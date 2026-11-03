@@ -182,6 +182,10 @@
           <i class="fa-solid fa-chart-line text-base w-5 text-center group-hover:scale-110 transition-transform"></i>
           <span>Reportes & Analytics</span>
         </button>
+        <button onclick="switchTab('diseno')" id="nav-diseno" class="nav-btn w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-slate-300 hover:bg-white/10 hover:text-white transition-all text-left group">
+          <i class="fa-solid fa-palette text-base w-5 text-center group-hover:scale-110 transition-transform"></i>
+          <span>Diseño de la tienda</span>
+        </button>
       </nav>
     </div>
 
@@ -552,6 +556,69 @@
         </div>
       </div>
 
+      <!-- ================= TAB 6: DISEÑO DE LA TIENDA PÚBLICA ================= -->
+      <div id="tab-diseno" class="tab-content hidden space-y-6 fade-in-up">
+        <div>
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-12 h-12 rounded-2xl bg-fuchsia-500/10 text-fuchsia-500 flex items-center justify-center text-xl"><i class="fa-solid fa-palette"></i></div>
+            <div>
+              <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Diseño de la tienda pública</h1>
+              <p class="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">Cambia la apariencia que ven tus clientes sin modificar este panel administrativo.</p>
+            </div>
+          </div>
+          <div class="glass-panel rounded-2xl p-4 mt-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <p class="text-xs uppercase tracking-wider font-extrabold text-slate-400">Diseño actualmente publicado</p>
+              <p id="temaActualNombre" class="text-lg font-extrabold text-slate-900 dark:text-white mt-1">Original NovaShop</p>
+              <p id="temaActualDescripcion" class="text-xs text-slate-500 dark:text-slate-400 mt-1">Diseño original de la tienda.</p>
+            </div>
+            <span id="temaEstado" class="inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-bold bg-emerald-500/10 text-emerald-500"><i class="fa-solid fa-circle-check"></i> Publicado</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+          <article class="glass-panel rounded-3xl overflow-hidden">
+            <div class="h-28 p-4 flex items-end bg-gradient-to-r from-blue-950 via-blue-800 to-blue-500 text-white"><span class="text-2xl font-black">NOVA<span class="text-blue-200">SHOP</span></span></div>
+            <div class="p-5"><h3 class="font-extrabold text-slate-900 dark:text-white">Original NovaShop</h3><p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Azul corporativo y estilo moderno.</p><button onclick="publicarTema('original')" class="w-full rounded-xl bg-electric text-white py-2.5 text-xs font-bold hover:bg-blue-600">Usar diseño original</button></div>
+          </article>
+          <article class="glass-panel rounded-3xl overflow-hidden">
+            <div class="h-28 p-4 flex items-end bg-gradient-to-r from-slate-950 via-purple-950 to-orange-500 text-white"><span class="text-2xl font-black">🎃 HALLOWEEN</span></div>
+            <div class="p-5"><h3 class="font-extrabold text-slate-900 dark:text-white">Halloween</h3><p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Negro, naranja y morado.</p><button onclick="publicarTema('halloween')" class="w-full rounded-xl bg-orange-500 text-white py-2.5 text-xs font-bold hover:bg-orange-600">Publicar Halloween</button></div>
+          </article>
+          <article class="glass-panel rounded-3xl overflow-hidden">
+            <div class="h-28 p-4 flex items-end bg-gradient-to-r from-red-950 via-red-700 to-emerald-600 text-white"><span class="text-2xl font-black">🎄 NAVIDAD</span></div>
+            <div class="p-5"><h3 class="font-extrabold text-slate-900 dark:text-white">Navidad</h3><p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Rojo, verde y dorado.</p><button onclick="publicarTema('navidad')" class="w-full rounded-xl bg-red-700 text-white py-2.5 text-xs font-bold hover:bg-red-800">Publicar Navidad</button></div>
+          </article>
+          <article class="glass-panel rounded-3xl overflow-hidden">
+            <div class="h-28 p-4 flex items-end bg-gradient-to-r from-rose-700 via-pink-500 to-red-400 text-white"><span class="text-2xl font-black">❤️ AMOR</span></div>
+            <div class="p-5"><h3 class="font-extrabold text-slate-900 dark:text-white">San Valentín</h3><p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Rosa, rojo y detalles románticos.</p><button onclick="publicarTema('sanvalentin')" class="w-full rounded-xl bg-pink-600 text-white py-2.5 text-xs font-bold hover:bg-pink-700">Publicar San Valentín</button></div>
+          </article>
+          <article class="glass-panel rounded-3xl overflow-hidden">
+            <div class="h-28 p-4 flex items-end bg-gradient-to-r from-slate-950 via-blue-900 to-amber-500 text-white"><span class="text-2xl font-black">👔 PAPÁ</span></div>
+            <div class="p-5"><h3 class="font-extrabold text-slate-900 dark:text-white">Día del Padre</h3><p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Azul marino, negro y dorado.</p><button onclick="publicarTema('padre')" class="w-full rounded-xl bg-blue-900 text-white py-2.5 text-xs font-bold hover:bg-blue-950">Publicar Día del Padre</button></div>
+          </article>
+          <article class="glass-panel rounded-3xl overflow-hidden">
+            <div class="h-28 p-4 flex items-end bg-gradient-to-r from-pink-200 via-rose-300 to-amber-100 text-rose-900"><span class="text-2xl font-black">🌷 MAMÁ</span></div>
+            <div class="p-5"><h3 class="font-extrabold text-slate-900 dark:text-white">Día de la Madre</h3><p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Tonos pastel, flores y elegancia.</p><button onclick="publicarTema('madre')" class="w-full rounded-xl bg-rose-500 text-white py-2.5 text-xs font-bold hover:bg-rose-600">Publicar Día de la Madre</button></div>
+          </article>
+          <article class="glass-panel rounded-3xl overflow-hidden">
+            <div class="h-28 p-4 flex items-end bg-gradient-to-r from-sky-400 via-yellow-300 to-pink-400 text-slate-900"><span class="text-2xl font-black">🎈 DÍA DEL NIÑO</span></div>
+            <div class="p-5"><h3 class="font-extrabold text-slate-900 dark:text-white">Día del Niño</h3><p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Colores alegres y estilo divertido.</p><button onclick="publicarTema('nino')" class="w-full rounded-xl bg-sky-500 text-white py-2.5 text-xs font-bold hover:bg-sky-600">Publicar Día del Niño</button></div>
+          </article>
+          <article class="glass-panel rounded-3xl overflow-hidden">
+            <div class="h-28 p-4 flex items-end bg-gradient-to-r from-black via-slate-900 to-yellow-400 text-white"><span class="text-2xl font-black">🛍️ BLACK FRIDAY</span></div>
+            <div class="p-5"><h3 class="font-extrabold text-slate-900 dark:text-white">Black Friday</h3><p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Negro, amarillo y detalles de ofertas especiales.</p><button onclick="publicarTema('blackfriday')" class="w-full rounded-xl bg-black text-yellow-300 py-2.5 text-xs font-bold hover:bg-slate-800">Publicar Black Friday</button></div>
+          </article>
+          <article class="glass-panel rounded-3xl overflow-hidden">
+            <div class="h-28 p-4 flex items-end bg-gradient-to-r from-red-500 via-yellow-400 via-green-500 via-blue-500 to-purple-600 text-white"><span class="text-2xl font-black drop-shadow">🏳️‍🌈 MES DEL ORGULLO</span></div>
+            <div class="p-5"><h3 class="font-extrabold text-slate-900 dark:text-white">Mes del Orgullo</h3><p class="text-xs text-slate-500 dark:text-slate-400 mt-1 mb-4">Colores arcoíris, diversidad, respeto e inclusión.</p><button onclick="publicarTema('orgullo')" class="w-full rounded-xl bg-gradient-to-r from-red-500 via-green-500 to-blue-600 text-white py-2.5 text-xs font-bold hover:opacity-90">Publicar Mes del Orgullo</button></div>
+          </article>
+        </div>
+        <div class="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 text-xs text-amber-700 dark:text-amber-300">
+          <i class="fa-solid fa-circle-info mr-2"></i> Al elegir un tema se abrirá la tienda pública en otra pestaña con ese diseño. Coloca este panel y <strong>index.html y las pantallas de temporada</strong> en la misma carpeta. No necesitas dominio ni servidor.
+        </div>
+      </div>
+
     </div>
 
     <!-- FOOTER GENERAL -->
@@ -692,6 +759,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       initDarkMode();
       cargarStorage();
+      actualizarEstadoTema();
       renderAll();
       initCharts();
     });
@@ -1200,6 +1268,44 @@
       link.href = URL.createObjectURL(blob);
       link.download = nombreArchivo;
       link.click();
+    }
+
+    // TEMAS DE LA TIENDA PÚBLICA (separados del diseño del panel)
+    const TEMAS_PUBLICOS = {
+      original: { nombre: 'Original NovaShop', descripcion: 'Diseño original de la tienda.', emoji: '✨' },
+      halloween: { nombre: 'Halloween', descripcion: 'Temporada de Halloween: negro, naranja y morado.', emoji: '🎃' },
+      navidad: { nombre: 'Navidad', descripcion: 'Temporada navideña: rojo, verde y dorado.', emoji: '🎄' },
+      sanvalentin: { nombre: 'San Valentín', descripcion: 'Temporada romántica: rosa y rojo.', emoji: '❤️' },
+      padre: { nombre: 'Día del Padre', descripcion: 'Edición especial para papá.', emoji: '👔' },
+      madre: { nombre: 'Día de la Madre', descripcion: 'Edición especial para mamá.', emoji: '🌷' },
+      nino: { nombre: 'Día del Niño', descripcion: 'Edición colorida para celebrar a los niños.', emoji: '🎈' },
+      blackfriday: { nombre: 'Black Friday', descripcion: 'Edición de ofertas: negro, amarillo y promociones especiales.', emoji: '🛍️' },
+      orgullo: { nombre: 'Mes del Orgullo', descripcion: 'Edición arcoíris que celebra la diversidad, el respeto y la inclusión.', emoji: '🏳️‍🌈' }
+    };
+
+    function publicarTema(tema) {
+      if (!TEMAS_PUBLICOS[tema]) return;
+      const configuracion = { tema, actualizado: new Date().toISOString() };
+      try { localStorage.setItem('novashop_public_theme', JSON.stringify(configuracion)); } catch (e) {}
+      actualizarEstadoTema();
+      showToast('Diseño seleccionado', `Abriendo la tienda pública con el tema ${TEMAS_PUBLICOS[tema].nombre}.`, 'fa-palette');
+      // Funciona abriendo archivos HTML directamente, sin dominio ni servidor.
+      // El panel abre el index.html actualizado, que debe estar en la misma carpeta.
+      const tiendaUrl = new URL('index.html', window.location.href);
+      tiendaUrl.searchParams.set('tema', tema);
+      window.open(tiendaUrl.href, '_blank');
+    }
+
+    function actualizarEstadoTema() {
+      let configuracion = { tema: 'original' };
+      try {
+        configuracion = JSON.parse(localStorage.getItem('novashop_public_theme')) || configuracion;
+      } catch (e) { configuracion = { tema: 'original' }; }
+      const tema = TEMAS_PUBLICOS[configuracion.tema] ? configuracion.tema : 'original';
+      const nombre = document.getElementById('temaActualNombre');
+      const descripcion = document.getElementById('temaActualDescripcion');
+      if (nombre) nombre.textContent = TEMAS_PUBLICOS[tema].nombre;
+      if (descripcion) descripcion.textContent = TEMAS_PUBLICOS[tema].descripcion;
     }
 
     // NAVEGACIÓN Y CAMBIO DE PESTAÑAS

@@ -1,149 +1,96 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¡Pedido Confirmado! | NovaShop</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            nova: '#071A42',
-            electric: '#2563EB',
-            'nova-dark': '#040f28',
-            'electric-hover': '#1d4ed8'
-          }
-        }
-      }
-    }
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguimiento de pedido | NovaShop</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{nova:'#071A42',electric:'#2563EB','nova-dark':'#040f28','electric-hover':'#1d4ed8'}}}}</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  body{background:linear-gradient(135deg,#f8fafc 0%,#eef4ff 100%)}
+  .step-line{height:4px;background:#e2e8f0;position:absolute;left:12%;right:12%;top:20px;z-index:0}
+  .step-dot{width:42px;height:42px;border-radius:999px;display:grid;place-items:center;margin:auto;position:relative;z-index:1;border:4px solid white;box-shadow:0 2px 8px #0f172a18}
+  @media print{header,.no-print,#searchPanel,footer{display:none!important}body{background:white}.print-card{box-shadow:none!important;border:1px solid #ddd!important}}
+</style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
-
-  <!-- Header Fijo / Navigation -->
-  <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-slate-200/80">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-      
-<a href="index.html" class="flex items-center gap-2">
-    <img src="img/logo..png"
-         alt="Logo de NovaShop"
-         class="w-12 h-10 object-contain">
-
-    <span class="text-3xl font-black text-nova tracking-tight">
-        Nova<span class="text-electric">Shop</span>
-    </span>
-</a>
-
-
-      <div class="flex items-center gap-3">
-        <a href="index.html" class="border border-nova/20 hover:border-nova text-nova font-bold px-4 py-2 rounded-xl text-xs transition-all">
-          <i class="fa-solid fa-house mr-1"></i> Inicio
-        </a>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Contenido Principal -->
-  <main class="max-w-2xl mx-auto px-4 sm:px-6 py-12 md:py-16 flex-grow flex items-center justify-center w-full">
-    <div class="bg-white rounded-3xl p-8 sm:p-12 shadow-xl shadow-nova/5 border border-slate-100 text-center relative overflow-hidden w-full">
-      
-      <!-- Detalle decorativo superior -->
-      <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-emerald-400 via-electric to-nova"></div>
-
-      <!-- Ícono de Éxito Animado -->
-      <div class="relative inline-flex items-center justify-center w-24 h-24 bg-emerald-50 text-emerald-500 rounded-full mb-6">
-        <span class="absolute inset-0 rounded-full bg-emerald-200/50 animate-ping opacity-75"></span>
-        <i class="fa-solid fa-circle-check text-6xl relative z-10"></i>
-      </div>
-
-      <span class="bg-emerald-100 text-emerald-800 text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider block w-fit mx-auto mb-3">
-        Orden Completada
-      </span>
-
-      <h1 class="text-3xl sm:text-4xl font-black text-nova tracking-tight">¡Gracias por tu compra!</h1>
-      
-      <!-- Número de pedido generado dinámicamente -->
-      <p class="text-slate-500 text-sm mt-2">
-        Número de orden: <span id="orderNumber" class="font-black text-nova">#NS-00000</span>
-      </p>
-
-      <!-- Mensaje descriptivo y prototipo -->
-      <div class="mt-6 p-4 bg-slate-50 rounded-2xl border border-slate-100 text-left text-xs text-slate-600 space-y-2">
-        <div class="flex items-center gap-2 text-nova font-bold text-sm">
-          <i class="fa-solid fa-envelope-circle-check text-electric"></i>
-          <span>Confirmación de la demostración</span>
-        </div>
-        <p class="leading-relaxed">
-          Esta es una representación visual de confirmación para el prototipo. Para procesar pedidos reales y enviar notificaciones por correo, la tienda debe integrarse a un sistema backend con base de datos.
-        </p>
-      </div>
-
-      <!-- Estado / Pasos del Envío -->
-      <div class="mt-8 pt-8 border-t border-slate-100 text-left">
-        <h3 class="font-black text-nova text-sm uppercase tracking-wider mb-6">Estado del pedido</h3>
-        
-        <div class="grid grid-cols-3 gap-2 relative">
-          <!-- Línea conectora -->
-          <div class="absolute top-4 left-1/6 right-1/6 h-1 bg-slate-200 -z-0"></div>
-          
-          <div class="text-center relative z-10">
-            <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold text-xs mx-auto shadow-md">
-              <i class="fa-solid fa-check"></i>
-            </div>
-            <p class="font-bold text-xs text-nova mt-2">Recibido</p>
-            <p class="text-[10px] text-slate-400">Procesado</p>
-          </div>
-
-          <div class="text-center relative z-10">
-            <div class="w-8 h-8 rounded-full bg-electric text-white flex items-center justify-center font-bold text-xs mx-auto shadow-md animate-bounce">
-              <i class="fa-solid fa-box font-bold"></i>
-            </div>
-            <p class="font-bold text-xs text-nova mt-2">En Preparación</p>
-            <p class="text-[10px] text-slate-400">Empacando</p>
-          </div>
-
-          <div class="text-center relative z-10 opacity-50">
-            <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-xs mx-auto">
-              <i class="fa-solid fa-truck-fast"></i>
-            </div>
-            <p class="font-bold text-xs text-slate-600 mt-2">En camino</p>
-            <p class="text-[10px] text-slate-400">24-48 hrs</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Botones de Acción -->
-      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a href="index.html" class="w-full sm:w-auto bg-electric hover:bg-electric-hover text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-lg shadow-electric/20 transition-all flex items-center justify-center gap-2">
-          <i class="fa-solid fa-bag-shopping"></i>
-          <span>Seguir comprando</span>
-        </a>
-        
-        <button onclick="window.print()" class="w-full sm:w-auto border border-slate-200 hover:border-slate-300 text-slate-700 bg-white px-6 py-3.5 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2">
-          <i class="fa-solid fa-print"></i>
-          <span>Imprimir Recibo</span>
-        </button>
-      </div>
-
+<body class="min-h-screen text-slate-800 flex flex-col">
+<header class="bg-white/90 backdrop-blur-lg border-b border-slate-200 sticky top-0 z-30">
+ <nav class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+  <a href="index.html" class="flex items-center gap-2"><img src="img/logo..png" alt="NovaShop" class="w-10 h-10 object-contain" onerror="this.style.display='none'"><span class="text-2xl font-black text-nova">Nova<span class="text-electric">Shop</span></span></a>
+  <a href="index.html" class="text-sm font-bold text-nova hover:text-electric"><i class="fa-solid fa-arrow-left mr-2"></i>Volver a la tienda</a>
+ </nav>
+</header>
+<main class="w-full max-w-5xl mx-auto px-4 sm:px-6 py-9 sm:py-12 flex-1">
+ <section class="text-center mb-8">
+  <div class="w-20 h-20 rounded-3xl bg-emerald-100 text-emerald-600 grid place-items-center text-4xl mx-auto mb-5 shadow-sm"><i class="fa-solid fa-check"></i></div>
+  <span class="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-800 px-4 py-1.5 text-xs font-black uppercase tracking-wider"><i class="fa-solid fa-circle-check"></i> Pedido registrado</span>
+  <h1 class="text-3xl sm:text-4xl font-black text-nova mt-4">¡Gracias por tu compra!</h1>
+  <p class="text-slate-500 mt-2 max-w-xl mx-auto">Tu pedido ha sido guardado. Desde aquí puedes consultar su estado y ver cuándo avance cada etapa.</p>
+ </section>
+ <section class="grid lg:grid-cols-3 gap-6 items-start">
+  <div class="lg:col-span-2 space-y-6">
+   <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/60 border border-slate-100 print-card">
+    <div class="flex flex-wrap justify-between gap-3 items-start border-b border-slate-100 pb-5">
+     <div><p class="text-xs font-bold uppercase tracking-widest text-slate-400">Número de pedido</p><p id="orderNumber" class="text-2xl font-black text-nova mt-1">—</p><p id="orderDate" class="text-xs text-slate-400 mt-1"></p></div>
+     <span id="statusBadge" class="rounded-full bg-amber-100 text-amber-800 px-4 py-2 text-xs font-black">En espera</span>
     </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="py-6 border-t border-slate-200 text-center text-xs text-slate-500 bg-white">
-    <p>© 2026 NovaShop. Todos los derechos reservados.</p>
-  </footer>
-
-  <script>
-    // Generar un número de orden aleatorio único al cargar la página
-    document.addEventListener('DOMContentLoaded', () => {
-      const orderEl = document.getElementById('orderNumber');
-      const randomNum = Math.floor(10000 + Math.random() * 90000);
-      orderEl.textContent = `#NS-${randomNum}`;
-    });
-  </script>
-
-</body>
-</html>
+    <div class="pt-6">
+     <div class="flex items-center justify-between mb-6"><h2 class="font-black text-nova text-lg">Seguimiento del pedido</h2><span class="text-xs text-slate-400"><i class="fa-solid fa-rotate mr-1"></i>Se actualiza automáticamente</span></div>
+     <div id="timeline" class="relative grid grid-cols-4 gap-1"></div>
+     <div id="statusMessage" class="mt-7 rounded-2xl bg-blue-50 border border-blue-100 p-4 text-sm text-blue-900"><i class="fa-solid fa-circle-info mr-2"></i>Estamos preparando la información de tu pedido.</div>
+    </div>
+   </div>
+   <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-lg shadow-slate-200/40 border border-slate-100 print-card">
+    <h2 class="font-black text-nova text-lg mb-5"><i class="fa-solid fa-box-open text-electric mr-2"></i>Resumen de tu compra</h2>
+    <div id="productList" class="space-y-3"><p class="text-sm text-slate-400">Cargando detalles...</p></div>
+    <div class="border-t border-slate-100 mt-5 pt-4 space-y-2 text-sm"><div class="flex justify-between text-slate-500"><span>Subtotal</span><b id="subtotal">—</b></div><div class="flex justify-between text-slate-500"><span>Envío</span><b id="shipping">—</b></div><div class="flex justify-between text-nova text-lg font-black pt-2"><span>Total</span><span id="total">—</span></div></div>
+   </div>
+  </div>
+  <aside class="space-y-6">
+   <div class="bg-white rounded-3xl p-6 shadow-lg shadow-slate-200/40 border border-slate-100">
+    <h2 class="font-black text-nova mb-4">Datos de entrega</h2>
+    <div class="space-y-4 text-sm"><div><p class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Recibe</p><p id="customerName" class="font-bold text-slate-800 mt-1">—</p></div><div><p class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Correo</p><p id="customerEmail" class="font-semibold break-all mt-1">—</p></div><div><p class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Dirección</p><p id="customerAddress" class="font-semibold mt-1">—</p></div><div><p class="text-[11px] uppercase tracking-wider text-slate-400 font-bold">Método de pago</p><p id="paymentMethod" class="font-semibold mt-1">—</p></div></div>
+   </div>
+   <div class="bg-nova text-white rounded-3xl p-6 shadow-xl shadow-nova/20">
+    <div class="w-11 h-11 rounded-2xl bg-white/10 grid place-items-center text-xl mb-4"><i class="fa-solid fa-headset"></i></div>
+    <h3 class="font-black text-lg">¿Necesitas ayuda?</h3><p class="text-sm text-blue-100 mt-2 leading-relaxed">Ten a mano tu número de pedido para consultar cualquier detalle con nuestro equipo.</p>
+    <a href="contacto.html" class="inline-flex mt-5 bg-white text-nova rounded-xl px-4 py-3 text-sm font-black hover:bg-blue-50 transition"><i class="fa-regular fa-message mr-2"></i>Contactar soporte</a>
+   </div>
+  </aside>
+ </section>
+ <section id="searchPanel" class="mt-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-lg shadow-slate-200/40 no-print">
+  <div class="flex items-start gap-3"><div class="w-10 h-10 rounded-xl bg-blue-50 text-electric grid place-items-center"><i class="fa-solid fa-magnifying-glass"></i></div><div><h2 class="font-black text-nova">Consultar otro pedido</h2><p class="text-sm text-slate-500 mt-1">Introduce el número de pedido y el correo utilizado en la compra.</p></div></div>
+  <form id="searchForm" class="mt-5 grid sm:grid-cols-[1fr_1fr_auto] gap-3"><input id="searchOrder" required placeholder="Ej. NS-48291" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric"><input id="searchEmail" required type="email" placeholder="Correo electrónico" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none focus:border-electric"><button class="rounded-xl bg-electric hover:bg-electric-hover text-white font-black px-5 py-3 text-sm"><i class="fa-solid fa-magnifying-glass mr-2"></i>Buscar</button></form>
+  <p id="searchMessage" class="hidden text-sm mt-3"></p>
+ </section>
+ <div class="flex flex-wrap justify-center gap-3 mt-7 no-print"><a href="index.html" class="rounded-xl bg-electric hover:bg-electric-hover text-white px-6 py-3 font-black text-sm"><i class="fa-solid fa-bag-shopping mr-2"></i>Seguir comprando</a><button onclick="window.print()" class="rounded-xl bg-white border border-slate-200 hover:border-slate-300 px-6 py-3 font-black text-sm text-slate-700"><i class="fa-solid fa-print mr-2"></i>Imprimir comprobante</button></div>
+ <p class="text-center text-xs text-slate-400 mt-6">NovaShop · Tu estilo, tu esencia</p>
+</main>
+<footer class="bg-white border-t border-slate-200 text-center py-5 text-xs text-slate-400">© 2026 NovaShop. Todos los derechos reservados.</footer>
+<script>
+const money=n=>'RD$ '+Number(n||0).toLocaleString('es-DO');
+const getOrders=()=>{try{return JSON.parse(localStorage.getItem('novashop_pro_orders_v2')||'[]')}catch{return[]}};
+let currentOrderId='';
+function getParam(){return new URLSearchParams(location.search).get('pedido')||localStorage.getItem('novashop_last_order_id')||'';}
+function stageFor(status){return {'En espera':0,'En preparación':1,'En camino':2,'Entregado':3}[status]??-1;}
+function renderOrder(order){
+ currentOrderId=order.id; document.getElementById('orderNumber').textContent=order.id; document.getElementById('orderDate').textContent='Registrado: '+(order.fecha||'Fecha no disponible');
+ const badge=document.getElementById('statusBadge'); badge.textContent=order.estado||'En espera';
+ badge.className='rounded-full px-4 py-2 text-xs font-black '+(order.estado==='Entregado'?'bg-emerald-100 text-emerald-800':order.estado==='Cancelado'?'bg-rose-100 text-rose-800':order.estado==='En camino'?'bg-blue-100 text-blue-800':'bg-amber-100 text-amber-800');
+ const stages=[['Recibido','fa-clipboard-check'],['En preparación','fa-box-open'],['En camino','fa-truck-fast'],['Entregado','fa-house-circle-check']]; const active=stageFor(order.estado);
+ document.getElementById('timeline').innerHTML='<div class="step-line"></div>'+stages.map((s,i)=>{let done=active>=i,now=active===i;return `<div class="text-center relative z-10"><div class="step-dot ${done?'bg-electric text-white':'bg-slate-100 text-slate-400'} ${now?'ring-4 ring-blue-100':''}"><i class="fa-solid ${s[1]}"></i></div><p class="text-[10px] sm:text-xs font-bold mt-3 ${done?'text-nova':'text-slate-400'}">${s[0]}</p></div>`}).join('');
+ const messages={'En espera':'Hemos recibido tu pedido. Pronto comenzaremos a prepararlo.','En preparación':'Estamos preparando y empacando tus productos.','En camino':'¡Tu pedido va en camino! Mantente atento a la entrega.','Entregado':'¡Pedido entregado! Gracias por comprar en NovaShop.','Cancelado':'Este pedido fue cancelado. Si crees que es un error, contacta con soporte.'};
+ const msg=document.getElementById('statusMessage');msg.className='mt-7 rounded-2xl p-4 text-sm '+(order.estado==='Cancelado'?'bg-rose-50 border border-rose-100 text-rose-900':order.estado==='Entregado'?'bg-emerald-50 border border-emerald-100 text-emerald-900':'bg-blue-50 border border-blue-100 text-blue-900');msg.innerHTML='<i class="fa-solid fa-circle-info mr-2"></i>'+ (messages[order.estado]||'El estado de tu pedido se actualizará aquí.');
+ const items=order.detalleProductos||[];document.getElementById('productList').innerHTML=items.length?items.map(p=>`<div class="flex justify-between gap-3 text-sm"><div><p class="font-bold text-nova">${escapeHtml(p.nombre)}</p><p class="text-xs text-slate-400">Cantidad: ${Number(p.cantidad)||1}</p></div><b class="text-slate-700">${money((Number(p.precio)||0)*(Number(p.cantidad)||1))}</b></div>`).join(''):(order.productos||[]).map(n=>`<p class="text-sm font-semibold">${escapeHtml(n)}</p>`).join('')||'<p class="text-sm text-slate-400">No hay detalle de productos disponible.</p>';
+ const subtotal=items.length?items.reduce((s,p)=>s+(Number(p.precio)||0)*(Number(p.cantidad)||1),0):Number(order.total||0);const shipping=Math.max(0,Number(order.total||0)-subtotal);
+ document.getElementById('subtotal').textContent=money(subtotal);document.getElementById('shipping').textContent=shipping?money(shipping):'Gratis';document.getElementById('total').textContent=money(order.total);
+ document.getElementById('customerName').textContent=order.cliente||'—';document.getElementById('customerEmail').textContent=order.email||'—';document.getElementById('customerAddress').textContent=[order.direccion,order.sector,order.provincia].filter(Boolean).join(', ')||'No especificada';document.getElementById('paymentMethod').textContent=({entrega:'Pago contra entrega',tarjeta:'Tarjeta bancaria (modo demostración)',transferencia:'Transferencia bancaria'}[order.metodoPago]||order.metodoPago||'—');
+}
+function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function loadById(id,email=''){const o=getOrders().find(p=>String(p.id).toUpperCase()===String(id).trim().toUpperCase()&&(!email||String(p.email||'').toLowerCase()===email.trim().toLowerCase()));if(o){renderOrder(o);return true;}return false;}
+document.addEventListener('DOMContentLoaded',()=>{const id=getParam();if(id&&loadById(id)){document.getElementById('searchOrder').value=id;}else{document.getElementById('orderNumber').textContent='Aún no hay pedido';document.getElementById('statusBadge').textContent='Sin pedido';document.getElementById('statusMessage').textContent='Cuando completes una compra, aquí aparecerá el seguimiento.';document.getElementById('productList').innerHTML='<p class="text-sm text-slate-400">Todavía no hay una compra registrada.</p>';}});
+document.getElementById('searchForm').addEventListener('submit',e=>{e.preventDefault();const ok=loadById(document.getElementById('searchOrder').value,document.getElementById('searchEmail').value);const m=document.getElementById('searchMessage');m.classList.remove('hidden');m.className='text-sm mt-3 '+(ok?'text-emerald-700':'text-rose-600');m.textContent=ok?'Pedido encontrado. Se muestra su estado actual.':'No encontramos un pedido con ese número y correo. Verifica los datos.';});
+window.addEventListener('storage',e=>{if(e.key==='novashop_pro_orders_v2'&&currentOrderId)loadById(currentOrderId);});
+setInterval(()=>{if(currentOrderId)loadById(currentOrderId);},4000);
+</script>
+</body></html>

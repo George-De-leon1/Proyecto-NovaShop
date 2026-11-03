@@ -20,6 +20,30 @@
     }
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style id="novashop-global-season-styles">
+:root{--ns-primary:#071A42;--ns-accent:#2563eb;--ns-page:#f8fafc;--ns-surface:#ffffff;--ns-ink:#0f172a;--ns-border:#e2e8f0}
+body[data-tema]{background-color:var(--ns-page)!important;color:var(--ns-ink)}
+body[data-tema] header{border-color:color-mix(in srgb,var(--ns-accent) 25%,var(--ns-border))!important}
+body[data-tema] header,body[data-tema] main .bg-white,body[data-tema] main .bg-slate-50,body[data-tema] main .bg-white\/95{background-color:var(--ns-surface)!important}
+body[data-tema] main .bg-nova,body[data-tema] footer.bg-nova{background:linear-gradient(125deg,var(--ns-primary),color-mix(in srgb,var(--ns-primary) 72%,var(--ns-accent)))!important}
+body[data-tema] .text-nova{color:var(--ns-primary)!important}
+body[data-tema] .text-electric{color:var(--ns-accent)!important}
+body[data-tema] .bg-electric{background-color:var(--ns-accent)!important}
+body[data-tema] .border-electric{border-color:var(--ns-accent)!important}
+body[data-tema] main .border-slate-200,body[data-tema] main .border-slate-300{border-color:var(--ns-border)!important}
+body[data-tema] main .text-slate-900{color:var(--ns-ink)!important}
+body[data-tema] main .text-slate-600,body[data-tema] main .text-slate-700{color:color-mix(in srgb,var(--ns-ink) 78%,#64748b)!important}
+body[data-tema] main button:not(.ns-season-banner),body[data-tema] main a[class*="bg-nova"],body[data-tema] main a[class*="bg-electric"]{transition:background-color .2s,border-color .2s,transform .2s}
+body[data-tema] main button:focus-visible,body[data-tema] main a:focus-visible{outline:3px solid color-mix(in srgb,var(--ns-accent) 55%,transparent);outline-offset:3px}
+body[data-tema="halloween"]{background-image:radial-gradient(circle at 8% 4%,#f9731618,transparent 26%),radial-gradient(circle at 92% 25%,#7c3aed14,transparent 28%)}
+body[data-tema="navidad"]{background-image:radial-gradient(circle at 8% 4%,#16a34a16,transparent 26%),radial-gradient(circle at 92% 25%,#dc262618,transparent 28%)}
+body[data-tema="sanvalentin"],body[data-tema="madre"]{background-image:radial-gradient(circle at 8% 4%,#ec489918,transparent 26%),radial-gradient(circle at 92% 25%,#fb718518,transparent 28%)}
+body[data-tema="padre"]{background-image:radial-gradient(circle at 8% 4%,#ca8a0418,transparent 26%),radial-gradient(circle at 92% 25%,#1d4ed818,transparent 28%)}
+body[data-tema="nino"]{background-image:radial-gradient(circle at 8% 4%,#0ea5e918,transparent 26%),radial-gradient(circle at 92% 25%,#f59e0b18,transparent 28%)}
+.ns-season-banner{position:relative;z-index:35;display:flex;justify-content:center;align-items:center;gap:12px;padding:10px 16px;text-align:center;color:white;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;background:linear-gradient(90deg,var(--ns-primary),var(--ns-accent));box-shadow:0 5px 18px color-mix(in srgb,var(--ns-primary) 18%,transparent)}
+.ns-season-banner span:first-child,.ns-season-banner span:last-child{font-size:17px}
+body[data-tema]:not([data-tema="original"]) main section[class*="rounded"],body[data-tema]:not([data-tema="original"]) main article[class*="rounded"]{border-color:color-mix(in srgb,var(--ns-accent) 22%,var(--ns-border))}
+</style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
 
@@ -304,5 +328,49 @@
       }, 3000);
     }
   </script>
+<script id="novashop-global-season-engine">
+(function(){
+ const THEMES={
+  original:{primary:'#071A42',accent:'#2563eb',page:'#f8fafc',surface:'#ffffff',ink:'#0f172a',border:'#e2e8f0',label:'NovaShop',icon:'✨'},
+  halloween:{primary:'#241032',accent:'#f97316',page:'#fff7ed',surface:'#fffaf5',ink:'#2b1738',border:'#fed7aa',label:'Halloween',icon:'🎃'},
+  navidad:{primary:'#14532d',accent:'#dc2626',page:'#f0fdf4',surface:'#fffefa',ink:'#173b27',border:'#bbf7d0',label:'Navidad',icon:'🎄'},
+  sanvalentin:{primary:'#881337',accent:'#ec4899',page:'#fff1f2',surface:'#fffafb',ink:'#4c1029',border:'#fecdd3',label:'San Valentín',icon:'❤️'},
+  padre:{primary:'#172554',accent:'#ca8a04',page:'#f8fafc',surface:'#ffffff',ink:'#172554',border:'#dbeafe',label:'Día del Padre',icon:'👔'},
+  madre:{primary:'#831843',accent:'#f472b6',page:'#fff1f2',surface:'#fffafd',ink:'#501536',border:'#fbcfe8',label:'Día de la Madre',icon:'🌷'},
+  nino:{primary:'#075985',accent:'#f59e0b',page:'#f0f9ff',surface:'#ffffff',ink:'#0c4a6e',border:'#bae6fd',label:'Día del Niño',icon:'🎈'}
+ };
+ function readSavedTheme(){
+  try{
+   const raw=localStorage.getItem('novashop_public_theme');
+   if(!raw)return 'original';
+   let value;
+   try{value=JSON.parse(raw)}catch(_){value=raw}
+   if(typeof value==='string')return value;
+   if(value&&typeof value==='object')return value.tema||value.theme||value.temporada||'original';
+  }catch(e){}
+  return 'original';
+ }
+ function applyTheme(){
+  const requested=new URLSearchParams(location.search).get('tema');
+  const key=requested&&THEMES[requested]?requested:readSavedTheme();
+  const theme=THEMES[key]?key:'original';
+  const t=THEMES[theme],root=document.documentElement,body=document.body;
+  if(!body)return;
+  body.dataset.tema=theme;root.dataset.tema=theme;
+  const vars={'--ns-primary':t.primary,'--ns-accent':t.accent,'--ns-page':t.page,'--ns-surface':t.surface,'--ns-ink':t.ink,'--ns-border':t.border};
+  Object.keys(vars).forEach(k=>root.style.setProperty(k,vars[k]));
+  document.querySelectorAll('.ns-season-banner,.season-ribbon').forEach(el=>el.remove());
+  if(theme!=='original'){
+   const banner=document.createElement('div');banner.className='ns-season-banner';
+   banner.innerHTML='<span aria-hidden="true">'+t.icon+'</span><span>Edición especial · '+t.label+' · NovaShop</span><span aria-hidden="true">'+t.icon+'</span>';
+   const header=body.querySelector('header');
+   if(header)header.insertAdjacentElement('afterend',banner);else body.insertAdjacentElement('afterbegin',banner);
+  }
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applyTheme,{once:true});else applyTheme();
+ window.addEventListener('pageshow',applyTheme);
+ window.addEventListener('storage',e=>{if(e.key==='novashop_public_theme')applyTheme()});
+})();
+</script>
 </body>
 </html>

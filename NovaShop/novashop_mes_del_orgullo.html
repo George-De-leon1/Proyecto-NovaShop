@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaShop | Mes del Orgullo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{font-family:Montserrat,sans-serif}body{background:#fff;color:#172033}
+    .rainbow{background:linear-gradient(110deg,#e8414b 0%,#f59e0b 20%,#facc15 38%,#22a06b 57%,#2785d8 76%,#8b5cf6 100%)}
+    .hero{background:linear-gradient(90deg,rgba(15,23,42,.88),rgba(15,23,42,.2)),url('https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1800&q=85') center/cover}
+    .btn{background:#172033;color:white}.btn:hover{background:#334155}
+    .product{box-shadow:0 12px 35px rgba(15,23,42,.08);border:1px solid #edf0f5}.product img{transition:transform .35s}.product:hover img{transform:scale(1.06)}
+  </style>
+</head>
+<body>
+  <div class="rainbow h-2"></div>
+  <div class="bg-slate-900 text-white text-center py-2 px-4 text-xs sm:text-sm font-semibold">NOVASHOP CELEBRA LA DIVERSIDAD · RESPETO, LIBERTAD Y AUTENTICIDAD</div>
+  <header class="bg-white/95 sticky top-0 z-20 border-b border-slate-100">
+    <nav class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between gap-5">
+      <a href="index.html" class="text-2xl font-black tracking-tight text-slate-900">NOVA<span class="text-indigo-600">SHOP</span></a>
+      <div class="hidden md:flex gap-8 text-sm font-semibold text-slate-600"><a href="#coleccion" class="hover:text-indigo-600">Colección</a><a href="#inspiracion" class="hover:text-indigo-600">Inspiración</a><a href="#nosotros" class="hover:text-indigo-600">Nosotros</a></div>
+      <a href="#coleccion" class="btn rounded-full px-5 py-2 text-sm font-bold">Explorar</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero min-h-[570px] flex items-center text-white">
+      <div class="max-w-7xl mx-auto w-full px-6 py-20">
+        <span class="inline-flex rainbow text-white text-xs font-black tracking-widest px-4 py-2 rounded-full">EDICIÓN ESPECIAL · PRIDE</span>
+        <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black leading-[.98] max-w-4xl mt-7">VISTE CON<br><span class="text-yellow-300">ORGULLO.</span></h1>
+        <p class="text-slate-100 text-lg sm:text-xl max-w-xl mt-7">Celebra lo que te hace único. Una colección llena de color, personalidad y libertad para expresar tu estilo.</p>
+        <a href="#coleccion" class="inline-block bg-white text-slate-900 rounded-lg px-8 py-4 mt-9 font-black hover:bg-slate-100">DESCUBRIR COLECCIÓN</a>
+      </div>
+    </section>
+    <section class="rainbow py-1"></section>
+    <section id="inspiracion" class="max-w-5xl mx-auto px-6 py-14 text-center"><p class="text-indigo-600 text-xs font-black tracking-[.3em]">TODOS LOS ESTILOS TIENEN SU LUGAR</p><h2 class="text-3xl sm:text-4xl font-black mt-3">La moda es una forma de expresión.</h2><p class="text-slate-600 leading-7 mt-4 max-w-3xl mx-auto">En NovaShop creemos que cada persona merece vestir con confianza y autenticidad. Esta edición celebra la diversidad, la inclusión y el respeto, sin dejar de lado lo más importante: tu estilo.</p></section>
+    <section id="coleccion" class="max-w-7xl mx-auto px-6 pb-16">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-8"><div><p class="text-indigo-600 text-xs font-black tracking-[.3em]">COLORES QUE TE REPRESENTAN</p><h2 class="text-3xl sm:text-4xl font-black mt-2">Colección Pride</h2></div><p class="text-slate-500 text-sm">Exprésate a tu manera.</p></div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <article class="product rounded-2xl overflow-hidden"><div class="overflow-hidden"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80" alt="Camiseta blanca para personalizar"></div><div class="p-5"><p class="text-xs text-indigo-600 font-bold">BÁSICOS</p><h3 class="font-bold mt-1">T-shirt esencial</h3><p class="font-black text-xl mt-3">RD$ 1,250</p><button class="btn w-full rounded-lg py-3 mt-4">Agregar al carrito</button></div></article>
+        <article class="product rounded-2xl overflow-hidden"><div class="overflow-hidden"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=700&q=80" alt="Chaqueta de estilo urbano"></div><div class="p-5"><p class="text-xs text-indigo-600 font-bold">STREETWEAR</p><h3 class="font-bold mt-1">Chaqueta urbana</h3><p class="font-black text-xl mt-3">RD$ 3,000</p><button class="btn w-full rounded-lg py-3 mt-4">Agregar al carrito</button></div></article>
+        <article class="product rounded-2xl overflow-hidden"><div class="overflow-hidden"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=700&q=80" alt="Conjunto de moda"></div><div class="p-5"><p class="text-xs text-indigo-600 font-bold">CASUAL</p><h3 class="font-bold mt-1">Look colorido</h3><p class="font-black text-xl mt-3">RD$ 2,000</p><button class="btn w-full rounded-lg py-3 mt-4">Agregar al carrito</button></div></article>
+        <article class="product rounded-2xl overflow-hidden"><div class="overflow-hidden"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80" alt="Calzado deportivo"></div><div class="p-5"><p class="text-xs text-indigo-600 font-bold">DEPORTIVA</p><h3 class="font-bold mt-1">Sneakers urbanos</h3><p class="font-black text-xl mt-3">RD$ 3,000</p><button class="btn w-full rounded-lg py-3 mt-4">Agregar al carrito</button></div></article>
+      </div>
+    </section>
+    <section id="nosotros" class="bg-slate-900 text-white py-16"><div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8"><div><p class="text-pink-300 text-xs font-black tracking-[.3em]">NOVASHOP · TU ESTILO, TU ESENCIA</p><h2 class="text-3xl sm:text-4xl font-black mt-3">Sé tú. Viste a tu manera.</h2><p class="text-slate-300 mt-3 max-w-xl">La autenticidad nunca pasa de moda. Gracias por formar parte de una comunidad donde cada estilo cuenta.</p></div><a href="#coleccion" class="rainbow rounded-lg px-8 py-4 text-white font-black">VER COLECCIÓN</a></div></section>
+  </main>
+  <footer class="py-8 text-center text-slate-500 text-sm">© 2026 NovaShop · Tu estilo, tu esencia</footer>
+</body>
+</html>

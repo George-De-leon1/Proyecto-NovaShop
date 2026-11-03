@@ -27,6 +27,98 @@
     }
     .animate-badge { animation: pulse-badge 2s infinite ease-in-out; }
   </style>
+
+  <style id="temaVisualActivo">
+    :root{--tema-principal:#071A42;--tema-acento:#2563eb;--tema-fondo:#f8fafc;--tema-texto:#0f172a}
+    body{background:var(--tema-fondo);transition:background .35s ease}
+    header{border-bottom:3px solid var(--tema-acento)!important}
+    header nav a span{color:var(--tema-principal)!important}
+    #inicioCarrusel{background:var(--tema-principal)!important}
+    #inicioCarrusel:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,color-mix(in srgb,var(--tema-principal) 78%,transparent),transparent 75%);z-index:1}
+    #inicioCarrusel button{background:var(--tema-acento)!important;border:2px solid rgba(255,255,255,.55);position:relative;z-index:3}
+    #ofertas>div:first-child{background:linear-gradient(115deg,var(--tema-principal),var(--tema-acento))!important}
+    #tendencias>div:first-child{background:linear-gradient(115deg,var(--tema-principal),var(--tema-acento))!important;border-color:var(--tema-acento)!important}
+    h2.text-nova,h2.text-3xl{ text-decoration-color:var(--tema-acento)}
+    .season-ribbon{display:none}
+    body.tema-especial .season-ribbon{display:block}
+  </style>
+
+  <style id="novashop-new-theme-polish">
+    body.tema-blackfriday{background:#f5f5f4;color:#171717}
+    body.tema-blackfriday header{background:#090909!important;border-color:#facc15!important}
+    body.tema-blackfriday header nav a span{color:#facc15!important}
+    body.tema-blackfriday #inicioCarrusel{background:#090909!important}
+    body.tema-blackfriday #inicioCarrusel button,body.tema-blackfriday #ofertas a{background:#facc15!important;color:#090909!important}
+    body.tema-blackfriday h2.text-nova,body.tema-blackfriday h3.text-nova{color:#171717!important}
+    body.tema-orgullo{background:#faf5ff}
+    body.tema-orgullo header{border-image:linear-gradient(90deg,#e8414b,#f59e0b,#22a06b,#2785d8,#8b5cf6) 1!important}
+    body.tema-orgullo #inicioCarrusel{background:#31205f!important}
+    body.tema-orgullo #inicioCarrusel button{background:linear-gradient(90deg,#e8414b,#8b5cf6)!important}
+    body.tema-orgullo .season-ribbon{background:linear-gradient(90deg,#e8414b,#f59e0b,#facc15,#22a06b,#2785d8,#8b5cf6)!important}
+    body.tema-orgullo h2.text-nova,body.tema-orgullo h3.text-nova{color:#31205f!important}
+  </style>
+
+
+<style id="novashop-full-season-design">
+  :root{--ns-primary:#071A42;--ns-accent:#2563eb;--ns-soft:#eff6ff;--ns-ink:#0f172a;--ns-banner:linear-gradient(115deg,#071A42,#2563eb)}
+  body{background:var(--ns-soft)!important;color:var(--ns-ink);transition:background .35s,color .35s}
+  body header{background:rgba(255,255,255,.96)!important;border-bottom:3px solid var(--ns-accent)!important;transition:all .3s}
+  body header nav a,body header nav button{transition:color .2s,border-color .2s,background .2s}
+  body header nav a.text-electric,body header nav a:hover{color:var(--ns-accent)!important;border-color:var(--ns-accent)!important}
+  body header nav>a:first-child span{color:var(--ns-primary)!important}
+  body header nav>a:first-child span span{color:var(--ns-accent)!important}
+  #inicioCarrusel{background:var(--ns-primary)!important;isolation:isolate}
+  #inicioCarrusel:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,color-mix(in srgb,var(--ns-primary) 88%,transparent) 0%,color-mix(in srgb,var(--ns-primary) 52%,transparent) 52%,transparent 100%)}
+  #inicioCarrusel:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border:0 solid var(--ns-accent);box-shadow:inset 0 -7px 0 var(--ns-accent)}
+  #seasonHeroContent{position:absolute;z-index:8;left:clamp(22px,6vw,76px);top:clamp(35px,8vw,85px);width:min(650px,82%);color:white;pointer-events:none;text-shadow:0 3px 20px rgba(0,0,0,.35)}
+  #seasonHeroContent .season-kicker{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;background:var(--ns-accent);color:white;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+  #seasonHeroContent h1{font-size:clamp(32px,5.7vw,68px);line-height:.98;font-weight:950;letter-spacing:-.045em;margin-top:18px;max-width:650px}
+  #seasonHeroContent p{font-size:clamp(13px,1.5vw,18px);line-height:1.65;color:#f8fafc;margin-top:17px;max-width:540px;font-weight:600}
+  #inicioCarrusel .inicio-slide{filter:saturate(.92)}
+  #inicioCarrusel button{background:var(--ns-accent)!important;color:white!important;border:2px solid rgba(255,255,255,.45);z-index:9}
+  .season-ribbon{display:block!important;color:white!important;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+  #ofertas>div:first-child,#tendencias>div:first-child{background:var(--ns-banner)!important;border-color:var(--ns-accent)!important}
+  #ofertas h2,#tendencias h2{color:white!important}
+  #ofertas a{background:var(--ns-accent)!important;color:white!important}
+  #categorias h2,#catalogo h2{color:var(--ns-primary)!important}
+  #categorias a{border-color:color-mix(in srgb,var(--ns-accent) 25%,white)!important;background:color-mix(in srgb,var(--ns-soft) 78%,white)!important}
+  #categorias a h3{color:var(--ns-primary)!important}
+  #categorias a:hover{box-shadow:0 18px 40px color-mix(in srgb,var(--ns-accent) 20%,transparent)!important;transform:translateY(-4px)}
+  .filter-btn.active,.filter-btn:hover{background:var(--ns-primary)!important;color:white!important}
+  #productsGrid article,#ofertasGrid article,#tendenciasGrid article{border-color:color-mix(in srgb,var(--ns-accent) 18%,#e2e8f0)!important}
+  #productsGrid article button,#ofertasGrid article button,#tendenciasGrid article button{background:var(--ns-primary)!important;color:white!important}
+  #productsGrid article button:hover,#ofertasGrid article button:hover,#tendenciasGrid article button:hover{background:var(--ns-accent)!important}
+  #vistaCatalogoTemporada{background:var(--ns-soft)!important}
+  #temporadaCabecera{background:var(--ns-banner)!important}
+  #vistaDetalle .text-electric,#vistaDetalle .text-nova{color:var(--ns-primary)!important}
+  #vistaDetalle button.bg-electric{background:var(--ns-accent)!important}
+  #cartDrawer .text-electric{color:var(--ns-accent)!important}
+  #cartDrawer button.bg-electric{background:var(--ns-accent)!important}
+  body[data-tema="halloween"]{--ns-primary:#27113d;--ns-accent:#f97316;--ns-soft:#fff7ed;--ns-banner:linear-gradient(115deg,#27113d,#7c2d12,#f97316)}
+  body[data-tema="halloween"] #seasonHeroContent .season-kicker{background:#f97316;color:#1c1028}
+  body[data-tema="navidad"]{--ns-primary:#14532d;--ns-accent:#dc2626;--ns-soft:#f0fdf4;--ns-banner:linear-gradient(115deg,#14532d,#166534,#dc2626)}
+  body[data-tema="sanvalentin"]{--ns-primary:#881337;--ns-accent:#ec4899;--ns-soft:#fff1f2;--ns-banner:linear-gradient(115deg,#881337,#be123c,#ec4899)}
+  body[data-tema="padre"]{--ns-primary:#172554;--ns-accent:#ca8a04;--ns-soft:#fffbeb;--ns-banner:linear-gradient(115deg,#172554,#1e40af,#ca8a04)}
+  body[data-tema="madre"]{--ns-primary:#831843;--ns-accent:#f472b6;--ns-soft:#fff1f2;--ns-banner:linear-gradient(115deg,#831843,#be185d,#f472b6)}
+  body[data-tema="nino"]{--ns-primary:#075985;--ns-accent:#f59e0b;--ns-soft:#f0f9ff;--ns-banner:linear-gradient(115deg,#075985,#0e7490,#f59e0b)}
+  body[data-tema="blackfriday"]{--ns-primary:#090909;--ns-accent:#facc15;--ns-soft:#f5f5f4;--ns-banner:linear-gradient(115deg,#090909,#262626,#a16207)}
+  body[data-tema="blackfriday"] header{background:#090909!important;color:#fff!important}
+  body[data-tema="blackfriday"] header nav a,body[data-tema="blackfriday"] header nav>a:first-child span{color:#facc15!important}
+  body[data-tema="blackfriday"] header nav button{background:#facc15!important;color:#090909!important}
+  body[data-tema="blackfriday"] #inicioCarrusel:before{background:linear-gradient(90deg,rgba(0,0,0,.94),rgba(0,0,0,.48),transparent)}
+  body[data-tema="blackfriday"] #seasonHeroContent .season-kicker{background:#facc15;color:#090909}
+  body[data-tema="blackfriday"] #ofertas>div:first-child,body[data-tema="blackfriday"] #tendencias>div:first-child{background:linear-gradient(110deg,#090909,#292929,#a16207)!important}
+  body[data-tema="blackfriday"] #ofertas a,body[data-tema="blackfriday"] #inicioCarrusel button{background:#facc15!important;color:#090909!important}
+  body[data-tema="orgullo"]{--ns-primary:#31205f;--ns-accent:#8b5cf6;--ns-soft:#faf5ff;--ns-banner:linear-gradient(110deg,#e8414b,#f59e0b,#22a06b,#2785d8,#8b5cf6)}
+  body[data-tema="orgullo"] header{border-bottom:5px solid transparent!important;border-image:linear-gradient(90deg,#e8414b,#f59e0b,#facc15,#22a06b,#2785d8,#8b5cf6) 1!important}
+  body[data-tema="orgullo"] #inicioCarrusel:before{background:linear-gradient(90deg,rgba(49,32,95,.92),rgba(49,32,95,.48),transparent)}
+  body[data-tema="orgullo"] #seasonHeroContent .season-kicker{background:linear-gradient(90deg,#e8414b,#f59e0b,#22a06b,#2785d8,#8b5cf6)}
+  body[data-tema="orgullo"] #ofertas>div:first-child,body[data-tema="orgullo"] #tendencias>div:first-child{background:linear-gradient(110deg,#e8414b,#f59e0b,#22a06b,#2785d8,#8b5cf6)!important}
+  body[data-tema="orgullo"] #ofertas a,body[data-tema="orgullo"] #inicioCarrusel button{background:linear-gradient(90deg,#e8414b,#8b5cf6)!important;color:white!important}
+  body[data-tema="original"]{--ns-primary:#071A42;--ns-accent:#2563eb;--ns-soft:#f8fafc;--ns-banner:linear-gradient(115deg,#071A42,#2563eb)}
+  @media(max-width:640px){#seasonHeroContent{top:30px;width:88%}#seasonHeroContent p{max-width:95%;font-size:12px}#inicioCarrusel{height:500px!important}#inicioCarrusel .bottom-6{bottom:18px;left:18px;right:18px}}
+</style>
+
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased flex flex-col min-h-screen">
 
@@ -98,9 +190,9 @@
         </div>
 
         <div class="absolute bottom-6 left-6 z-10 flex flex-wrap items-center gap-4 sm:bottom-10 sm:left-10 md:bottom-12 md:left-[60px]">
-          <a href="#catalogo" class="inline-flex items-center gap-2 rounded-xl bg-electric px-8 py-4 font-bold text-white shadow-xl shadow-black/20 transition-all hover:bg-electric-hover">
+          <button type="button" onclick="abrirCatalogoTemporada()" class="inline-flex items-center gap-2 rounded-xl bg-electric px-8 py-4 font-bold text-white shadow-xl shadow-black/20 transition-all hover:bg-electric-hover">
             Explorar Catálogo <i class="fa-solid fa-arrow-right"></i>
-          </a>
+          </button>
 
           <div class="bg-nova/95 backdrop-blur-md text-white p-3.5 rounded-xl border border-electric/40 shadow-2xl flex items-center gap-3 max-w-xs sm:max-w-sm">
             <div class="w-8 h-8 rounded-lg bg-electric/20 text-electric border border-electric/30 flex items-center justify-center shrink-0">
@@ -216,6 +308,32 @@
         <div id="productsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"></div>
       </section>
     </div>
+
+    <!-- VISTA INDEPENDIENTE: COLECCIÓN DE LA TEMPORADA ACTIVA. NO MEZCLA EL CATÁLOGO NORMAL. -->
+    <section id="vistaCatalogoTemporada" class="hidden min-h-[70vh] px-5 sm:px-8 py-10" style="background:var(--season-bg,#fff)">
+      <div class="max-w-7xl mx-auto">
+        <button type="button" onclick="volverDesdeTemporada()" class="mb-6 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 shadow-sm hover:shadow-md">
+          <i class="fa-solid fa-arrow-left"></i> Volver al inicio
+        </button>
+        <div id="temporadaCabecera" class="mb-9 rounded-3xl p-7 sm:p-10 text-white shadow-xl">
+          <p id="temporadaEtiqueta" class="text-xs font-black uppercase tracking-[.2em] opacity-90">Colección especial</p>
+          <h1 id="temporadaTitulo" class="mt-3 text-3xl sm:text-5xl font-black">Colección de temporada</h1>
+          <p id="temporadaDescripcion" class="mt-3 max-w-2xl text-sm sm:text-base opacity-95">Prendas seleccionadas para esta temporada.</p>
+        </div>
+        <div class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 id="temporadaSubtitulo" class="text-2xl font-black text-slate-900">Prendas de temporada</h2>
+            <p class="mt-1 text-sm text-slate-500">Esta colección es independiente del catálogo habitual de NovaShop.</p>
+          </div>
+          <span id="temporadaCantidad" class="rounded-full bg-white px-4 py-2 text-xs font-bold text-slate-600 shadow-sm">Colección especial</span>
+        </div>
+        <div id="temporadaProductos" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+        <div class="mt-10 rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-600">
+          <i class="fa-solid fa-circle-info mr-2 text-slate-400"></i>
+          Las prendas que aparecen aquí son ejemplos visuales de la colección temática. Las fotos originales y los productos del catálogo habitual siguen intactos.
+        </div>
+      </div>
+    </section>
 
     <!-- VISTA 2: PANTALLA COMPLETA DE DETALLE DE PRODUCTO -->
     <div id="vistaDetalle" class="hidden max-w-7xl mx-auto px-6 py-10">
@@ -1121,8 +1239,139 @@
       `).join('');
     }
 
+    // Colecciones visuales de temporada. Permanecen separadas del catálogo habitual.
+    const coleccionesTemporada = {
+      original: {
+        titulo: 'Tu estilo, tu esencia', etiqueta: 'NOVASHOP ORIGINAL', descripcion: 'Explora la colección habitual de NovaShop.', color: '#071A42', acento: '#2563EB', fondo: '#f8fafc',
+        prendas: [
+          { nombre: 'Estilo formal', detalle: 'Conjunto para ocasiones especiales', precio: 'RD$ 2,500', img: '../Img/Formal, para el inicio.png' },
+          { nombre: 'Estilo urbano', detalle: 'Prendas para un look urbano', precio: 'RD$ 1,800', img: '../Img/Urbano, para el inicio.png' },
+          { nombre: 'Estilo tropical', detalle: 'Look fresco y casual', precio: 'RD$ 1,500', img: '../Img/Tropical, para el inicio.png' }
+        ]
+      },
+      halloween: {
+        titulo: '¡Estilo que da miedo!', etiqueta: 'COLECCIÓN HALLOWEEN 🎃', descripcion: 'Disfraces, camisetas gráficas y prendas negras y naranjas para crear tu look de Halloween.', color: '#241032', acento: '#f97316', fondo: '#fff7ed',
+        prendas: [
+          { nombre: 'Camiseta gráfica Halloween', detalle: 'Camiseta negra para un look tenebroso', precio: 'RD$ 950', img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Sudadera negra edición Halloween', detalle: 'Sudadera oscura para combinar con tu disfraz', precio: 'RD$ 1,850', img: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Chaqueta estilo oscuro', detalle: 'Una capa extra para tu outfit de Halloween', precio: 'RD$ 2,200', img: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Look negro y naranja', detalle: 'Prendas para armar un conjunto temático', precio: 'RD$ 1,600', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=85' }
+        ]
+      },
+      navidad: {
+        titulo: 'La magia de la Navidad llegó a NovaShop', etiqueta: 'COLECCIÓN NAVIDEÑA 🎄', descripcion: 'Suéteres, camisetas y conjuntos rojos, verdes y festivos para celebrar con estilo.', color: '#14532d', acento: '#dc2626', fondo: '#f0fdf4',
+        prendas: [
+          { nombre: 'Suéter rojo festivo', detalle: 'Ideal para reuniones y celebraciones', precio: 'RD$ 1,450', img: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Camiseta verde casual', detalle: 'Una opción cómoda para las fiestas', precio: 'RD$ 850', img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Conjunto elegante de Navidad', detalle: 'Un look para cenas y encuentros familiares', precio: 'RD$ 2,400', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=85' }
+        ]
+      },
+      sanvalentin: {
+        titulo: 'Encuentra tu look ideal', etiqueta: 'COLECCIÓN SAN VALENTÍN ❤️', descripcion: 'Vestidos, blusas y prendas en tonos rojos y rosados para una ocasión especial.', color: '#881337', acento: '#ec4899', fondo: '#fff1f2',
+        prendas: [
+          { nombre: 'Vestido rojo de ocasión', detalle: 'Una opción elegante para una cita', precio: 'RD$ 2,300', img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Blusa rosa romántica', detalle: 'Combínala con pantalón o falda', precio: 'RD$ 1,100', img: 'https://images.unsplash.com/photo-1564257577-0a5b1f3b8f91?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Look rojo para salir', detalle: 'Prendas para una noche especial', precio: 'RD$ 1,950', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=85' }
+        ]
+      },
+      padre: {
+        titulo: 'Un estilo especial para papá', etiqueta: 'COLECCIÓN DÍA DEL PADRE 👔', descripcion: 'Polos, camisas y chaquetas para regalar o crear un look masculino clásico y moderno.', color: '#172554', acento: '#ca8a04', fondo: '#f8fafc',
+        prendas: [
+          { nombre: 'Polo clásico para papá', detalle: 'Una prenda versátil para todos los días', precio: 'RD$ 1,250', img: 'https://images.unsplash.com/photo-1625910513413-5fc4e3e8d3c3?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Camisa elegante', detalle: 'Ideal para reuniones y ocasiones especiales', precio: 'RD$ 1,700', img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Chaqueta masculina', detalle: 'Un toque moderno para el outfit de papá', precio: 'RD$ 2,600', img: 'https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Conjunto casual masculino', detalle: 'Cómodo para salidas y fines de semana', precio: 'RD$ 1,900', img: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=900&q=85' }
+        ]
+      },
+      madre: {
+        titulo: 'Detalles que enamoran a mamá', etiqueta: 'COLECCIÓN DÍA DE LA MADRE 🌷', descripcion: 'Vestidos, blusas y conjuntos elegantes para celebrar a mamá con estilo.', color: '#831843', acento: '#f472b6', fondo: '#fff1f2',
+        prendas: [
+          { nombre: 'Vestido floral', detalle: 'Un look fresco y femenino', precio: 'RD$ 2,100', img: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Blusa elegante', detalle: 'Ideal para combinar con pantalón o falda', precio: 'RD$ 1,200', img: 'https://images.unsplash.com/photo-1564257577-0a5b1f3b8f91?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Conjunto para una ocasión especial', detalle: 'Una opción sofisticada para mamá', precio: 'RD$ 2,500', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=85' }
+        ]
+      },
+      nino: {
+        titulo: 'Diversión y color para los pequeños', etiqueta: 'COLECCIÓN DÍA DEL NIÑO 🎈', descripcion: 'Camisetas, conjuntos deportivos y ropa infantil cómoda y colorida.', color: '#075985', acento: '#f59e0b', fondo: '#f0f9ff',
+        prendas: [
+          { nombre: 'Camiseta infantil colorida', detalle: 'Cómoda para jugar y salir', precio: 'RD$ 650', img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Conjunto deportivo infantil', detalle: 'Ideal para actividades y juegos', precio: 'RD$ 1,150', img: 'https://images.unsplash.com/photo-1503919005314-30d93d07d823?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Look casual para niños', detalle: 'Prendas cómodas para el día a día', precio: 'RD$ 980', img: 'https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?auto=format&fit=crop&w=900&q=85' }
+        ]
+      },
+      blackfriday: {
+        titulo: 'BLACK FRIDAY: ofertas que no puedes dejar pasar', etiqueta: 'EDICIÓN BLACK FRIDAY 🛍️', descripcion: 'Aprovecha una selección de prendas con precios especiales. Estilo increíble, oportunidades por tiempo limitado.', color: '#090909', acento: '#facc15', fondo: '#f5f5f4',
+        prendas: [
+          { nombre: 'T-shirt Essential en oferta', detalle: 'Básico imprescindible para combinar', precio: 'RD$ 875 · Antes RD$ 1,250', img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Sneakers deportivos', detalle: 'Comodidad para todos tus días', precio: 'RD$ 2,250 · Antes RD$ 3,000', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Chaqueta urbana', detalle: 'Dale personalidad a tu outfit', precio: 'RD$ 1,800 · Antes RD$ 3,000', img: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Look de temporada', detalle: 'Un conjunto para destacar', precio: 'RD$ 1,600 · Antes RD$ 2,000', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85' }
+        ]
+      },
+      orgullo: {
+        titulo: 'Viste con orgullo. Viste como eres.', etiqueta: 'EDICIÓN MES DEL ORGULLO 🏳️‍🌈', descripcion: 'Celebra la diversidad, la autenticidad y la libertad de expresar tu estilo. Todos los estilos tienen su lugar en NovaShop.', color: '#31205f', acento: '#ec4899', fondo: '#faf5ff',
+        prendas: [
+          { nombre: 'T-shirt esencial', detalle: 'Un básico para expresar tu personalidad', precio: 'RD$ 1,250', img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Chaqueta urbana', detalle: 'Estilo y actitud para cada ocasión', precio: 'RD$ 3,000', img: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Look colorido', detalle: 'Exprésate a tu manera', precio: 'RD$ 2,000', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85' },
+          { nombre: 'Sneakers urbanos', detalle: 'Comodidad con mucha personalidad', precio: 'RD$ 3,000', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85' }
+        ]
+      }
+    };
+
+    function leerTemaNovaShop() {
+      const parametros = new URLSearchParams(window.location.search);
+      const solicitado = parametros.get('tema');
+      if (solicitado) return solicitado.toLowerCase().trim();
+      try {
+        const guardado = localStorage.getItem('novashop_public_theme');
+        if (!guardado) return 'original';
+        try {
+          const dato = JSON.parse(guardado);
+          return typeof dato === 'string' ? dato : (dato.tema || dato.theme || dato.temporada || 'original');
+        } catch (e) { return guardado; }
+      } catch (e) { return 'original'; }
+    }
+
+    function obtenerTemaActual() {
+      const tema = leerTemaNovaShop();
+      return coleccionesTemporada[tema] ? tema : 'original';
+    }
+
+    function abrirCatalogoTemporada() {
+      const tema = obtenerTemaActual();
+      if (tema === 'original') {
+        document.getElementById('catalogo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      const datos = coleccionesTemporada[tema];
+      document.getElementById('vistaPrincipal').classList.add('hidden');
+      document.getElementById('vistaDetalle').classList.add('hidden');
+      document.getElementById('vistaCatalogoTemporada').classList.remove('hidden');
+      document.getElementById('temporadaCabecera').style.background = `linear-gradient(115deg, ${datos.color}, ${datos.acento})`;
+      document.getElementById('temporadaEtiqueta').textContent = datos.etiqueta;
+      document.getElementById('temporadaTitulo').textContent = datos.titulo;
+      document.getElementById('temporadaDescripcion').textContent = datos.descripcion;
+      document.getElementById('temporadaSubtitulo').textContent = datos.etiqueta;
+      document.getElementById('temporadaCantidad').textContent = `${datos.prendas.length} prendas destacadas`;
+      const grid = document.getElementById('temporadaProductos');
+      grid.innerHTML = datos.prendas.map(prenda => `
+        <article class="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-shadow">
+          <img src="${prenda.img}" alt="${prenda.nombre}" class="w-full h-64 object-cover" loading="lazy">
+          <div class="p-5"><h3 class="font-black text-slate-900">${prenda.nombre}</h3><p class="text-sm text-slate-500 mt-2">${prenda.detalle}</p><p class="font-black mt-4" style="color:${datos.color}">${prenda.precio}</p></div>
+        </article>`).join('');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function volverDesdeTemporada() {
+      document.getElementById('vistaCatalogoTemporada').classList.add('hidden');
+      document.getElementById('vistaPrincipal').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function volverAlCatalogo() {
       document.getElementById('vistaDetalle').classList.add('hidden');
+      document.getElementById('vistaCatalogoTemporada').classList.add('hidden');
       document.getElementById('vistaPrincipal').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -1268,20 +1517,157 @@
   </script>
 
   <script>
+    // El carrusel usa exclusivamente imágenes de la temporada activa.
+    // Cuando no hay temporada publicada, conserva las tres imágenes originales.
     document.addEventListener('DOMContentLoaded', () => {
-      const slides = document.querySelectorAll('#inicioCarrusel .inicio-slide');
-      if (slides.length < 2) return;
+      const contenedor = document.querySelector('#inicioCarrusel > div[aria-label="Carrusel de estilos NovaShop"]');
+      if (!contenedor) return;
 
-      let slideActual = 0;
-      window.setInterval(() => {
-        slides[slideActual].classList.remove('opacity-100');
-        slides[slideActual].classList.add('opacity-0');
-        slideActual = (slideActual + 1) % slides.length;
-        slides[slideActual].classList.remove('opacity-0');
-        slides[slideActual].classList.add('opacity-100');
-      }, 5000);
+      const fotos = {
+        original: [
+          { src: '../Img/Formal, para el inicio.png', alt: 'Colección formal de NovaShop' },
+          { src: '../Img/Urbano, para el inicio.png', alt: 'Colección urbana de NovaShop' },
+          { src: '../Img/Tropical, para el inicio.png', alt: 'Colección tropical de NovaShop' }
+        ],
+        halloween: [
+          { src: 'https://images.unsplash.com/photo-1509551388413-e18d0ac5d495?auto=format&fit=crop&w=1800&q=90', alt: 'halloween - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1604881988758-f76ad2f7aac1?auto=format&fit=crop&w=1800&q=90', alt: 'halloween - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=1800&q=90', alt: 'halloween - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=1800&q=90', alt: 'halloween - imagen de colección' }
+        ],
+        navidad: [
+          { src: 'https://images.unsplash.com/photo-1543589077-47d81606c1bf?auto=format&fit=crop&w=1800&q=90', alt: 'navidad - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1800&q=90', alt: 'navidad - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=90', alt: 'navidad - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1800&q=90', alt: 'navidad - imagen de colección' }
+        ],
+        sanvalentin: [
+          { src: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1800&q=90', alt: 'sanvalentin - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1800&q=90', alt: 'sanvalentin - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=90', alt: 'sanvalentin - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1800&q=90', alt: 'sanvalentin - imagen de colección' }
+        ],
+        padre: [
+          { src: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=1800&q=90', alt: 'padre - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=1800&q=90', alt: 'padre - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=1800&q=90', alt: 'padre - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1800&q=90', alt: 'padre - imagen de colección' }
+        ],
+        madre: [
+          { src: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1800&q=90', alt: 'madre - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1800&q=90', alt: 'madre - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=90', alt: 'madre - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1800&q=90', alt: 'madre - imagen de colección' }
+        ],
+        nino: [
+          { src: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=1800&q=90', alt: 'nino - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1503919005314-30d93d07d823?auto=format&fit=crop&w=1800&q=90', alt: 'nino - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?auto=format&fit=crop&w=1800&q=90', alt: 'nino - imagen de colección' },
+          { src: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=1800&q=90', alt: 'nino - imagen de colección' }
+        ],
+        blackfriday: [
+          { src: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=90', alt: 'Black Friday - tienda de moda' },
+          { src: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1800&q=90', alt: 'Black Friday - camiseta en oferta' },
+          { src: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1800&q=90', alt: 'Black Friday - calzado deportivo' },
+          { src: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1800&q=90', alt: 'Black Friday - chaqueta urbana' }
+        ],
+        orgullo: [
+          { src: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1800&q=90', alt: 'Mes del Orgullo - moda y diversidad' },
+          { src: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=90', alt: 'Mes del Orgullo - estilo personal' },
+          { src: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1800&q=90', alt: 'Mes del Orgullo - prendas casuales' },
+          { src: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1800&q=90', alt: 'Mes del Orgullo - moda urbana' }
+        ]
+      };
+
+      const tema = obtenerTemaActual();
+      const seleccion = fotos[tema] || fotos.original;
+      contenedor.innerHTML = '';
+      seleccion.forEach((foto, indice) => {
+        const img = document.createElement('img');
+        img.src = foto.src;
+        img.alt = foto.alt;
+        img.className = `inicio-slide absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000 ${indice === 0 ? 'opacity-100' : 'opacity-0'}`;
+        img.setAttribute('aria-hidden', indice === 0 ? 'false' : 'true');
+        if (indice > 0) img.loading = 'lazy';
+        contenedor.appendChild(img);
+      });
+
+      const slides = Array.from(contenedor.querySelectorAll('.inicio-slide'));
+      let actual = 0;
+      if (slides.length > 1) {
+        window.setInterval(() => {
+          slides[actual].classList.remove('opacity-100');
+          slides[actual].classList.add('opacity-0');
+          slides[actual].setAttribute('aria-hidden', 'true');
+          actual = (actual + 1) % slides.length;
+          slides[actual].classList.remove('opacity-0');
+          slides[actual].classList.add('opacity-100');
+          slides[actual].setAttribute('aria-hidden', 'false');
+        }, 5000);
+      }
     });
   </script>
 
+
+<script id="novashop-index-theme-engine">
+(function(){
+ const TEMAS={
+  original:{nombre:'NovaShop',kicker:'TU ESTILO, TU ESENCIA',titulo:'Moda para cada ocasión.',descripcion:'Descubre prendas para tu día a día, tus entrenamientos, tus salidas y esos momentos especiales.',mensaje:'Bienvenido a NovaShop'},
+  halloween:{nombre:'Halloween 🎃',kicker:'EDICIÓN ESPECIAL · HALLOWEEN',titulo:'Un look que da miedo de lo increíble.',descripcion:'Encuentra disfraces, prendas oscuras y estilos atrevidos para una noche llena de personalidad.',mensaje:'Halloween llegó a NovaShop'},
+  navidad:{nombre:'Navidad 🎄',kicker:'EDICIÓN ESPECIAL · NAVIDAD',titulo:'Viste la magia de la Navidad.',descripcion:'Looks festivos para compartir, regalar y celebrar cada momento especial.',mensaje:'Celebra la Navidad con estilo'},
+  sanvalentin:{nombre:'San Valentín ❤️',kicker:'EDICIÓN ESPECIAL · SAN VALENTÍN',titulo:'El amor también se viste.',descripcion:'Descubre outfits especiales para sorprender, compartir y celebrar el amor en todas sus formas.',mensaje:'Celebra el amor con NovaShop'},
+  padre:{nombre:'Día del Padre 👔',kicker:'EDICIÓN ESPECIAL · DÍA DEL PADRE',titulo:'El estilo de papá comienza aquí.',descripcion:'Camisas, polos, conjuntos y accesorios para regalar comodidad y buen estilo.',mensaje:'Un detalle con mucho estilo para papá'},
+  madre:{nombre:'Día de la Madre 🌷',kicker:'EDICIÓN ESPECIAL · DÍA DE LA MADRE',titulo:'Mamá merece brillar.',descripcion:'Vestidos, conjuntos y prendas especiales para celebrar a mamá con un regalo inolvidable.',mensaje:'Celebra a mamá con estilo'},
+  nino:{nombre:'Día del Niño 🎈',kicker:'EDICIÓN ESPECIAL · DÍA DEL NIÑO',titulo:'Pequeños estilos, grandes sonrisas.',descripcion:'Ropa infantil cómoda, divertida y llena de color para jugar, explorar y disfrutar.',mensaje:'Diversión y color para los más pequeños'},
+  blackfriday:{nombre:'Black Friday 🛍️',kicker:'OFERTAS ESPECIALES · BLACK FRIDAY',titulo:'BLACK FRIDAY: precios que sorprenden.',descripcion:'Aprovecha descuentos especiales en tus prendas favoritas y renueva tu estilo por menos.',mensaje:'Ofertas Black Friday por tiempo limitado'},
+  orgullo:{nombre:'Mes del Orgullo 🏳️‍🌈',kicker:'EDICIÓN ESPECIAL · MES DEL ORGULLO',titulo:'Viste con orgullo. Viste como eres.',descripcion:'Celebra la diversidad, la autenticidad y la libertad de expresar tu estilo. Todos los estilos tienen su lugar.',mensaje:'Diversidad, respeto y autenticidad'}
+ };
+ function leerTema(){
+  const params=new URLSearchParams(location.search);const query=params.get('tema');
+  if(query)return query.toLowerCase().trim();
+  try{const raw=localStorage.getItem('novashop_public_theme');if(!raw)return 'original';const parsed=JSON.parse(raw);return (typeof parsed==='string'?parsed:(parsed.tema||parsed.theme||parsed.temporada||'original')).toLowerCase().trim();}
+  catch(e){return 'original';}
+ }
+ function aplicarTema(){
+  const elegido=leerTema();const tema=TEMAS[elegido]?elegido:'original';const data=TEMAS[tema];
+  document.body.dataset.tema=tema;document.documentElement.dataset.tema=tema;
+  document.body.classList.toggle('tema-especial',tema!=='original');
+  document.body.classList.toggle('tema-blackfriday',tema==='blackfriday');document.body.classList.toggle('tema-orgullo',tema==='orgullo');
+  document.documentElement.style.setProperty('--tema-principal',getComputedStyle(document.body).getPropertyValue('--ns-primary').trim());
+  document.documentElement.style.setProperty('--tema-acento',getComputedStyle(document.body).getPropertyValue('--ns-accent').trim());
+  document.documentElement.style.setProperty('--tema-fondo',getComputedStyle(document.body).getPropertyValue('--ns-soft').trim());
+  document.documentElement.style.setProperty('--season-bg',getComputedStyle(document.body).getPropertyValue('--ns-soft').trim());
+  document.title=tema==='original'?'NovaShop | Tu estilo, tu esencia':'NovaShop | '+data.nombre;
+  let ribbon=document.querySelector('.season-ribbon');
+  if(tema==='original'){if(ribbon)ribbon.remove();}
+  else{
+   if(!ribbon){ribbon=document.createElement('div');ribbon.className='season-ribbon text-center py-2 text-sm font-black text-white';document.querySelector('header')?.after(ribbon);}
+   ribbon.textContent=(tema==='blackfriday'?'🛍️ ':tema==='orgullo'?'🏳️‍🌈 ':'✨ ')+data.kicker+' · NOVASHOP';
+   ribbon.style.background=tema==='orgullo'?'linear-gradient(90deg,#e8414b,#f59e0b,#facc15,#22a06b,#2785d8,#8b5cf6)':getComputedStyle(document.body).getPropertyValue('--ns-banner');
+  }
+  const hero=document.getElementById('inicioCarrusel');
+  if(hero){
+   let content=document.getElementById('seasonHeroContent');
+   if(!content){content=document.createElement('div');content.id='seasonHeroContent';content.innerHTML='<span class="season-kicker"></span><h1></h1><p></p>';hero.appendChild(content);}
+   content.querySelector('.season-kicker').textContent=data.kicker;
+   content.querySelector('h1').textContent=data.titulo;
+   content.querySelector('p').textContent=data.descripcion;
+   const button=hero.querySelector('button');if(button){button.innerHTML=(tema==='blackfriday'?'Ver ofertas Black Friday':tema==='orgullo'?'Explorar colección Pride':tema==='original'?'Explorar Catálogo':'Explorar colección')+' <i class="fa-solid fa-arrow-right"></i>';}
+  }
+  const offer=document.querySelector('#ofertas>div:first-child');
+  if(offer){const h=offer.querySelector('h2');const p=offer.querySelector('p');const pill=offer.querySelector('span');
+   if(h)h.textContent=tema==='blackfriday'?'Black Friday: ofertas que no puedes dejar pasar':tema==='orgullo'?'Celebra tu estilo y autenticidad':tema==='original'?'Ofertas Exclusivas NovaShop':'Ofertas especiales de '+data.nombre;
+   if(p)p.textContent=tema==='blackfriday'?'Descuentos especiales en prendas seleccionadas. ¡Aprovecha antes de que se agoten!':tema==='orgullo'?'Una colección para expresarte con libertad, color y autenticidad.':tema==='original'?'Prendas seleccionadas con hasta un 40% de descuento. ¡Aprovecha antes de que se agoten las existencias!':data.descripcion;
+   if(pill)pill.innerHTML='<i class="fa-solid fa-bolt text-amber-300"></i> '+(tema==='blackfriday'?'Black Friday':tema==='orgullo'?'Edición Pride':tema==='original'?'Descuentos de temporada':data.nombre);
+  }
+  const trend=document.querySelector('#tendencias>div:first-child');
+  if(trend){const h=trend.querySelector('h2');const p=trend.querySelector('p');if(h)h.textContent=tema==='blackfriday'?'Los favoritos con precio especial':tema==='orgullo'?'Estilos para expresarte':tema==='original'?'Ropa en Tendencia':'Lo más destacado de '+data.nombre;if(p)p.textContent=tema==='blackfriday'?'Descubre prendas seleccionadas para aprovechar esta temporada de ofertas.':tema==='orgullo'?'Combina colores, prendas y accesorios para crear un look que hable de ti.':tema==='original'?'Colección recién llegada con diseños vanguardistas, estilos únicos y máxima exclusividad que marcan tendencia.':data.descripcion;}
+  const seasonView=document.getElementById('vistaCatalogoTemporada');if(seasonView)seasonView.style.setProperty('--season-bg',getComputedStyle(document.body).getPropertyValue('--ns-soft').trim());
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',aplicarTema);else aplicarTema();
+ window.addEventListener('storage',e=>{if(e.key==='novashop_public_theme')location.reload();});
+ window.addEventListener('pageshow',aplicarTema);
+})();
+</script>
 </body>
 </html>

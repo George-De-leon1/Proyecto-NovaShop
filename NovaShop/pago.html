@@ -330,9 +330,47 @@
 
     function procesarPedido(e) {
       e.preventDefault();
-      // Limpiar carrito tras completar orden de prueba
+      const form = document.getElementById('checkoutForm');
+      if (!form.reportValidity()) return;
+
+      const carrito = JSON.parse(localStorage.getItem('novashop') || '[]');
+      if (!carrito.length) {
+        alert('Tu carrito está vacío. Agrega productos antes de confirmar.');
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Los campos se leen en el mismo orden en que aparecen en el formulario.
+      const textos = [...form.querySelectorAll('input[type="text"]')];
+      const nombre = form.querySelector('input[type="text"]')?.value.trim() || '';
+      const email = form.querySelector('input[type="email"]')?.value.trim() || '';
+      const telefono = form.querySelector('input[type="tel"]')?.value.trim() || '';
+      const provincia = textos[1]?.value.trim() || '';
+      const sector = textos[2]?.value.trim() || '';
+      const direccion = textos[3]?.value.trim() || '';
+      const metodo = form.querySelector('input[name="pago"]:checked')?.value || 'entrega';
+      const subtotal = carrito.reduce((s, p) => s + (Number(p.precio) * Number(p.cantidad)), 0);
+      const envio = subtotal >= 3000 ? 0 : 250;
+      const total = subtotal + envio;
+      const pedidos = JSON.parse(localStorage.getItem('novashop_pro_orders_v2') || '[]');
+      let id;
+      do { id = 'NS-' + Math.floor(10000 + Math.random() * 90000); }
+      while (pedidos.some(p => p.id === id));
+
+      const pedido = {
+        id, cliente: nombre, email, telefono, items: carrito.reduce((s,p) => s + Number(p.cantidad || 0), 0),
+        total, estado: 'En espera', fecha: new Date().toLocaleString('es-DO'),
+        productos: carrito.map(p => p.nombre),
+        detalleProductos: carrito.map(p => ({ nombre: p.nombre, precio: Number(p.precio), cantidad: Number(p.cantidad) })),
+        provincia, sector, direccion, metodoPago: metodo,
+        creadoEn: new Date().toISOString()
+      };
+
+      pedidos.unshift(pedido);
+      localStorage.setItem('novashop_pro_orders_v2', JSON.stringify(pedidos));
+      localStorage.setItem('novashop_last_order_id', id);
       localStorage.removeItem('novashop');
-      window.location.href = 'confirmacion.html';
+      window.location.href = 'confirmacion.html?pedido=' + encodeURIComponent(id);
     }
   </script>
 </body>

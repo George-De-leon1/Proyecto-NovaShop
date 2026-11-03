@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaShop | Black Friday</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{font-family:Montserrat,sans-serif} body{background:#090909;color:#fff}
+    .gold{color:#facc15}.gold-bg{background:#facc15}.hero{background:linear-gradient(90deg,rgba(0,0,0,.92),rgba(0,0,0,.42)),url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1800&q=85') center/cover}
+    .product{background:#171717;border:1px solid #303030}.product img{transition:transform .35s}.product:hover img{transform:scale(1.06)}
+    .btn{background:#facc15;color:#090909;font-weight:900}.btn:hover{background:#eab308}
+  </style>
+</head>
+<body>
+  <div class="bg-yellow-400 text-black text-center py-2 px-4 text-xs sm:text-sm font-extrabold tracking-widest">BLACK FRIDAY NOVASHOP · OFERTAS POR TIEMPO LIMITADO</div>
+  <header class="bg-black/95 border-b border-zinc-800 sticky top-0 z-20">
+    <nav class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between gap-5">
+      <a href="index.html" class="text-2xl font-black tracking-tight">NOVA<span class="gold">SHOP</span></a>
+      <div class="hidden md:flex gap-8 text-sm text-zinc-300"><a href="#ofertas" class="hover:text-yellow-400">Ofertas</a><a href="#coleccion" class="hover:text-yellow-400">Colección</a><a href="#beneficios" class="hover:text-yellow-400">Beneficios</a></div>
+      <a href="#ofertas" class="btn rounded-full px-5 py-2 text-sm">Comprar ahora</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero min-h-[570px] flex items-center">
+      <div class="max-w-7xl mx-auto w-full px-6 py-20">
+        <p class="gold font-extrabold tracking-[.35em] text-sm mb-5">LA TEMPORADA MÁS ESPERADA</p>
+        <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black leading-[.95] max-w-3xl">BLACK<br><span class="gold">FRIDAY</span></h1>
+        <p class="text-zinc-200 text-lg sm:text-xl max-w-xl mt-7">Tu estilo, tu esencia. Aprovecha descuentos especiales en tus prendas favoritas.</p>
+        <div class="flex flex-wrap gap-4 mt-9"><a href="#ofertas" class="btn rounded-lg px-8 py-4">VER OFERTAS</a><span class="border border-zinc-500 rounded-lg px-6 py-4 text-sm font-bold">EDICIÓN ESPECIAL NOVASHOP</span></div>
+      </div>
+    </section>
+    <section id="ofertas" class="max-w-7xl mx-auto px-6 py-16">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-8"><div><p class="gold text-xs font-black tracking-[.3em]">PRECIOS ESPECIALES</p><h2 class="text-3xl sm:text-4xl font-black mt-2">Ofertas destacadas</h2></div><p class="text-zinc-400 text-sm">Renueva tu armario por menos.</p></div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <article class="product rounded-2xl overflow-hidden"><div class="relative overflow-hidden"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=80" alt="Camiseta básica"><span class="absolute top-4 left-4 gold-bg text-black text-xs font-black px-3 py-2 rounded-full">-30%</span></div><div class="p-5"><p class="text-xs text-zinc-400">CASUAL</p><h3 class="font-bold mt-1">T-shirt esencial</h3><p class="mt-3"><span class="gold font-black text-xl">RD$ 875</span> <del class="text-zinc-500 text-sm ml-2">RD$ 1,250</del></p><button class="btn w-full rounded-lg py-3 mt-4">Agregar al carrito</button></div></article>
+        <article class="product rounded-2xl overflow-hidden"><div class="relative overflow-hidden"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80" alt="Calzado deportivo"><span class="absolute top-4 left-4 gold-bg text-black text-xs font-black px-3 py-2 rounded-full">-25%</span></div><div class="p-5"><p class="text-xs text-zinc-400">DEPORTIVA</p><h3 class="font-bold mt-1">Sneakers deportivos</h3><p class="mt-3"><span class="gold font-black text-xl">RD$ 2,250</span> <del class="text-zinc-500 text-sm ml-2">RD$ 3,000</del></p><button class="btn w-full rounded-lg py-3 mt-4">Agregar al carrito</button></div></article>
+        <article class="product rounded-2xl overflow-hidden"><div class="relative overflow-hidden"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=700&q=80" alt="Chaqueta urbana"><span class="absolute top-4 left-4 gold-bg text-black text-xs font-black px-3 py-2 rounded-full">-40%</span></div><div class="p-5"><p class="text-xs text-zinc-400">STREETWEAR</p><h3 class="font-bold mt-1">Chaqueta urbana</h3><p class="mt-3"><span class="gold font-black text-xl">RD$ 1,800</span> <del class="text-zinc-500 text-sm ml-2">RD$ 3,000</del></p><button class="btn w-full rounded-lg py-3 mt-4">Agregar al carrito</button></div></article>
+        <article class="product rounded-2xl overflow-hidden"><div class="relative overflow-hidden"><img class="w-full h-64 object-cover" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=700&q=80" alt="Conjunto de moda"><span class="absolute top-4 left-4 gold-bg text-black text-xs font-black px-3 py-2 rounded-full">-20%</span></div><div class="p-5"><p class="text-xs text-zinc-400">URBANO</p><h3 class="font-bold mt-1">Look de temporada</h3><p class="mt-3"><span class="gold font-black text-xl">RD$ 1,600</span> <del class="text-zinc-500 text-sm ml-2">RD$ 2,000</del></p><button class="btn w-full rounded-lg py-3 mt-4">Agregar al carrito</button></div></article>
+      </div>
+    </section>
+    <section id="coleccion" class="bg-yellow-400 text-black py-14"><div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6"><div><p class="font-black tracking-[.25em] text-xs">NO DEJES PASAR LA OPORTUNIDAD</p><h2 class="text-3xl sm:text-4xl font-black mt-2">Un gran estilo. Un mejor precio.</h2></div><a href="#ofertas" class="bg-black text-white rounded-lg px-8 py-4 font-black hover:bg-zinc-800">EXPLORAR COLECCIÓN</a></div></section>
+    <section id="beneficios" class="max-w-7xl mx-auto px-6 py-14 grid sm:grid-cols-3 gap-8 text-center"><div><div class="text-3xl gold">✦</div><h3 class="font-bold mt-3">Ofertas especiales</h3><p class="text-zinc-400 text-sm mt-2">Descuentos en estilos seleccionados.</p></div><div><div class="text-3xl gold">🚚</div><h3 class="font-bold mt-3">Envíos disponibles</h3><p class="text-zinc-400 text-sm mt-2">Recibe tus compras cómodamente.</p></div><div><div class="text-3xl gold">♡</div><h3 class="font-bold mt-3">Tu estilo, tu esencia</h3><p class="text-zinc-400 text-sm mt-2">Encuentra prendas para cada ocasión.</p></div></section>
+  </main>
+  <footer class="border-t border-zinc-800 py-8 text-center text-zinc-500 text-sm">© 2026 NovaShop · Tu estilo, tu esencia</footer>
+</body>
+</html>

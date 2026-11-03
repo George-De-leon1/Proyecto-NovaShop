@@ -20,6 +20,76 @@
     }
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style id="novashop-season-themes">
+:root{--ns-primary:#071A42;--ns-accent:#2563EB;--ns-soft:#eff6ff;--ns-text:#071A42;--ns-border:#dbe3ef}
+body{transition:background-color .35s,color .35s}
+body[data-tema="halloween"]{--ns-primary:#32105b;--ns-accent:#f97316;--ns-soft:#fff7ed;--ns-text:#32105b;--ns-border:#fed7aa;background:#fff7ed!important;color:#2e1745!important}
+body[data-tema="navidad"]{--ns-primary:#14532d;--ns-accent:#dc2626;--ns-soft:#f0fdf4;--ns-text:#14532d;--ns-border:#bbf7d0;background:#f0fdf4!important;color:#173b27!important}
+body[data-tema="sanvalentin"]{--ns-primary:#9d174d;--ns-accent:#e11d48;--ns-soft:#fff1f2;--ns-text:#881337;--ns-border:#fecdd3;background:#fff1f2!important;color:#881337!important}
+body[data-tema="padre"]{--ns-primary:#172554;--ns-accent:#ca8a04;--ns-soft:#fefce8;--ns-text:#172554;--ns-border:#fde68a;background:#f8fafc!important;color:#172554!important}
+body[data-tema="madre"]{--ns-primary:#9d174d;--ns-accent:#db2777;--ns-soft:#fdf2f8;--ns-text:#831843;--ns-border:#fbcfe8;background:#fdf2f8!important;color:#831843!important}
+body[data-tema="nino"]{--ns-primary:#075985;--ns-accent:#eab308;--ns-soft:#fefce8;--ns-text:#075985;--ns-border:#bae6fd;background:#f0f9ff!important;color:#075985!important}
+body[data-tema="original"]{--ns-primary:#071A42;--ns-accent:#2563EB;--ns-soft:#eff6ff;--ns-text:#071A42;--ns-border:#dbe3ef}
+body[data-tema] header{border-color:var(--ns-border)!important}
+body[data-tema] header,body[data-tema] header.bg-white\/95{background:color-mix(in srgb,white 94%,var(--ns-soft))!important}
+body[data-tema] footer{background:var(--ns-primary)!important;color:white!important;border-color:var(--ns-border)!important}
+body[data-tema] .text-nova{color:var(--ns-primary)!important}
+body[data-tema] .text-electric{color:var(--ns-accent)!important}
+body[data-tema] .bg-nova{background:var(--ns-primary)!important}
+body[data-tema] .bg-electric{background:var(--ns-accent)!important}
+body[data-tema] .hover\:bg-nova-dark:hover{background:var(--ns-primary)!important;filter:brightness(.88)}
+body[data-tema] .hover\:bg-electric-hover:hover{background:var(--ns-accent)!important;filter:brightness(.88)}
+body[data-tema] .border-nova,body[data-tema] .border-electric{border-color:var(--ns-accent)!important}
+body[data-tema] main article,body[data-tema] main section.bg-white,body[data-tema] main article.bg-white{border-color:var(--ns-border)!important}
+body[data-tema] main .bg-slate-50{background:var(--ns-soft)!important}
+body[data-tema] main .bg-blue-50,body[data-tema] main .bg-blue-100{background:color-mix(in srgb,var(--ns-accent) 12%,white)!important}
+body[data-tema] main input:focus,body[data-tema] main textarea:focus,body[data-tema] main select:focus{border-color:var(--ns-accent)!important}
+body[data-tema] .ns-season-banner{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;padding:10px 16px;background:var(--ns-primary);color:white;font-size:13px;font-weight:800;letter-spacing:.02em}
+body[data-tema="halloween"] .ns-season-banner{background:linear-gradient(90deg,#32105b,#7e22ce,#f97316)}
+body[data-tema="navidad"] .ns-season-banner{background:linear-gradient(90deg,#14532d,#15803d,#b91c1c)}
+body[data-tema="sanvalentin"] .ns-season-banner{background:linear-gradient(90deg,#9d174d,#e11d48,#be123c)}
+body[data-tema="padre"] .ns-season-banner{background:linear-gradient(90deg,#172554,#1e3a8a,#ca8a04)}
+body[data-tema="madre"] .ns-season-banner{background:linear-gradient(90deg,#831843,#db2777,#be185d)}
+body[data-tema="nino"] .ns-season-banner{background:linear-gradient(90deg,#075985,#0284c7,#eab308)}
+@media(prefers-reduced-motion:no-preference){body[data-tema] main article,body[data-tema] main section{transition:background-color .3s,border-color .3s,color .3s}}
+body[data-tema="halloween"] main .bg-white{background:#fffaf5!important}
+body[data-tema="navidad"] main .bg-white{background:#fbfffb!important}
+body[data-tema="sanvalentin"] main .bg-white{background:#fffafb!important}
+body[data-tema="padre"] main .bg-white{background:#fffef8!important}
+body[data-tema="madre"] main .bg-white{background:#fffaff!important}
+body[data-tema="nino"] main .bg-white{background:#fcfeff!important}
+body[data-tema] main .border-slate-100,body[data-tema] main .border-slate-200{border-color:var(--ns-border)!important}
+body[data-tema] main .text-slate-900{color:var(--ns-text)!important}
+body[data-tema] main .text-slate-600,body[data-tema] main .text-slate-700{color:color-mix(in srgb,var(--ns-text) 78%,#64748b)!important}
+body[data-tema] main button:focus-visible,body[data-tema] main a:focus-visible{outline-color:var(--ns-accent)!important}
+
+</style>
+
+<style id="novashop-global-season-styles">
+:root{--ns-primary:#071A42;--ns-accent:#2563eb;--ns-page:#f8fafc;--ns-surface:#ffffff;--ns-ink:#0f172a;--ns-border:#e2e8f0}
+body[data-tema]{background-color:var(--ns-page)!important;color:var(--ns-ink)}
+body[data-tema] header{border-color:color-mix(in srgb,var(--ns-accent) 25%,var(--ns-border))!important}
+body[data-tema] header,body[data-tema] main .bg-white,body[data-tema] main .bg-slate-50,body[data-tema] main .bg-white\/95{background-color:var(--ns-surface)!important}
+body[data-tema] main .bg-nova,body[data-tema] footer.bg-nova{background:linear-gradient(125deg,var(--ns-primary),color-mix(in srgb,var(--ns-primary) 72%,var(--ns-accent)))!important}
+body[data-tema] .text-nova{color:var(--ns-primary)!important}
+body[data-tema] .text-electric{color:var(--ns-accent)!important}
+body[data-tema] .bg-electric{background-color:var(--ns-accent)!important}
+body[data-tema] .border-electric{border-color:var(--ns-accent)!important}
+body[data-tema] main .border-slate-200,body[data-tema] main .border-slate-300{border-color:var(--ns-border)!important}
+body[data-tema] main .text-slate-900{color:var(--ns-ink)!important}
+body[data-tema] main .text-slate-600,body[data-tema] main .text-slate-700{color:color-mix(in srgb,var(--ns-ink) 78%,#64748b)!important}
+body[data-tema] main button:not(.ns-season-banner),body[data-tema] main a[class*="bg-nova"],body[data-tema] main a[class*="bg-electric"]{transition:background-color .2s,border-color .2s,transform .2s}
+body[data-tema] main button:focus-visible,body[data-tema] main a:focus-visible{outline:3px solid color-mix(in srgb,var(--ns-accent) 55%,transparent);outline-offset:3px}
+body[data-tema="halloween"]{background-image:radial-gradient(circle at 8% 4%,#f9731618,transparent 26%),radial-gradient(circle at 92% 25%,#7c3aed14,transparent 28%)}
+body[data-tema="navidad"]{background-image:radial-gradient(circle at 8% 4%,#16a34a16,transparent 26%),radial-gradient(circle at 92% 25%,#dc262618,transparent 28%)}
+body[data-tema="sanvalentin"],body[data-tema="madre"]{background-image:radial-gradient(circle at 8% 4%,#ec489918,transparent 26%),radial-gradient(circle at 92% 25%,#fb718518,transparent 28%)}
+body[data-tema="padre"]{background-image:radial-gradient(circle at 8% 4%,#ca8a0418,transparent 26%),radial-gradient(circle at 92% 25%,#1d4ed818,transparent 28%)}
+body[data-tema="nino"]{background-image:radial-gradient(circle at 8% 4%,#0ea5e918,transparent 26%),radial-gradient(circle at 92% 25%,#f59e0b18,transparent 28%)}
+.ns-season-banner{position:relative;z-index:35;display:flex;justify-content:center;align-items:center;gap:12px;padding:10px 16px;text-align:center;color:white;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;background:linear-gradient(90deg,var(--ns-primary),var(--ns-accent));box-shadow:0 5px 18px color-mix(in srgb,var(--ns-primary) 18%,transparent)}
+.ns-season-banner span:first-child,.ns-season-banner span:last-child{font-size:17px}
+body[data-tema]:not([data-tema="original"]) main section[class*="rounded"],body[data-tema]:not([data-tema="original"]) main article[class*="rounded"]{border-color:color-mix(in srgb,var(--ns-accent) 22%,var(--ns-border))}
+</style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
 
@@ -213,5 +283,52 @@
       document.getElementById('cartCount').textContent = totalCount;
     });
   </script>
+
+
+
+<script id="novashop-global-season-engine">
+(function(){
+ const THEMES={
+  original:{primary:'#071A42',accent:'#2563eb',page:'#f8fafc',surface:'#ffffff',ink:'#0f172a',border:'#e2e8f0',label:'NovaShop',icon:'✨'},
+  halloween:{primary:'#241032',accent:'#f97316',page:'#fff7ed',surface:'#fffaf5',ink:'#2b1738',border:'#fed7aa',label:'Halloween',icon:'🎃'},
+  navidad:{primary:'#14532d',accent:'#dc2626',page:'#f0fdf4',surface:'#fffefa',ink:'#173b27',border:'#bbf7d0',label:'Navidad',icon:'🎄'},
+  sanvalentin:{primary:'#881337',accent:'#ec4899',page:'#fff1f2',surface:'#fffafb',ink:'#4c1029',border:'#fecdd3',label:'San Valentín',icon:'❤️'},
+  padre:{primary:'#172554',accent:'#ca8a04',page:'#f8fafc',surface:'#ffffff',ink:'#172554',border:'#dbeafe',label:'Día del Padre',icon:'👔'},
+  madre:{primary:'#831843',accent:'#f472b6',page:'#fff1f2',surface:'#fffafd',ink:'#501536',border:'#fbcfe8',label:'Día de la Madre',icon:'🌷'},
+  nino:{primary:'#075985',accent:'#f59e0b',page:'#f0f9ff',surface:'#ffffff',ink:'#0c4a6e',border:'#bae6fd',label:'Día del Niño',icon:'🎈'}
+ };
+ function readSavedTheme(){
+  try{
+   const raw=localStorage.getItem('novashop_public_theme');
+   if(!raw)return 'original';
+   let value;
+   try{value=JSON.parse(raw)}catch(_){value=raw}
+   if(typeof value==='string')return value;
+   if(value&&typeof value==='object')return value.tema||value.theme||value.temporada||'original';
+  }catch(e){}
+  return 'original';
+ }
+ function applyTheme(){
+  const requested=new URLSearchParams(location.search).get('tema');
+  const key=requested&&THEMES[requested]?requested:readSavedTheme();
+  const theme=THEMES[key]?key:'original';
+  const t=THEMES[theme],root=document.documentElement,body=document.body;
+  if(!body)return;
+  body.dataset.tema=theme;root.dataset.tema=theme;
+  const vars={'--ns-primary':t.primary,'--ns-accent':t.accent,'--ns-page':t.page,'--ns-surface':t.surface,'--ns-ink':t.ink,'--ns-border':t.border};
+  Object.keys(vars).forEach(k=>root.style.setProperty(k,vars[k]));
+  document.querySelectorAll('.ns-season-banner,.season-ribbon').forEach(el=>el.remove());
+  if(theme!=='original'){
+   const banner=document.createElement('div');banner.className='ns-season-banner';
+   banner.innerHTML='<span aria-hidden="true">'+t.icon+'</span><span>Edición especial · '+t.label+' · NovaShop</span><span aria-hidden="true">'+t.icon+'</span>';
+   const header=body.querySelector('header');
+   if(header)header.insertAdjacentElement('afterend',banner);else body.insertAdjacentElement('afterbegin',banner);
+  }
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',applyTheme,{once:true});else applyTheme();
+ window.addEventListener('pageshow',applyTheme);
+ window.addEventListener('storage',e=>{if(e.key==='novashop_public_theme')applyTheme()});
+})();
+</script>
 </body>
 </html>
