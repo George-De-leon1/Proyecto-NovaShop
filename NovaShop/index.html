@@ -26,6 +26,18 @@
       50% { transform: scale(1.08); }
     }
     .animate-badge { animation: pulse-badge 2s infinite ease-in-out; }
+
+  /* Buscador inteligente estilo marketplace */
+  #searchBox.search-open #searchInput{background:#fff;border-color:#2563eb;border-bottom-left-radius:12px;border-bottom-right-radius:12px}
+  #searchSuggestions{animation:searchDrop .16s ease-out}
+  @keyframes searchDrop{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+  .search-row{display:flex;align-items:center;gap:12px;width:100%;padding:11px 15px;text-align:left;color:#334155;transition:background .15s}
+  .search-row:hover,.search-row.active{background:#eff6ff}
+  .search-row .search-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#f1f5f9;color:#64748b;flex:none}
+  .search-section-title{padding:13px 15px 7px;display:flex;justify-content:space-between;align-items:center;color:#64748b;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+  .search-highlight{color:#071a42;font-weight:800}
+  @media(max-width:1023px){#searchSuggestions{max-height:65vh}}
+
   </style>
 
   <style id="temaVisualActivo">
@@ -133,12 +145,27 @@
       </a>
 
       <!-- Barra de Búsqueda Header -->
-      <div class="hidden lg:flex items-center flex-grow max-w-md mx-6">
-        <div class="relative w-full">
-          <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
-            <i class="fa-solid fa-magnifying-glass text-xs"></i>
-          </span>
-          <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Buscar prendas, hoodies, niños, zapatillas..." class="w-full bg-slate-100/80 border border-slate-200 text-slate-900 rounded-xl pl-10 pr-4 py-2 text-xs focus:outline-none focus:border-electric focus:bg-white transition-all font-medium">
+      <!-- Buscador inteligente: sugerencias + historial -->
+      <div class="flex order-3 w-full lg:order-none lg:flex-1 lg:max-w-md lg:mx-6">
+        <div class="relative w-full" id="searchBox">
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 pointer-events-none">
+              <i class="fa-solid fa-magnifying-glass text-sm"></i>
+            </span>
+            <input type="search" id="searchInput" autocomplete="off"
+              oninput="handleSearch()" onfocus="mostrarPanelBusqueda()"
+              onkeydown="manejarTeclasBusqueda(event)"
+              placeholder="Buscar zapatos, camisetas, hoodies..."
+              aria-label="Buscar productos" aria-expanded="false" aria-controls="searchSuggestions"
+              class="w-full bg-slate-100/90 border border-slate-200 text-slate-900 rounded-2xl pl-11 pr-11 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white focus:ring-4 focus:ring-electric/10 transition-all font-medium">
+            <button type="button" onclick="limpiarBusqueda()" id="clearSearchBtn"
+              class="hidden absolute inset-y-0 right-0 px-4 text-slate-400 hover:text-nova" aria-label="Limpiar búsqueda">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div id="searchSuggestions" class="hidden absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden z-[80]">
+            <div id="searchSuggestionsContent" class="max-h-[min(70vh,430px)] overflow-y-auto"></div>
+          </div>
         </div>
       </div>
 
@@ -1486,34 +1513,258 @@
       setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
     }
 
-    function handleSearch() {
-      volverAlCatalogo();
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      const grid = document.getElementById('productsGrid');
-      grid.innerHTML = '';
+    const NOVASHOP_SEARCH_HISTORY_KEY = 'novashop_search_history_v1';
+    let indiceSugerenciaActiva = -1;
 
-      const filtrados = productos.filter(p =>
-        p.nombre.toLowerCase().includes(query) ||
-        p.categoriaLabel.toLowerCase().includes(query)
-      );
+    function obtenerHistorialBusqueda() {
+      try {
+        const datos = JSON.parse(localStorage.getItem(NOVASHOP_SEARCH_HISTORY_KEY) || '[]');
+        return Array.isArray(datos) ? datos : [];
+      } catch (error) { return []; }
+    }
 
-      if (filtrados.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 font-bold">Sin resultados para "${query}"</div>`;
-        return;
-      }
+    function guardarEnHistorialBusqueda(texto) {
+      const termino = String(texto || '').trim().replace(/\s+/g, ' ');
+      if (termino.length < 2) return;
+      const historial = obtenerHistorialBusqueda()
+        .filter(item => item.toLowerCase() !== termino.toLowerCase());
+      historial.unshift(termino);
+      localStorage.setItem(NOVASHOP_SEARCH_HISTORY_KEY, JSON.stringify(historial.slice(0, 8)));
+    }
 
-      filtrados.forEach(prod => {
-        const card = document.createElement('article');
-        card.className = 'bg-white rounded-3xl border border-slate-100 shadow-sm p-4';
-        card.innerHTML = `
-          <img src="${prod.colores[0].img}" class="w-full h-48 object-cover rounded-2xl cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')">
-          <h3 class="font-bold text-sm mt-3 cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')">${prod.nombre}</h3>
-          <p class="font-black text-electric mt-1">RD$ ${prod.precio.toLocaleString('es-DO')}</p>
-          <button onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')" class="w-full bg-slate-100 hover:bg-electric hover:text-white font-bold py-2 rounded-xl text-xs mt-3">Ver Detalle Completo</button>
-        `;
-        grid.appendChild(card);
+    function normalizarBusqueda(texto) {
+      return String(texto || '').toLocaleLowerCase('es').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function obtenerCatalogoBusqueda() {
+      const todos = [...(typeof productos !== 'undefined' ? productos : []),
+        ...(typeof ofertasEspeciales !== 'undefined' ? ofertasEspeciales : []),
+        ...(typeof tendenciasEspeciales !== 'undefined' ? tendenciasEspeciales : [])];
+      const vistos = new Set();
+      return todos.filter(p => {
+        if (!p || vistos.has(p.id)) return false;
+        vistos.add(p.id);
+        return true;
       });
     }
+
+    function abrirPanelBusqueda() {
+      const panel = document.getElementById('searchSuggestions');
+      const caja = document.getElementById('searchBox');
+      const input = document.getElementById('searchInput');
+      if (!panel || !caja || !input) return;
+      panel.classList.remove('hidden');
+      caja.classList.add('search-open');
+      input.setAttribute('aria-expanded', 'true');
+    }
+
+    function cerrarPanelBusqueda() {
+      const panel = document.getElementById('searchSuggestions');
+      const caja = document.getElementById('searchBox');
+      const input = document.getElementById('searchInput');
+      if (!panel || !caja || !input) return;
+      panel.classList.add('hidden');
+      caja.classList.remove('search-open');
+      input.setAttribute('aria-expanded', 'false');
+      indiceSugerenciaActiva = -1;
+    }
+
+    function mostrarPanelBusqueda() {
+      renderizarSugerenciasBusqueda();
+      abrirPanelBusqueda();
+    }
+
+    function renderizarSugerenciasBusqueda() {
+      const input = document.getElementById('searchInput');
+      const contenido = document.getElementById('searchSuggestionsContent');
+      if (!input || !contenido) return;
+
+      const query = input.value.trim();
+      const q = normalizarBusqueda(query);
+      const catalogo = obtenerCatalogoBusqueda();
+      const historial = obtenerHistorialBusqueda();
+      const categorias = [
+        { nombre: 'Zapatos', categoria: 'calzado', icono: 'fa-shoe-prints' },
+        { nombre: 'Ropa deportiva', categoria: 'deportiva', icono: 'fa-person-running' },
+        { nombre: 'Camisetas', categoria: 'casual', icono: 'fa-shirt' },
+        { nombre: 'Hoodies', categoria: 'streetwear', icono: 'fa-cloud' },
+        { nombre: 'Ropa para niños', categoria: 'ninos', icono: 'fa-child' }
+      ];
+
+      const coincidencias = q
+        ? catalogo.filter(p => normalizarBusqueda([p.nombre, p.categoria, p.categoriaLabel, p.tipo].join(' ')).includes(q)).slice(0, 5)
+        : [];
+      const historialFiltrado = q
+        ? historial.filter(t => normalizarBusqueda(t).includes(q)).slice(0, 4)
+        : historial.slice(0, 5);
+      const categoriasFiltradas = q
+        ? categorias.filter(c => normalizarBusqueda(c.nombre).includes(q)).slice(0, 3)
+        : categorias.slice(0, 4);
+
+      let contenidoHTML = '';
+      if (!q) {
+        if (historialFiltrado.length) {
+          contenidoHTML += `<div class="search-section-title"><span><i class="fa-regular fa-clock mr-2"></i>Tu historial</span><button type="button" onclick="borrarHistorialBusqueda(event)" class="normal-case tracking-normal text-electric hover:underline">Borrar todo</button></div>`;
+          historialFiltrado.forEach(t => {
+            contenidoHTML += `<button type="button" class="search-row" onclick="seleccionarBusqueda(${JSON.stringify(t).replace(/</g,'\\u003c')})"><span class="search-icon"><i class="fa-solid fa-clock-rotate-left"></i></span><span class="flex-1 text-sm">${escaparTextoBusqueda(t)}</span><i class="fa-solid fa-arrow-up-left text-xs text-slate-300"></i></button>`;
+          });
+        }
+        contenidoHTML += `<div class="search-section-title"><span><i class="fa-solid fa-fire mr-2 text-orange-500"></i>Búsquedas populares</span></div>`;
+        categoriasFiltradas.forEach(c => {
+          contenidoHTML += `<button type="button" class="search-row" onclick="buscarCategoriaRapida('${c.categoria}')"><span class="search-icon"><i class="fa-solid ${c.icono}"></i></span><span class="flex-1 text-sm">${c.nombre}</span><i class="fa-solid fa-arrow-trend-up text-xs text-slate-300"></i></button>`;
+        });
+      } else {
+        if (coincidencias.length) {
+          contenidoHTML += `<div class="search-section-title"><span>Productos sugeridos</span><span class="normal-case tracking-normal font-medium">${coincidencias.length} coincidencias</span></div>`;
+          coincidencias.forEach(p => {
+            const imagen = p.colores && p.colores[0] ? p.colores[0].img : '';
+            const precio = Number(p.precio || 0).toLocaleString('es-DO');
+            contenidoHTML += `<button type="button" class="search-row" onclick="seleccionarBusqueda(${JSON.stringify(p.nombre).replace(/</g,'\\u003c')})">
+              <span class="w-11 h-11 rounded-xl bg-slate-100 overflow-hidden flex-none">${imagen ? `<img src="${imagen}" alt="" class="w-full h-full object-cover" loading="lazy">` : '<i class="fa-solid fa-shirt"></i>'}</span>
+              <span class="flex-1 min-w-0"><span class="block text-sm font-bold truncate">${escaparTextoBusqueda(p.nombre)}</span><span class="block text-[11px] text-slate-400">${escaparTextoBusqueda(p.categoriaLabel || p.categoria || 'NovaShop')}</span></span>
+              <span class="text-xs font-black text-electric whitespace-nowrap">RD$ ${precio}</span>
+            </button>`;
+          });
+        }
+        if (historialFiltrado.length) {
+          contenidoHTML += `<div class="search-section-title"><span><i class="fa-regular fa-clock mr-2"></i>Búsquedas anteriores</span></div>`;
+          historialFiltrado.forEach(t => {
+            contenidoHTML += `<button type="button" class="search-row" onclick="seleccionarBusqueda(${JSON.stringify(t).replace(/</g,'\\u003c')})"><span class="search-icon"><i class="fa-solid fa-clock-rotate-left"></i></span><span class="flex-1 text-sm">${escaparTextoBusqueda(t)}</span></button>`;
+          });
+        }
+        if (!coincidencias.length && !historialFiltrado.length) {
+          contenidoHTML = `<div class="px-5 py-6 text-center"><div class="text-2xl text-slate-300 mb-2"><i class="fa-solid fa-magnifying-glass"></i></div><p class="text-sm font-bold text-slate-600">Busca “${escaparTextoBusqueda(query)}”</p><p class="text-xs text-slate-400 mt-1">Presiona Enter para ver los resultados disponibles.</p></div>`;
+        }
+        contenidoHTML += `<button type="button" class="w-full border-t border-slate-100 px-4 py-3 text-sm font-bold text-electric hover:bg-blue-50 text-left" onclick="ejecutarBusqueda()"><i class="fa-solid fa-magnifying-glass mr-2"></i>Ver todos los resultados para “${escaparTextoBusqueda(query)}”</button>`;
+      }
+      contenido.innerHTML = contenidoHTML;
+      indiceSugerenciaActiva = -1;
+    }
+
+    function escaparTextoBusqueda(texto) {
+      return String(texto ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function seleccionarBusqueda(texto) {
+      const input = document.getElementById('searchInput');
+      input.value = texto;
+      ejecutarBusqueda();
+    }
+
+    function buscarCategoriaRapida(categoria) {
+      cerrarPanelBusqueda();
+      volverAlCatalogo();
+      renderProducts(categoria);
+      document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function borrarHistorialBusqueda(event) {
+      if (event) event.stopPropagation();
+      localStorage.removeItem(NOVASHOP_SEARCH_HISTORY_KEY);
+      renderizarSugerenciasBusqueda();
+      showToast('Historial de búsqueda eliminado');
+    }
+
+    function limpiarBusqueda() {
+      const input = document.getElementById('searchInput');
+      input.value = '';
+      actualizarBotonLimpiarBusqueda();
+      renderizarSugerenciasBusqueda();
+      abrirPanelBusqueda();
+      input.focus();
+      volverAlCatalogo();
+      renderProducts('all');
+    }
+
+    function actualizarBotonLimpiarBusqueda() {
+      const boton = document.getElementById('clearSearchBtn');
+      const input = document.getElementById('searchInput');
+      if (boton && input) boton.classList.toggle('hidden', !input.value);
+    }
+
+    function manejarTeclasBusqueda(event) {
+      const panel = document.getElementById('searchSuggestions');
+      if (event.key === 'Escape') { cerrarPanelBusqueda(); return; }
+      if (event.key === 'Enter') { event.preventDefault(); ejecutarBusqueda(); return; }
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+      const opciones = Array.from(panel.querySelectorAll('button.search-row'));
+      if (!opciones.length) return;
+      event.preventDefault();
+      indiceSugerenciaActiva += event.key === 'ArrowDown' ? 1 : -1;
+      if (indiceSugerenciaActiva < 0) indiceSugerenciaActiva = opciones.length - 1;
+      if (indiceSugerenciaActiva >= opciones.length) indiceSugerenciaActiva = 0;
+      opciones.forEach((op, i) => op.classList.toggle('active', i === indiceSugerenciaActiva));
+      opciones[indiceSugerenciaActiva].scrollIntoView({ block: 'nearest' });
+    }
+
+    function ejecutarBusqueda() {
+      const input = document.getElementById('searchInput');
+      const query = input.value.trim();
+      if (!query) { mostrarPanelBusqueda(); return; }
+      guardarEnHistorialBusqueda(query);
+      cerrarPanelBusqueda();
+      actualizarBotonLimpiarBusqueda();
+      volverAlCatalogo();
+      const grid = document.getElementById('productsGrid');
+      const q = normalizarBusqueda(query);
+      const filtrados = obtenerCatalogoBusqueda().filter(p =>
+        normalizarBusqueda([p.nombre, p.categoriaLabel, p.categoria, p.tipo].join(' ')).includes(q)
+      );
+      grid.innerHTML = '';
+      if (!filtrados.length) {
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500 font-bold">Sin resultados para "${escaparTextoBusqueda(query)}". Prueba con otra palabra.</div>`;
+      } else {
+        filtrados.forEach(prod => {
+          const card = document.createElement('article');
+          card.className = 'bg-white rounded-3xl border border-slate-100 shadow-sm p-4';
+          const imagen = prod.colores && prod.colores[0] ? prod.colores[0].img : '';
+          card.innerHTML = `
+            <img src="${imagen}" alt="${escaparTextoBusqueda(prod.nombre)}" class="w-full h-48 object-cover rounded-2xl cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')">
+            <h3 class="font-bold text-sm mt-3 cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')">${escaparTextoBusqueda(prod.nombre)}</h3>
+            <p class="font-black text-electric mt-1">RD$ ${Number(prod.precio || 0).toLocaleString('es-DO')}</p>
+            <button onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')" class="w-full bg-slate-100 hover:bg-electric hover:text-white font-bold py-2 rounded-xl text-xs mt-3">Ver Detalle Completo</button>`;
+          grid.appendChild(card);
+        });
+      }
+      document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleSearch() {
+      const input = document.getElementById('searchInput');
+      actualizarBotonLimpiarBusqueda();
+      renderizarSugerenciasBusqueda();
+      abrirPanelBusqueda();
+      if (input.value.trim().length >= 2) {
+        // Actualiza los resultados detrás del panel sin obligar al usuario a enviar todavía.
+        const query = normalizarBusqueda(input.value.trim());
+        const grid = document.getElementById('productsGrid');
+        const filtrados = obtenerCatalogoBusqueda().filter(p =>
+          normalizarBusqueda([p.nombre, p.categoriaLabel, p.categoria, p.tipo].join(' ')).includes(query)
+        );
+        if (filtrados.length) {
+          volverAlCatalogo();
+          grid.innerHTML = '';
+          filtrados.forEach(prod => {
+            const card = document.createElement('article');
+            card.className = 'bg-white rounded-3xl border border-slate-100 shadow-sm p-4';
+            const imagen = prod.colores && prod.colores[0] ? prod.colores[0].img : '';
+            card.innerHTML = `<img src="${imagen}" alt="${escaparTextoBusqueda(prod.nombre)}" class="w-full h-48 object-cover rounded-2xl cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')"><h3 class="font-bold text-sm mt-3 cursor-pointer" onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')">${escaparTextoBusqueda(prod.nombre)}</h3><p class="font-black text-electric mt-1">RD$ ${Number(prod.precio || 0).toLocaleString('es-DO')}</p><button onclick="abrirDetalleCompleto(${prod.id}, 'catalogo')" class="w-full bg-slate-100 hover:bg-electric hover:text-white font-bold py-2 rounded-xl text-xs mt-3">Ver Detalle Completo</button>`;
+            grid.appendChild(card);
+          });
+        }
+      } else if (!input.value.trim()) {
+        volverAlCatalogo();
+        if (typeof renderProducts === 'function') renderProducts('all');
+      }
+    }
+
+    document.addEventListener('click', function(event) {
+      const caja = document.getElementById('searchBox');
+      if (caja && !caja.contains(event.target)) cerrarPanelBusqueda();
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      actualizarBotonLimpiarBusqueda();
+    });
   </script>
 
   <script>
