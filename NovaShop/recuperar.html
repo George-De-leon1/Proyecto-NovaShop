@@ -1,164 +1,213 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recuperar Contraseña | NovaShop</title>
+  <meta name="theme-color" content="#071A42">
+  <title>Recuperar contraseña | NovaShop</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            nova: '#071A42',
-            electric: '#2563EB',
-            'nova-dark': '#040f28',
-            'electric-hover': '#1d4ed8'
-          }
-        }
-      }
-    }
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root{--navy:#071a42;--blue:#2563eb;--muted:#718096}
+    *{box-sizing:border-box}
+    body{font-family:"DM Sans",sans-serif;background:#f4f7fc;color:#15223b}
+    h1,h2,h3,.brand{font-family:"Manrope",sans-serif}
+    .page-bg{background:radial-gradient(ellipse at 8% 8%,rgba(37,99,235,.12),transparent 32%),radial-gradient(ellipse at 92% 90%,rgba(14,165,233,.10),transparent 30%),#f4f7fc}
+    .shell{box-shadow:0 35px 100px rgba(7,26,66,.13),0 3px 12px rgba(7,26,66,.04)}
+    .visual-panel{background:linear-gradient(145deg,#06132f 0%,#0a2456 52%,#1746a2 100%)}
+    .visual-panel:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,black,transparent 90%)}
+    .orb{position:absolute;border:1px solid rgba(255,255,255,.13);border-radius:50%;pointer-events:none}
+    .input-wrap{transition:.2s ease;border:1px solid #dce4f0;background:#f8faff}
+    .input-wrap:focus-within{border-color:#3975f6;background:#fff;box-shadow:0 0 0 4px rgba(37,99,235,.10)}
+    .input-wrap input{outline:0}
+    .main-btn{background:linear-gradient(105deg,#071a42,#123d91 58%,#2563eb);box-shadow:0 12px 24px rgba(37,99,235,.20);transition:transform .2s,box-shadow .2s,filter .2s}
+    .main-btn:hover{transform:translateY(-2px);box-shadow:0 16px 28px rgba(37,99,235,.27);filter:brightness(1.06)}
+    .main-btn:active{transform:translateY(0)}
+    .fade{animation:fade .38s ease both}
+    @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .step-line{background:linear-gradient(90deg,rgba(147,197,253,.65),rgba(147,197,253,.08))}
+    .toast{transition:opacity .25s,transform .25s}
+    @media(max-width:767px){.visual-panel{min-height:205px}.mobile-brand{display:flex}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
+<body class="page-bg min-h-screen flex flex-col">
 
-  <!-- Header Simplificado -->
-  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 py-4">
-    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <a href="index.html" class="flex items-center gap-2">
-    <img src="img/logo..png"
-         alt="Logo de NovaShop"
-         class="w-12 h-10 object-contain">
-
-    <span class="text-3xl font-black text-nova tracking-tight">
-        Nova<span class="text-electric">Shop</span>
-    </span>
-</a>
-
-      <a href="login.html" class="text-xs sm:text-sm font-bold text-slate-600 hover:text-electric transition-colors flex items-center gap-1.5">
-        <i class="fa-solid fa-arrow-left text-xs"></i> Volver al inicio de sesión
+  <header class="relative z-10 border-b border-slate-200/70 bg-white/85 backdrop-blur-xl">
+    <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+      <a href="index.html" class="flex items-center gap-3" aria-label="NovaShop, página principal">
+        <img src="img/logo..png" alt="NovaShop" class="h-10 w-11 object-contain" onerror="this.hidden=true">
+        <span class="brand text-[1.65rem] font-extrabold tracking-[-.07em] text-[#071A42]">Nova<span class="text-[#2563EB]">Shop</span><span class="ml-2 hidden align-middle text-[9px] font-bold uppercase tracking-[.2em] text-slate-400 sm:inline">Tu estilo, tu esencia</span></span>
       </a>
-    </div>
+      <a href="login.html" class="group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs font-bold text-slate-600 shadow-sm transition hover:border-blue-200 hover:text-blue-700 sm:text-sm">
+        <i class="fa-solid fa-arrow-left transition group-hover:-translate-x-1"></i>
+        <span>Iniciar sesión</span>
+      </a>
+    </nav>
   </header>
 
-  <!-- Formulario de Recuperación Principal -->
-  <main class="flex-grow flex items-center justify-center px-4 py-12">
-    <div class="w-full max-w-md">
-      
-      <!-- Card Principal -->
-      <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-xl shadow-nova/5 border border-slate-100 relative overflow-hidden">
-        <!-- Detalle decorativo superior -->
-        <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-nova via-electric to-blue-400"></div>
+  <main class="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-9 sm:px-6 sm:py-14">
+    <div class="pointer-events-none absolute -left-24 top-24 h-72 w-72 rounded-full bg-blue-300/20 blur-3xl"></div>
+    <div class="pointer-events-none absolute -right-24 bottom-12 h-80 w-80 rounded-full bg-cyan-200/25 blur-3xl"></div>
 
-        <!-- Estado 1: Formulario -->
-        <div id="formState">
-          <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-blue-50 text-electric mb-4 text-2xl font-bold shadow-sm">
-              <i class="fa-solid fa-key"></i>
-            </div>
-            <h1 class="text-2xl sm:text-3xl font-black text-nova tracking-tight">¿Olvidaste tu contraseña?</h1>
-            <p class="text-slate-500 text-sm mt-2 leading-relaxed">
-              No te preocupes. Introduce el correo electrónico asociado a tu cuenta y te enviaremos un enlace de recuperación.
-            </p>
+    <div class="shell relative grid w-full max-w-5xl overflow-hidden rounded-[30px] border border-white/80 bg-white md:grid-cols-[.92fr_1.08fr]">
+      <!-- Panel de marca -->
+      <aside class="visual-panel relative flex min-h-[230px] flex-col justify-between overflow-hidden p-7 text-white sm:p-10 md:min-h-[650px] md:p-11">
+        <div class="orb -right-24 -top-28 h-80 w-80"></div>
+        <div class="orb -right-5 -top-9 h-52 w-52"></div>
+        <div class="orb -bottom-36 -left-28 h-80 w-80"></div>
+        <div class="relative z-10 flex items-center justify-between">
+          <div class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-[.22em] text-blue-100">
+            <span class="flex h-8 w-8 items-center justify-center rounded-xl border border-white/15 bg-white/10"><i class="fa-solid fa-sparkles"></i></span>
+            Centro de ayuda
           </div>
+          <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[10px] font-bold tracking-wider text-blue-100">NOVASHOP</span>
+        </div>
 
-          <form onsubmit="handleResetPassword(event)" class="space-y-5">
-            <div>
-              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Correo electrónico registrado</label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
-                  <i class="fa-regular fa-envelope text-sm"></i>
-                </span>
-                <input required type="email" id="recoveryEmail" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400" placeholder="correo@ejemplo.com">
+        <div class="relative z-10 mt-10 md:mt-0">
+          <div class="mb-7 hidden h-16 w-16 items-center justify-center rounded-[20px] border border-white/15 bg-white/10 text-3xl text-blue-200 shadow-xl shadow-black/10 md:flex">
+            <i class="fa-solid fa-lock-open"></i>
+          </div>
+          <p class="mb-3 text-[10px] font-extrabold uppercase tracking-[.28em] text-blue-200">Tu cuenta, bajo control</p>
+          <h2 class="max-w-sm text-3xl font-extrabold leading-[1.14] tracking-[-.04em] sm:text-4xl">Volver a entrar debería ser sencillo.</h2>
+          <p class="mt-5 hidden max-w-sm text-sm leading-7 text-blue-100/75 md:block">Te guiaremos para recuperar el acceso a tu cuenta y continuar disfrutando de tu experiencia NovaShop.</p>
+        </div>
+
+        <div class="relative z-10 mt-8 hidden space-y-4 md:block">
+          <div class="step-line h-px w-full"></div>
+          <div class="flex items-center gap-3 text-xs font-medium text-blue-100/85">
+            <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-blue-200"><i class="fa-regular fa-envelope"></i></span>
+            <span>Usa el correo vinculado a tu cuenta.</span>
+          </div>
+          <div class="flex items-center gap-3 text-xs font-medium text-blue-100/85">
+            <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-blue-200"><i class="fa-solid fa-shield-halved"></i></span>
+            <span>No compartas tus instrucciones de recuperación.</span>
+          </div>
+          <p class="pt-3 text-[10px] tracking-wide text-blue-200/55">NOVASHOP · TU ESTILO, TU ESENCIA.</p>
+        </div>
+      </aside>
+
+      <!-- Formulario -->
+      <section class="flex min-h-[590px] items-center justify-center px-6 py-10 sm:px-12 md:px-14">
+        <div class="w-full max-w-[390px]">
+          <div id="formState" class="fade">
+            <div class="mb-8">
+              <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-2xl text-blue-600 ring-1 ring-blue-100">
+                <i class="fa-solid fa-key"></i>
               </div>
+              <div class="mb-2 text-[10px] font-extrabold uppercase tracking-[.24em] text-blue-600">Recuperación de acceso</div>
+              <h1 class="text-[2rem] font-extrabold leading-tight tracking-[-.055em] text-[#071A42] sm:text-[2.25rem]">¿Olvidaste tu contraseña?</h1>
+              <p class="mt-3 text-sm leading-6 text-slate-500">No pasa nada. Introduce tu correo electrónico registrado y te indicaremos cómo continuar.</p>
             </div>
 
-            <button type="submit" class="w-full bg-nova hover:bg-nova-dark text-white font-bold py-3.5 rounded-xl shadow-lg shadow-nova/10 hover:shadow-nova/20 transition-all flex items-center justify-center gap-2 text-sm">
-              <i class="fa-regular fa-paper-plane text-xs"></i>
-              <span>Enviar instrucciones</span>
-            </button>
-          </form>
+            <form id="recoveryForm" class="space-y-5" onsubmit="handleResetPassword(event)" novalidate>
+              <div>
+                <label for="recoveryEmail" class="mb-2 block text-[11px] font-extrabold uppercase tracking-[.13em] text-slate-700">Correo electrónico</label>
+                <div class="input-wrap flex items-center rounded-2xl px-4">
+                  <i class="fa-regular fa-envelope mr-3 text-slate-400"></i>
+                  <input id="recoveryEmail" name="email" type="email" autocomplete="email" required placeholder="nombre@correo.com" class="w-full bg-transparent py-4 text-sm font-semibold text-slate-800 placeholder:font-normal placeholder:text-slate-400">
+                </div>
+                <p id="emailError" class="mt-2 hidden text-xs font-semibold text-rose-600" role="alert">Escribe un correo electrónico válido para continuar.</p>
+              </div>
 
-          <div class="mt-8 pt-6 border-t border-slate-100 text-center">
-            <a href="login.html" class="text-xs font-bold text-electric hover:underline flex items-center justify-center gap-1.5">
-              <i class="fa-solid fa-arrow-left text-[10px]"></i>
-              <span>Regresar a Iniciar Sesión</span>
-            </a>
+              <button id="sendButton" type="submit" class="main-btn flex w-full items-center justify-center gap-3 rounded-2xl px-5 py-4 text-sm font-extrabold text-white">
+                <span>Enviar instrucciones</span><i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </form>
+
+            <div class="mt-6 flex gap-3 rounded-2xl border border-blue-100 bg-blue-50/70 p-4">
+              <i class="fa-solid fa-circle-info mt-0.5 text-blue-600"></i>
+              <p class="text-xs leading-5 text-slate-600">Asegúrate de escribir el mismo correo que utilizaste al registrarte en NovaShop.</p>
+            </div>
+
+            <div class="mt-8 border-t border-slate-100 pt-6 text-center">
+              <a href="login.html" class="text-xs font-extrabold text-blue-700 transition hover:text-[#071A42]"><i class="fa-solid fa-chevron-left mr-2 text-[9px]"></i>Volver al inicio de sesión</a>
+            </div>
+          </div>
+
+          <div id="successState" class="hidden text-center fade" aria-live="polite">
+            <div class="relative mx-auto mb-7 flex h-24 w-24 items-center justify-center rounded-[28px] bg-emerald-50 text-4xl text-emerald-600">
+              <span class="absolute inset-2 rounded-[22px] border border-emerald-100"></span>
+              <i class="fa-solid fa-envelope-circle-check relative"></i>
+            </div>
+            <p class="mb-2 text-[10px] font-extrabold uppercase tracking-[.23em] text-emerald-600">Solicitud registrada en esta demostración</p>
+            <h2 class="text-3xl font-extrabold tracking-[-.05em] text-[#071A42]">¡Todo listo!</h2>
+            <p class="mt-3 text-sm leading-6 text-slate-500">La solicitud se preparó para el correo:</p>
+            <p id="sentEmailDisplay" class="mt-2 break-all rounded-xl bg-slate-50 px-4 py-3 text-sm font-extrabold text-[#071A42]"></p>
+
+            <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-5 text-left">
+              <h3 class="mb-3 text-sm font-extrabold text-[#071A42]">Si no ves un mensaje:</h3>
+              <ul class="space-y-3 text-xs leading-5 text-slate-500">
+                <li class="flex gap-2"><i class="fa-solid fa-check mt-0.5 text-emerald-500"></i>Comprueba la carpeta de spam o correo no deseado.</li>
+                <li class="flex gap-2"><i class="fa-solid fa-check mt-0.5 text-emerald-500"></i>Verifica que el correo esté escrito correctamente.</li>
+                <li class="flex gap-2"><i class="fa-solid fa-check mt-0.5 text-emerald-500"></i>Recuerda que esta versión es una demostración visual.</li>
+              </ul>
+            </div>
+            <button type="button" onclick="resetForm()" class="mt-7 w-full rounded-2xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-extrabold text-[#071A42] transition hover:border-blue-200 hover:bg-blue-50">
+              <i class="fa-solid fa-rotate-left mr-2"></i>Usar otro correo
+            </button>
+            <a href="login.html" class="mt-5 inline-block text-xs font-extrabold text-blue-700 hover:text-[#071A42]">Volver al inicio de sesión</a>
           </div>
         </div>
-
-        <!-- Estado 2: Mensaje de Confirmación (Oculto por defecto) -->
-        <div id="successState" class="hidden text-center py-4">
-          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 text-emerald-500 mb-4 text-3xl font-bold">
-            <i class="fa-solid fa-envelope-circle-check"></i>
-          </div>
-          <h2 class="text-2xl font-black text-nova tracking-tight">¡Correo Enviado!</h2>
-          <p class="text-slate-500 text-sm mt-2 leading-relaxed">
-            Hemos enviado las instrucciones de recuperación a <strong id="sentEmailDisplay" class="text-nova"></strong>.
-          </p>
-
-          <div class="mt-6 p-4 bg-slate-50 rounded-2xl border border-slate-100 text-xs text-slate-500 text-left space-y-1">
-            <p class="font-bold text-nova">¿No recibiste el correo?</p>
-            <p>Revisa tu carpeta de correo no deseado (Spam) o intenta enviar la solicitud nuevamente.</p>
-          </div>
-
-          <div class="mt-8 space-y-3">
-            <button onclick="resendEmail()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold py-3 rounded-xl text-xs transition-all">
-              Reenviar correo
-            </button>
-            <a href="login.html" class="block text-center text-xs font-bold text-electric hover:underline">
-              Volver al inicio de sesión
-            </a>
-          </div>
-        </div>
-
-      </div>
-
+      </section>
     </div>
   </main>
 
-  <!-- Notification Toast -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-nova text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
-    <div class="w-8 h-8 rounded-full bg-electric/20 text-electric flex items-center justify-center">
-      <i class="fa-solid fa-check"></i>
-    </div>
-    <span id="toastMsg" class="font-bold text-sm">Instrucciones enviadas correctamente</span>
-  </div>
-
-  <!-- Footer Simplificado -->
-  <footer class="py-6 border-t border-slate-200 text-center text-xs text-slate-500 bg-white">
-    <p>© 2026 NovaShop. Todos los derechos reservados.</p>
+  <footer class="border-t border-slate-200/70 bg-white/75 px-5 py-5 text-center text-[11px] font-medium text-slate-400">
+    © <span id="year"></span> NovaShop. Todos los derechos reservados.
   </footer>
 
+  <div id="toast" class="toast pointer-events-none fixed bottom-5 right-5 z-50 flex max-w-[calc(100%-2.5rem)] translate-y-4 items-center gap-3 rounded-2xl bg-[#071A42] px-5 py-4 text-white opacity-0 shadow-2xl" role="status" aria-live="polite">
+    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-400/15 text-emerald-300"><i class="fa-solid fa-check"></i></span>
+    <span id="toastMsg" class="text-xs font-bold">Solicitud preparada.</span>
+  </div>
+
   <script>
-    function handleResetPassword(e) {
-      e.preventDefault();
-      const email = document.getElementById('recoveryEmail').value;
-      
+    let correoSolicitado = '';
+    let toastTimer = null;
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function handleResetPassword(event) {
+      event.preventDefault();
+      const input = document.getElementById('recoveryEmail');
+      const error = document.getElementById('emailError');
+      const email = input.value.trim().toLowerCase();
+
+      if (!input.checkValidity() || !email) {
+        error.classList.remove('hidden');
+        input.focus();
+        return;
+      }
+
+      error.classList.add('hidden');
+      correoSolicitado = email;
       document.getElementById('sentEmailDisplay').textContent = email;
       document.getElementById('formState').classList.add('hidden');
       document.getElementById('successState').classList.remove('hidden');
-
-      showToast('Instrucciones enviadas con éxito');
+      showToast('Solicitud preparada en modo demostración.');
     }
 
-    function resendEmail() {
-      showToast('Reenviando correo de recuperación...');
+    function resetForm() {
+      document.getElementById('successState').classList.add('hidden');
+      document.getElementById('formState').classList.remove('hidden');
+      document.getElementById('recoveryEmail').value = correoSolicitado;
+      document.getElementById('recoveryEmail').focus();
     }
 
-    function showToast(mensaje) {
+    function showToast(message) {
       const toast = document.getElementById('toast');
-      const toastMsg = document.getElementById('toastMsg');
-      
-      toastMsg.textContent = mensaje;
-      toast.classList.remove('translate-y-20', 'opacity-0');
-
-      setTimeout(() => {
-        toast.classList.add('translate-y-20', 'opacity-0');
-      }, 3000);
+      document.getElementById('toastMsg').textContent = message;
+      toast.classList.remove('translate-y-4', 'opacity-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.add('translate-y-4', 'opacity-0'), 3200);
     }
-  </script>
 
+    document.getElementById('recoveryEmail').addEventListener('input', () => {
+      document.getElementById('emailError').classList.add('hidden');
+    });
+  </script>
 </body>
 </html>

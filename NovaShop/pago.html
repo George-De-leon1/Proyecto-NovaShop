@@ -113,13 +113,25 @@
           <div class="space-y-4">
             <div class="grid sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Provincia</label>
-                <input required type="text" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400" placeholder="Ej. San Pedro de Macorís">
+                <label for="provincia" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Provincia</label>
+                <select required id="provincia" name="provincia" onchange="actualizarMunicipios()" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium">
+                  <option value="">Selecciona una provincia</option>
+                  <option>Azua</option><option>Bahoruco</option><option>Barahona</option><option>Dajabón</option>
+                  <option>Distrito Nacional</option><option>Duarte</option><option>Elías Piña</option><option>El Seibo</option>
+                  <option>Espaillat</option><option>Hato Mayor</option><option>Hermanas Mirabal</option><option>Independencia</option>
+                  <option>La Altagracia</option><option>La Romana</option><option>La Vega</option><option>María Trinidad Sánchez</option>
+                  <option>Monseñor Nouel</option><option>Monte Cristi</option><option>Monte Plata</option><option>Pedernales</option>
+                  <option>Peravia</option><option>Puerto Plata</option><option>Samaná</option><option>San Cristóbal</option>
+                  <option>San José de Ocoa</option><option>San Juan</option><option>San Pedro de Macorís</option><option>Sánchez Ramírez</option>
+                  <option>Santiago</option><option>Santiago Rodríguez</option><option>Santo Domingo</option><option>Valverde</option>
+                </select>
               </div>
 
               <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Municipio / Sector</label>
-                <input required type="text" class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium placeholder:text-slate-400" placeholder="Ej. Centro de la Ciudad">
+                <label for="sector" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Municipio / Sector</label>
+                <select required id="sector" name="sector" disabled class="w-full bg-slate-50 border border-slate-200 text-slate-900 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-electric focus:bg-white transition-all font-medium disabled:opacity-60">
+                  <option value="">Primero selecciona una provincia</option>
+                </select>
               </div>
             </div>
 
@@ -252,6 +264,54 @@
   </footer>
 
   <script>
+    const municipiosPorProvincia = {
+      "Azua": ["Azua", "Estebanía", "Guayabal", "Las Charcas", "Las Yayas de Viajama", "Padre Las Casas", "Peralta", "Pueblo Viejo", "Sabana Yegua", "Tábara Arriba"],
+      "Bahoruco": ["Neiba", "Galván", "Los Ríos", "Tamayo", "Villa Jaragua"],
+      "Barahona": ["Barahona", "Cabral", "El Peñón", "Enriquillo", "Fundación", "Jaquimeyes", "La Ciénaga", "Las Salinas", "Paraíso", "Polo", "Vicente Noble"],
+      "Dajabón": ["Dajabón", "El Pino", "Loma de Cabrera", "Partido", "Restauración"],
+      "Distrito Nacional": ["Santo Domingo de Guzmán (Distrito Nacional)"],
+      "Duarte": ["San Francisco de Macorís", "Arenoso", "Castillo", "Eugenio María de Hostos", "Las Guáranas", "Pimentel", "Villa Riva"],
+      "Elías Piña": ["Comendador", "Bánica", "El Llano", "Hondo Valle", "Juan Santiago", "Pedro Santana"],
+      "El Seibo": ["El Seibo", "Miches"],
+      "Espaillat": ["Moca", "Cayetano Germosén", "Gaspar Hernández", "Jamao al Norte", "San Víctor"],
+      "Hato Mayor": ["Hato Mayor del Rey", "El Valle", "Sabana de la Mar"],
+      "Hermanas Mirabal": ["Salcedo", "Tenares", "Villa Tapia"],
+      "Independencia": ["Jimaní", "Cristóbal", "Duvergé", "La Descubierta", "Mella", "Postrer Río"],
+      "La Altagracia": ["Higüey", "San Rafael del Yuma"],
+      "La Romana": ["La Romana", "Guaymate", "Villa Hermosa"],
+      "La Vega": ["La Vega", "Constanza", "Jarabacoa", "Jima Abajo"],
+      "María Trinidad Sánchez": ["Nagua", "Cabrera", "El Factor", "Río San Juan"],
+      "Monseñor Nouel": ["Bonao", "Maimón", "Piedra Blanca"],
+      "Monte Cristi": ["Monte Cristi", "Castañuelas", "Guayubín", "Las Matas de Santa Cruz", "Pepillo Salcedo", "Villa Vásquez"],
+      "Monte Plata": ["Monte Plata", "Bayaguana", "Peralvillo", "Sabana Grande de Boyá", "Yamasá"],
+      "Pedernales": ["Pedernales", "Oviedo"],
+      "Peravia": ["Baní", "Nizao"],
+      "Puerto Plata": ["Puerto Plata", "Altamira", "Guananico", "Imbert", "Los Hidalgos", "Luperón", "Sosúa", "Villa Isabela", "Villa Montellano"],
+      "Samaná": ["Samaná", "Las Terrenas", "Sánchez"],
+      "San Cristóbal": ["San Cristóbal", "Bajos de Haina", "Cambita Garabitos", "Los Cacaos", "Sabana Grande de Palenque", "San Gregorio de Nigua", "Villa Altagracia", "Yaguate"],
+      "San José de Ocoa": ["San José de Ocoa", "Rancho Arriba", "Sabana Larga"],
+      "San Juan": ["San Juan de la Maguana", "Bohechío", "El Cercado", "Juan de Herrera", "Las Matas de Farfán", "Vallejuelo"],
+      "San Pedro de Macorís": ["San Pedro de Macorís", "Consuelo", "Guayacanes", "Quisqueya", "Ramón Santana", "San José de los Llanos"],
+      "Sánchez Ramírez": ["Cotuí", "Cevicos", "Fantino", "La Mata"],
+      "Santiago": ["Santiago de los Caballeros", "Bisonó (Navarrete)", "Jánico", "Licey al Medio", "Puñal", "Sabana Iglesia", "San José de las Matas", "Tamboril", "Villa González"],
+      "Santiago Rodríguez": ["San Ignacio de Sabaneta", "Los Almácigos", "Monción"],
+      "Santo Domingo": ["Santo Domingo Este", "Santo Domingo Norte", "Santo Domingo Oeste", "Boca Chica", "Los Alcarrizos", "Pedro Brand", "San Antonio de Guerra"],
+      "Valverde": ["Mao", "Esperanza", "Laguna Salada"]
+    };
+
+    function actualizarMunicipios() {
+      const provincia = document.getElementById('provincia').value;
+      const selector = document.getElementById('sector');
+      selector.innerHTML = '<option value="">Selecciona un municipio o distrito</option>';
+      (municipiosPorProvincia[provincia] || []).forEach(nombre => {
+        const opcion = document.createElement('option');
+        opcion.value = nombre;
+        opcion.textContent = nombre;
+        selector.appendChild(opcion);
+      });
+      selector.disabled = !provincia;
+    }
+
     document.addEventListener('DOMContentLoaded', cargarResumenOrden);
 
     function cargarResumenOrden() {
@@ -341,13 +401,12 @@
       }
 
       // Los campos se leen en el mismo orden en que aparecen en el formulario.
-      const textos = [...form.querySelectorAll('input[type="text"]')];
       const nombre = form.querySelector('input[type="text"]')?.value.trim() || '';
       const email = form.querySelector('input[type="email"]')?.value.trim() || '';
       const telefono = form.querySelector('input[type="tel"]')?.value.trim() || '';
-      const provincia = textos[1]?.value.trim() || '';
-      const sector = textos[2]?.value.trim() || '';
-      const direccion = textos[3]?.value.trim() || '';
+      const provincia = document.getElementById('provincia').value;
+      const sector = document.getElementById('sector').value;
+      const direccion = form.querySelector('input[placeholder^="Ej. C/"]')?.value.trim() || ''; 
       const metodo = form.querySelector('input[name="pago"]:checked')?.value || 'entrega';
       const subtotal = carrito.reduce((s, p) => s + (Number(p.precio) * Number(p.cantidad)), 0);
       const envio = subtotal >= 3000 ? 0 : 250;
