@@ -1346,17 +1346,35 @@
       }
     };
 
+    function normalizarTemaNovaShop(valor) {
+      const texto = String(valor || 'original').toLowerCase().trim()
+        .normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
+      const clave = texto.replace(/[^a-z0-9]/g, '');
+      const alias = {
+        halloween: 'halloween', navidad: 'navidad',
+        sanvalentin: 'sanvalentin', diadelamor: 'sanvalentin',
+        padre: 'padre', diadelpadre: 'padre',
+        madre: 'madre', diadelamadre: 'madre',
+        nino: 'nino', ninos: 'nino', diadelnino: 'nino',
+        blackfriday: 'blackfriday', orgullo: 'orgullo',
+        mesdelorgullo: 'orgullo', original: 'original', normal: 'original'
+      };
+      return alias[clave] || 'original';
+    }
+
     function leerTemaNovaShop() {
       const parametros = new URLSearchParams(window.location.search);
       const solicitado = parametros.get('tema');
-      if (solicitado) return solicitado.toLowerCase().trim();
+      if (solicitado) return normalizarTemaNovaShop(solicitado);
       try {
         const guardado = localStorage.getItem('novashop_public_theme');
         if (!guardado) return 'original';
-        try {
-          const dato = JSON.parse(guardado);
-          return typeof dato === 'string' ? dato : (dato.tema || dato.theme || dato.temporada || 'original');
-        } catch (e) { return guardado; }
+        let dato = guardado;
+        try { dato = JSON.parse(guardado); } catch (e) { /* El administrador puede guardar texto plano. */ }
+        if (dato && typeof dato === 'object') {
+          dato = dato.tema || dato.theme || dato.temporada || dato.season || dato.value || dato.selected || 'original';
+        }
+        return normalizarTemaNovaShop(dato);
       } catch (e) { return 'original'; }
     }
 
@@ -1873,11 +1891,30 @@
   blackfriday:{nombre:'Black Friday 🛍️',kicker:'OFERTAS ESPECIALES · BLACK FRIDAY',titulo:'BLACK FRIDAY: precios que sorprenden.',descripcion:'Aprovecha descuentos especiales en tus prendas favoritas y renueva tu estilo por menos.',mensaje:'Ofertas Black Friday por tiempo limitado'},
   orgullo:{nombre:'Mes del Orgullo 🏳️‍🌈',kicker:'EDICIÓN ESPECIAL · MES DEL ORGULLO',titulo:'Viste con orgullo. Viste como eres.',descripcion:'Celebra la diversidad, la autenticidad y la libertad de expresar tu estilo. Todos los estilos tienen su lugar.',mensaje:'Diversidad, respeto y autenticidad'}
  };
+ function normalizarTema(valor){
+  const texto=String(valor||'original').toLowerCase().trim().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'');
+  const clave=texto.replace(/[^a-z0-9]/g,'');
+  const alias={
+   original:'original',normal:'original',
+   halloween:'halloween',navidad:'navidad',
+   sanvalentin:'sanvalentin',diadelamor:'sanvalentin',
+   padre:'padre',diadelpadre:'padre',
+   madre:'madre',diadelamadre:'madre',
+   nino:'nino',ninos:'nino',diadelnino:'nino',
+   blackfriday:'blackfriday',orgullo:'orgullo',mesdelorgullo:'orgullo'
+  };
+  return alias[clave]||'original';
+ }
  function leerTema(){
   const params=new URLSearchParams(location.search);const query=params.get('tema');
-  if(query)return query.toLowerCase().trim();
-  try{const raw=localStorage.getItem('novashop_public_theme');if(!raw)return 'original';const parsed=JSON.parse(raw);return (typeof parsed==='string'?parsed:(parsed.tema||parsed.theme||parsed.temporada||'original')).toLowerCase().trim();}
-  catch(e){return 'original';}
+  if(query)return normalizarTema(query);
+  try{
+   const raw=localStorage.getItem('novashop_public_theme');if(!raw)return 'original';
+   let parsed=raw;
+   try{parsed=JSON.parse(raw);}catch(e){/* Admite valores guardados como texto plano. */}
+   if(parsed&&typeof parsed==='object')parsed=parsed.tema||parsed.theme||parsed.temporada||parsed.season||parsed.value||parsed.selected||'original';
+   return normalizarTema(parsed);
+  }catch(e){return 'original';}
  }
  function aplicarTema(){
   const elegido=leerTema();const tema=TEMAS[elegido]?elegido:'original';const data=TEMAS[tema];
@@ -1916,8 +1953,12 @@
   const seasonView=document.getElementById('vistaCatalogoTemporada');if(seasonView)seasonView.style.setProperty('--season-bg',getComputedStyle(document.body).getPropertyValue('--ns-soft').trim());
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',aplicarTema);else aplicarTema();
- window.addEventListener('storage',e=>{if(e.key==='novashop_public_theme')location.reload();});
+ // Se actualiza cuando el administrador cambia la temporada, incluso si ambas pantallas comparten pestaña.
+ window.addEventListener('storage',e=>{if(e.key==='novashop_public_theme')aplicarTema();});
+ window.addEventListener('novashop:theme-changed',aplicarTema);
+ window.addEventListener('focus',aplicarTema);
  window.addEventListener('pageshow',aplicarTema);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)aplicarTema();});
 })();
 </script>
 </body>

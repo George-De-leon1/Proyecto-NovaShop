@@ -142,10 +142,23 @@
           </div>
         </div>
 
-        <!-- Sección 3: Método de pago -->
+        <!-- Sección 3: Transportista y entrega -->
         <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
           <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
             <span class="w-8 h-8 rounded-xl bg-blue-50 text-electric font-black flex items-center justify-center text-sm">3</span>
+            <h2 class="text-xl font-black text-nova">Transportista y método de entrega</h2>
+          </div>
+          <div id="shippingInfo" class="rounded-2xl bg-slate-50 border border-slate-200 p-4 text-sm">
+            <p class="font-bold text-nova"><i class="fa-solid fa-truck-fast text-electric mr-2"></i>Selecciona tu provincia</p>
+            <p class="text-slate-500 mt-1">Te mostraremos el transportista recomendado y el costo estimado para tu zona.</p>
+          </div>
+          <p class="text-xs text-slate-500 mt-3"><i class="fa-solid fa-circle-info text-electric mr-1"></i>Asignación demostrativa: el courier y la tarifa deben confirmarse con el transportista antes de activar ventas reales.</p>
+        </div>
+
+        <!-- Sección 4: Método de pago -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+          <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+            <span class="w-8 h-8 rounded-xl bg-blue-50 text-electric font-black flex items-center justify-center text-sm">4</span>
             <h2 class="text-xl font-black text-nova">Método de pago</h2>
           </div>
 
@@ -243,6 +256,10 @@
             <span>Envío estimativo</span>
             <span id="shippingAmount" class="font-bold text-emerald-600">Gratis</span>
           </div>
+          <div class="flex justify-between gap-3 text-slate-600">
+            <span>Transportista</span>
+            <span id="carrierAmount" class="font-bold text-nova text-right">Por seleccionar</span>
+          </div>
           <div class="flex justify-between text-lg font-black text-nova pt-3 border-t border-slate-100">
             <span>Total a pagar</span>
             <span id="totalAmount" class="text-electric">RD$ 0</span>
@@ -299,6 +316,66 @@
       "Valverde": ["Mao", "Esperanza", "Laguna Salada"]
     };
 
+    // La asignación se obtiene del directorio de empresas reales configurado en admin.html.
+    const COURIER_STORAGE_KEY = 'novashop_couriers_config';
+    let rutaSeleccionada = null;
+    function obtenerRuta(provincia) {
+      let lista=[];
+      try { lista=JSON.parse(localStorage.getItem(COURIER_STORAGE_KEY)||'[]'); } catch(e) {}
+      const courier=Array.isArray(lista)?lista.find(c=>c.activo && Array.isArray(c.provincias) && c.provincias.includes(provincia)):null;
+      if(!courier) return null;
+      return {
+        courier:courier.nombre,
+        tipo:courier.servicio||'Entrega a domicilio',
+        tarifa:Number(courier.tarifa)||0,
+        tarifaPendiente:(Number(courier.tarifa)||0)<=0 || !!courier.tarifaPendiente,
+        tarifaTexto:courier.tarifaTexto||'',
+        tiempo:courier.tiempo||'Por confirmar',
+        zona:provincia,
+        contacto:courier.contacto||'',
+        telefono:courier.telefono||'',
+        whatsapp:courier.whatsapp||'',
+        email:courier.email||'',
+        web:courier.web||'',
+        nota:courier.nota||''
+      };
+    }
+    function actualizarTransportista(){
+      const provincia=document.getElementById('provincia')?.value||'';
+      rutaSeleccionada=provincia?obtenerRuta(provincia):null;
+      const info=document.getElementById('shippingInfo');
+      const carrier=document.getElementById('carrierAmount');
+      if(!info)return;
+      if(!provincia){
+        info.innerHTML='<p class="font-bold text-nova"><i class="fa-solid fa-truck-fast text-electric mr-2"></i>Selecciona tu provincia</p><p class="text-slate-500 mt-1">El courier se asignará automáticamente según la configuración de NovaShop.</p>';
+        if(carrier)carrier.textContent='Por seleccionar';
+      }else if(!rutaSeleccionada){
+        info.innerHTML='<p class="font-bold text-rose-600"><i class="fa-solid fa-circle-exclamation mr-2"></i>Sin courier asignado</p><p class="text-slate-500 mt-1">Contacta a NovaShop para confirmar la cobertura de tu provincia.</p>';
+        if(carrier)carrier.textContent='Sin asignación';
+      }else{
+        const tarifaTexto=rutaSeleccionada.tarifaPendiente?(rutaSeleccionada.tarifaTexto||'Tarifa por cotizar'):`RD$ ${rutaSeleccionada.tarifa.toLocaleString('es-DO')}`;
+        info.innerHTML=`<div class="flex items-start gap-3"><span class="w-10 h-10 rounded-xl bg-blue-100 text-electric flex items-center justify-center"><i class="fa-solid fa-truck-fast"></i></span><div class="min-w-0"><p class="font-black text-nova">${escapeHtmlCheckout(rutaSeleccionada.courier)}</p><p class="text-slate-500 mt-1">${escapeHtmlCheckout(rutaSeleccionada.tipo)}</p><p class="text-slate-500 mt-1">Entrega estimada: ${escapeHtmlCheckout(rutaSeleccionada.tiempo)}</p><p class="font-bold text-electric mt-2">${tarifaTexto}</p>${rutaSeleccionada.telefono?`<p class="text-slate-500 mt-1">Contacto: ${escapeHtmlCheckout(rutaSeleccionada.telefono)}</p>`:''}${rutaSeleccionada.web?`<a class="inline-block text-blue-600 underline mt-2" href="${escapeHtmlCheckout(rutaSeleccionada.web)}" target="_blank" rel="noopener">Sitio oficial</a>`:''}${rutaSeleccionada.nota?`<p class="text-amber-700 bg-amber-50 rounded-lg p-2 mt-2 text-xs">${escapeHtmlCheckout(rutaSeleccionada.nota)}</p>`:''}</div></div>`;
+        if(carrier)carrier.textContent=rutaSeleccionada.courier;
+      }
+      actualizarTotales();
+    }
+    function escapeHtmlCheckout(v){return String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+
+    function actualizarTotales() {
+      const carrito = JSON.parse(localStorage.getItem('novashop') || '[]');
+      const subtotal = carrito.reduce((s, p) => s + Number(p.precio || 0) * Number(p.cantidad || 0), 0);
+      const tarifa = rutaSeleccionada ? rutaSeleccionada.tarifa : 0;
+      const pendiente = !!rutaSeleccionada && rutaSeleccionada.tarifaPendiente && subtotal < 3000;
+      const envio = subtotal >= 3000 ? 0 : tarifa;
+      const shippingEl = document.getElementById('shippingAmount');
+      if (shippingEl) {
+        shippingEl.textContent = !rutaSeleccionada ? 'Por calcular' : (pendiente ? 'Por cotizar' : (envio === 0 ? 'Gratis' : `RD$ ${envio.toLocaleString('es-DO')}`));
+        shippingEl.className = pendiente ? 'font-bold text-amber-600' : (envio === 0 && rutaSeleccionada ? 'font-bold text-emerald-600' : 'font-bold text-nova');
+      }
+      document.getElementById('subtotalAmount').textContent = `RD$ ${subtotal.toLocaleString('es-DO')}`;
+      document.getElementById('totalAmount').textContent = pendiente ? 'Subtotal + envío por cotizar' : `RD$ ${(subtotal + envio).toLocaleString('es-DO')}`;
+    }
+
     function actualizarMunicipios() {
       const provincia = document.getElementById('provincia').value;
       const selector = document.getElementById('sector');
@@ -310,9 +387,10 @@
         selector.appendChild(opcion);
       });
       selector.disabled = !provincia;
+      actualizarTransportista();
     }
 
-    document.addEventListener('DOMContentLoaded', cargarResumenOrden);
+    document.addEventListener('DOMContentLoaded', () => { cargarResumenOrden(); actualizarTransportista(); });
 
     function cargarResumenOrden() {
       const carrito = JSON.parse(localStorage.getItem('novashop') || '[]');
@@ -335,6 +413,7 @@
         `;
         subtotalEl.textContent = 'RD$ 0';
         totalEl.textContent = 'RD$ 0';
+        shippingEl.textContent = 'Por calcular';
         return;
       }
 
@@ -355,17 +434,22 @@
         container.appendChild(item);
       });
 
-      const costoEnvio = subtotal >= 3000 ? 0 : 250;
-      if (costoEnvio === 0) {
+      const tarifaRuta = rutaSeleccionada ? rutaSeleccionada.tarifa : 0;
+      const pendiente = !!rutaSeleccionada && rutaSeleccionada.tarifaPendiente && subtotal < 3000;
+      const costoEnvio = subtotal >= 3000 ? 0 : tarifaRuta;
+      if (pendiente) {
+        shippingEl.textContent = 'Por cotizar';
+        shippingEl.className = 'font-bold text-amber-600';
+      } else if (costoEnvio === 0) {
         shippingEl.textContent = 'Gratis';
         shippingEl.className = 'font-bold text-emerald-600';
       } else {
-        shippingEl.textContent = `RD$ ${costoEnvio}`;
+        shippingEl.textContent = `RD$ ${costoEnvio.toLocaleString('es-DO')}`;
         shippingEl.className = 'font-bold text-nova';
       }
 
       subtotalEl.textContent = `RD$ ${subtotal.toLocaleString('es-DO')}`;
-      totalEl.textContent = `RD$ ${(subtotal + costoEnvio).toLocaleString('es-DO')}`;
+      totalEl.textContent = pendiente ? 'Subtotal + envío por cotizar' : `RD$ ${(subtotal + costoEnvio).toLocaleString('es-DO')}`;
     }
 
     function togglePaymentFields(metodo) {
@@ -406,10 +490,20 @@
       const telefono = form.querySelector('input[type="tel"]')?.value.trim() || '';
       const provincia = document.getElementById('provincia').value;
       const sector = document.getElementById('sector').value;
+      if (!rutaSeleccionada) {
+        alert('Selecciona tu provincia para calcular el transportista y el envío.');
+        document.getElementById('provincia').focus();
+        return;
+      }
       const direccion = form.querySelector('input[placeholder^="Ej. C/"]')?.value.trim() || ''; 
       const metodo = form.querySelector('input[name="pago"]:checked')?.value || 'entrega';
       const subtotal = carrito.reduce((s, p) => s + (Number(p.precio) * Number(p.cantidad)), 0);
-      const envio = subtotal >= 3000 ? 0 : 250;
+      const tarifaTransportista = rutaSeleccionada.tarifa;
+      if (subtotal < 3000 && rutaSeleccionada.tarifaPendiente) {
+        alert('El courier asignado es '+rutaSeleccionada.courier+', pero su tarifa todavía está pendiente de cotización. NovaShop debe configurar el precio de envío en el panel administrativo antes de aceptar este pedido.');
+        return;
+      }
+      const envio = subtotal >= 3000 ? 0 : tarifaTransportista;
       const total = subtotal + envio;
       const pedidos = JSON.parse(localStorage.getItem('novashop_pro_orders_v2') || '[]');
       let id;
@@ -422,6 +516,16 @@
         productos: carrito.map(p => p.nombre),
         detalleProductos: carrito.map(p => ({ nombre: p.nombre, precio: Number(p.precio), cantidad: Number(p.cantidad) })),
         provincia, sector, direccion, metodoPago: metodo,
+        transportista: rutaSeleccionada.courier,
+        tipoEntrega: rutaSeleccionada.tipo,
+        tiempoEntrega: rutaSeleccionada.tiempo,
+        zonaEntrega: rutaSeleccionada.zona,
+        courierContacto: rutaSeleccionada.contacto || '',
+        courierTelefono: rutaSeleccionada.telefono || '',
+        courierWhatsApp: rutaSeleccionada.whatsapp || '',
+        courierEmail: rutaSeleccionada.email || '',
+        tarifaTransportista, envio,
+        subtotal,
         creadoEn: new Date().toISOString()
       };
 
@@ -429,7 +533,7 @@
       localStorage.setItem('novashop_pro_orders_v2', JSON.stringify(pedidos));
       localStorage.setItem('novashop_last_order_id', id);
       localStorage.removeItem('novashop');
-      window.location.href = 'confirmacion.html?pedido=' + encodeURIComponent(id);
+      window.location.href = 'factura.html?pedido=' + encodeURIComponent(id);
     }
   </script>
 </body>
