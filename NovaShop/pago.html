@@ -498,12 +498,11 @@
       const direccion = form.querySelector('input[placeholder^="Ej. C/"]')?.value.trim() || ''; 
       const metodo = form.querySelector('input[name="pago"]:checked')?.value || 'entrega';
       const subtotal = carrito.reduce((s, p) => s + (Number(p.precio) * Number(p.cantidad)), 0);
-      const tarifaTransportista = rutaSeleccionada.tarifa;
-      if (subtotal < 3000 && rutaSeleccionada.tarifaPendiente) {
-        alert('El courier asignado es '+rutaSeleccionada.courier+', pero su tarifa todavía está pendiente de cotización. NovaShop debe configurar el precio de envío en el panel administrativo antes de aceptar este pedido.');
-        return;
-      }
-      const envio = subtotal >= 3000 ? 0 : tarifaTransportista;
+      const tarifaTransportista = Number(rutaSeleccionada.tarifa) || 0;
+      // Si el courier todavía no tiene una tarifa configurada, registramos el pedido
+      // como pendiente de cotización. No inventamos ni cobramos un costo de envío.
+      const envioPendiente = subtotal < 3000 && !!rutaSeleccionada.tarifaPendiente;
+      const envio = subtotal >= 3000 ? 0 : (envioPendiente ? 0 : tarifaTransportista);
       const total = subtotal + envio;
       const pedidos = JSON.parse(localStorage.getItem('novashop_pro_orders_v2') || '[]');
       let id;
@@ -512,7 +511,13 @@
 
       const pedido = {
         id, cliente: nombre, email, telefono, items: carrito.reduce((s,p) => s + Number(p.cantidad || 0), 0),
-        total, estado: 'En espera', fecha: new Date().toLocaleString('es-DO'),
+        // Mientras se cotiza el envío, total contiene solo el subtotal de productos.
+        // El panel debe identificarlo mediante totalPendiente/envioPendiente.
+        total, estado: envioPendiente ? 'Pendiente de cotización' : 'En espera',
+        totalPendiente: envioPendiente,
+        envioPendiente,
+        notaEnvio: envioPendiente ? 'El costo de envío debe confirmarse antes de cobrar o entregar el pedido.' : '',
+        fecha: new Date().toLocaleString('es-DO'),
         productos: carrito.map(p => p.nombre),
         detalleProductos: carrito.map(p => ({ nombre: p.nombre, precio: Number(p.precio), cantidad: Number(p.cantidad) })),
         provincia, sector, direccion, metodoPago: metodo,
@@ -524,7 +529,9 @@
         courierTelefono: rutaSeleccionada.telefono || '',
         courierWhatsApp: rutaSeleccionada.whatsapp || '',
         courierEmail: rutaSeleccionada.email || '',
-        tarifaTransportista, envio,
+        // Se guardan como 0 por compatibilidad con el panel; no representan un cobro.
+        tarifaTransportista: envioPendiente ? 0 : tarifaTransportista,
+        envio: envioPendiente ? 0 : envio,
         subtotal,
         creadoEn: new Date().toISOString()
       };
@@ -533,7 +540,7 @@
       localStorage.setItem('novashop_pro_orders_v2', JSON.stringify(pedidos));
       localStorage.setItem('novashop_last_order_id', id);
       localStorage.removeItem('novashop');
-      window.location.href = 'factura.html?pedido=' + encodeURIComponent(id);
+      window.location.href = 'confirmacion.html?pedido=' + encodeURIComponent(id);
     }
   </script>
 </body>
