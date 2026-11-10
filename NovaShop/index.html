@@ -131,6 +131,30 @@
   @media(max-width:640px){#seasonHeroContent{top:30px;width:88%}#seasonHeroContent p{max-width:95%;font-size:12px}#inicioCarrusel{height:500px!important}#inicioCarrusel .bottom-6{bottom:18px;left:18px;right:18px}}
 </style>
 
+<style id="novashop-carrusel-sin-sombra">
+  #inicioCarrusel::before, #inicioCarrusel::after { content:none !important; display:none !important; background:none !important; box-shadow:none !important; }
+  #inicioCarrusel #seasonHeroContent { display:none !important; }
+  #inicioCarrusel .inicio-slide { filter:none !important; }
+</style>
+
+<style id="novashop-footer-tematico">
+  /* El footer sigue la temática que ya establece aplicarTema(). */
+  body[data-tema] footer.bg-nova {
+    background:linear-gradient(125deg,var(--ns-primary),color-mix(in srgb,var(--ns-primary) 72%,var(--ns-accent))) !important;
+    color:#fff !important;
+    border-top-color:var(--ns-accent) !important;
+    transition:background .3s ease,border-color .3s ease;
+  }
+  body[data-tema="orgullo"] footer.bg-nova {
+    background:linear-gradient(110deg,#a92e52,#b97429,#277f65,#2866a4,#653fa1) !important;
+  }
+  body[data-tema="blackfriday"] footer.bg-nova {
+    background:linear-gradient(125deg,#090909,#262626,#422006) !important;
+  }
+  body[data-tema] footer.bg-nova .bg-electric {background-color:var(--ns-accent) !important;}
+  body[data-tema] footer.bg-nova .text-electric {color:var(--ns-accent) !important;}
+  body[data-tema] footer.bg-nova a:hover {color:var(--ns-accent) !important;}
+</style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased flex flex-col min-h-screen">
 
@@ -138,7 +162,8 @@
   <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 transition-all duration-300 border-b border-slate-200/80">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
       <a href="index.html" class="flex items-center gap-2">
-        <img src="img/logo..png" alt="Logo de NovaShop" class="w-12 h-10 object-contain">
+        <img id="novaLogoOriginal" src="img/logo..png" alt="Logo de NovaShop" class="w-12 h-10 object-contain">
+        <span id="novaLogoTemporada" class="hidden text-4xl leading-none" aria-hidden="true"></span>
         <span class="text-3xl font-black text-nova tracking-tight">
           Nova<span class="text-electric">Shop</span>
         </span>
@@ -332,6 +357,15 @@
           </div>
         </div>
 
+        <div class="mt-6 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-wrap items-end gap-5" id="filtrosPrecioNova">
+          <div class="flex-1 min-w-[220px]">
+            <div class="flex justify-between items-center mb-3"><label for="precioMaxNova" class="text-xs font-black text-nova uppercase tracking-wider">Precio máximo</label><strong id="precioMaxNovaValor" class="text-electric text-sm"></strong></div>
+            <input id="precioMaxNova" type="range" min="0" step="100" class="w-full cursor-pointer accent-blue-600" oninput="actualizarFiltroPrecioNova()">
+          </div>
+          <div class="min-w-[190px]"><label for="ordenPrecioNova" class="block text-xs font-black text-nova uppercase tracking-wider mb-2">Ordenar productos</label><select id="ordenPrecioNova" onchange="renderProducts(currentCategory)" class="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm"><option value="default">Orden original</option><option value="asc">Precio: menor a mayor</option><option value="desc">Precio: mayor a menor</option></select></div>
+          <button type="button" onclick="limpiarFiltroPrecioNova()" class="rounded-xl border border-slate-200 px-4 py-3 text-xs font-bold hover:bg-slate-100">Limpiar precio</button>
+          <p id="contadorFiltroNova" class="w-full text-xs text-slate-500" aria-live="polite"></p>
+        </div>
         <div id="productsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"></div>
       </section>
     </div>
@@ -382,7 +416,7 @@
             <h1 id="detalleTitulo" class="text-3xl sm:text-4xl font-black text-nova mt-2"></h1>
             <div class="flex items-center gap-2 mt-2">
               <span class="text-amber-500 font-bold text-sm">★ <span id="detalleRating"></span></span>
-              <span class="text-slate-400 text-xs">(<span id="detalleReviews"></span> reseñas verificadas)</span>
+              <span class="text-slate-400 text-xs">(<span id="detalleReviews"></span> valoraciones de referencia)</span>
             </div>
             <div class="flex items-center gap-3 mt-3">
               <p id="detallePrecio" class="text-3xl font-black text-electric"></p>
@@ -421,37 +455,14 @@
       </div>
 
       <section class="mt-12 bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-slate-100 gap-4">
-          <div>
-            <h3 class="text-2xl font-black text-nova">Opiniones de Clientes</h3>
-            <p class="text-xs text-slate-400 mt-1">Reseñas reales de compradores verificados</p>
-          </div>
-          <div class="flex items-center gap-2 bg-amber-50 px-4 py-2 rounded-2xl border border-amber-100">
-            <span class="text-amber-500 font-black text-lg">4.9</span>
-            <div class="text-amber-400 text-xs">
-              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-            </div>
-          </div>
-        </div>
-
-        <div class="divide-y divide-slate-100 space-y-6 pt-6">
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-slate-200 text-nova font-bold flex items-center justify-center text-xs">CM</div>
-                <div>
-                  <p class="font-bold text-xs text-nova">Carlos M.</p>
-                  <div class="text-amber-400 text-[10px]">
-                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                  </div>
-                </div>
-              </div>
-              <span class="text-[10px] text-slate-400">Hace 2 días</span>
-            </div>
-            <p class="text-xs text-slate-600">"Me encantó la calidad de la tela, el color coincide exactamente con la foto del producto y la entrega fue muy rápida. ¡Totalmente recomendado!"</p>
-            <span class="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md inline-block">Color seleccionado | Talla estándar</span>
-          </div>
-        </div>
+        <div class="flex flex-wrap justify-between items-center gap-4 border-b border-slate-100 pb-5"><div><h3 class="text-2xl font-black text-nova">Opiniones de clientes</h3><p class="text-xs text-slate-500 mt-1">Comentarios guardados en este navegador; no son reseñas verificadas.</p></div><strong id="resumenOpinionesNova" class="text-amber-500"></strong></div>
+        <form id="formOpinionNova" class="mt-6 bg-slate-50 border border-slate-100 rounded-2xl p-5 space-y-4">
+          <h4 class="font-black text-nova">Escribe tu opinión</h4>
+          <div class="grid sm:grid-cols-2 gap-4"><div><label for="nombreOpinionNova" class="block text-xs font-bold mb-2">Tu nombre</label><input id="nombreOpinionNova" required maxlength="60" class="w-full border rounded-xl p-3 text-sm" placeholder="Nombre o apodo"></div><div><label for="estrellasOpinionNova" class="block text-xs font-bold mb-2">Calificación</label><select id="estrellasOpinionNova" required class="w-full border rounded-xl p-3 text-sm"><option value="5">★★★★★ (5)</option><option value="4">★★★★☆ (4)</option><option value="3">★★★☆☆ (3)</option><option value="2">★★☆☆☆ (2)</option><option value="1">★☆☆☆☆ (1)</option></select></div></div>
+          <div><label for="textoOpinionNova" class="block text-xs font-bold mb-2">Tu comentario</label><textarea id="textoOpinionNova" required minlength="5" maxlength="1000" rows="4" class="w-full border rounded-xl p-3 text-sm" placeholder="¿Qué te pareció este producto?"></textarea></div>
+          <button type="submit" class="bg-electric text-white font-bold rounded-xl px-6 py-3 hover:opacity-90">Publicar comentario</button><p id="mensajeOpinionNova" class="text-xs" role="status"></p>
+        </form>
+        <div id="listaOpinionesNova" class="divide-y divide-slate-100 mt-6" aria-live="polite"></div>
       </section>
 
       <div class="mt-8 text-center">
@@ -497,7 +508,7 @@
     <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-800/80">
       <div class="md:col-span-1">
         <a href="index.html" class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-          <span class="bg-electric text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg font-bold">N</span>
+          <span id="novaFooterIcono" class="bg-electric text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg font-bold">N</span>
           Nova<span class="text-electric">Shop</span>
         </a>
         <p class="text-slate-400 text-sm mt-4 leading-relaxed">
@@ -1162,15 +1173,84 @@
       });
     }
 
+    function configurarFiltroPrecioNova() {
+      const slider = document.getElementById('precioMaxNova');
+      if (!slider) return;
+      const max = Math.ceil(Math.max(...productos.map(p => Number(p.precio)), 100) / 100) * 100;
+      slider.max = String(max);
+      slider.value = String(max);
+      actualizarEtiquetaPrecioNova();
+    }
+    function actualizarEtiquetaPrecioNova() {
+      const slider = document.getElementById('precioMaxNova');
+      document.getElementById('precioMaxNovaValor').textContent = 'RD$ ' + Number(slider.value).toLocaleString('es-DO');
+    }
+    function actualizarFiltroPrecioNova() { actualizarEtiquetaPrecioNova(); renderProducts(currentCategory); }
+    function limpiarFiltroPrecioNova() {
+      const slider = document.getElementById('precioMaxNova'); slider.value = slider.max;
+      document.getElementById('ordenPrecioNova').value = 'default';
+      actualizarFiltroPrecioNova();
+    }
+    document.addEventListener('DOMContentLoaded', configurarFiltroPrecioNova);
+
+    function claveOpinionNova() {
+      return productoSeleccionado ? `novashop_opiniones_${productoSeleccionado.id}_${productoSeleccionado.nombre}` : '';
+    }
+    function leerOpinionesNova() {
+      try { const v = JSON.parse(localStorage.getItem(claveOpinionNova()) || '[]'); return Array.isArray(v) ? v : []; }
+      catch { return []; }
+    }
+    function mostrarOpinionesNova() {
+      const lista = document.getElementById('listaOpinionesNova');
+      if (!lista || !productoSeleccionado) return;
+      const opiniones = leerOpinionesNova();
+      lista.replaceChildren();
+      const promedio = opiniones.length ? (opiniones.reduce((a,r) => a + Number(r.estrellas), 0) / opiniones.length).toFixed(1) : null;
+      document.getElementById('resumenOpinionesNova').textContent = promedio ? `★ ${promedio} · ${opiniones.length} opinión(es)` : 'Aún sin comentarios';
+      if (!opiniones.length) { const p = document.createElement('p'); p.className='text-sm text-slate-500 py-6'; p.textContent='Sé el primero en comentar este producto.'; lista.append(p); return; }
+      opiniones.slice().reverse().forEach(r => {
+        const card=document.createElement('article'); card.className='py-5 space-y-2';
+        const cab=document.createElement('div'); cab.className='flex flex-wrap justify-between gap-2';
+        const nombre=document.createElement('strong'); nombre.className='text-sm text-nova'; nombre.textContent=r.nombre;
+        const fecha=document.createElement('span'); fecha.className='text-xs text-slate-400'; fecha.textContent=new Date(r.fecha).toLocaleDateString('es-DO');
+        const stars=document.createElement('p'); stars.className='text-amber-500 text-sm'; stars.textContent='★'.repeat(r.estrellas)+'☆'.repeat(5-r.estrellas);
+        const texto=document.createElement('p'); texto.className='text-sm text-slate-600 whitespace-pre-wrap'; texto.textContent=r.texto;
+        cab.append(nombre,fecha);card.append(cab,stars,texto);lista.append(card);
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('formOpinionNova')?.addEventListener('submit', e => {
+        e.preventDefault(); if (!productoSeleccionado) return;
+        const nombre=document.getElementById('nombreOpinionNova').value.trim();
+        const texto=document.getElementById('textoOpinionNova').value.trim();
+        const estrellas=Number(document.getElementById('estrellasOpinionNova').value);
+        if (!nombre || texto.length < 5 || texto.length > 1000 || !Number.isInteger(estrellas) || estrellas < 1 || estrellas > 5) return;
+        const opiniones=leerOpinionesNova(); opiniones.push({nombre,texto,estrellas,fecha:new Date().toISOString()});
+        try { localStorage.setItem(claveOpinionNova(),JSON.stringify(opiniones));
+          document.getElementById('formOpinionNova').reset();
+          document.getElementById('mensajeOpinionNova').textContent='Tu comentario se guardó en este navegador.';
+          mostrarOpinionesNova();
+        } catch { document.getElementById('mensajeOpinionNova').textContent='No se pudo guardar el comentario. Comprueba el almacenamiento del navegador.'; }
+      });
+    });
+
     function renderProducts(categoria, event = null) {
       currentCategory = categoria;
       const grid = document.getElementById('productsGrid');
       grid.innerHTML = '';
 
       let filtrados = categoria === 'all'
-        ? productos
+        ? [...productos]
         : productos.filter(p => p.categoria === categoria);
+      const controlPrecio = document.getElementById('precioMaxNova');
+      if (controlPrecio) filtrados = filtrados.filter(p => Number(p.precio) <= Number(controlPrecio.value));
+      const orden = document.getElementById('ordenPrecioNova')?.value;
+      if (orden === 'asc') filtrados.sort((a,b) => a.precio - b.precio);
+      if (orden === 'desc') filtrados.sort((a,b) => b.precio - a.precio);
+      const contador = document.getElementById('contadorFiltroNova');
+      if (contador) contador.textContent = `${filtrados.length} producto(s) encontrado(s)`;
 
+      if (!filtrados.length) grid.innerHTML = '<p class="col-span-full text-center text-slate-500 py-10">No hay productos dentro de este rango de precios.</p>';
       filtrados.forEach(prod => {
         const card = document.createElement('article');
         card.className = 'bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group flex flex-col justify-between';
@@ -1220,6 +1300,7 @@
       if (!prod) return;
 
       productoSeleccionado = prod;
+      mostrarOpinionesNova();
       colorSeleccionado = prod.colores[0];
       tallaSeleccionada = prod.tallas[0];
 
@@ -1919,6 +2000,16 @@
  function aplicarTema(){
   const elegido=leerTema();const tema=TEMAS[elegido]?elegido:'original';const data=TEMAS[tema];
   document.body.dataset.tema=tema;document.documentElement.dataset.tema=tema;
+  // El logo se adapta a la temporada sin alterar el nombre ni los enlaces de NovaShop.
+  const iconosTemporada={halloween:'🎃',navidad:'🎅',sanvalentin:'💘',padre:'👔',madre:'🌷',nino:'🎈',blackfriday:'🛍️',orgullo:'🏳️‍🌈'};
+  const emoji=iconosTemporada[tema]||'';
+  const logoOriginal=document.getElementById('novaLogoOriginal');
+  const logoTemporada=document.getElementById('novaLogoTemporada');
+  const footerIcono=document.getElementById('novaFooterIcono');
+  if(logoOriginal)logoOriginal.classList.toggle('hidden',!!emoji);
+  if(logoTemporada){logoTemporada.textContent=emoji;logoTemporada.classList.toggle('hidden',!emoji);}
+  if(footerIcono){footerIcono.textContent=emoji||'N';footerIcono.style.background=emoji?'transparent':'';footerIcono.style.fontSize=emoji?'26px':'';}
+
   document.body.classList.toggle('tema-especial',tema!=='original');
   document.body.classList.toggle('tema-blackfriday',tema==='blackfriday');document.body.classList.toggle('tema-orgullo',tema==='orgullo');
   document.documentElement.style.setProperty('--tema-principal',getComputedStyle(document.body).getPropertyValue('--ns-primary').trim());
@@ -1935,11 +2026,7 @@
   }
   const hero=document.getElementById('inicioCarrusel');
   if(hero){
-   let content=document.getElementById('seasonHeroContent');
-   if(!content){content=document.createElement('div');content.id='seasonHeroContent';content.innerHTML='<span class="season-kicker"></span><h1></h1><p></p>';hero.appendChild(content);}
-   content.querySelector('.season-kicker').textContent=data.kicker;
-   content.querySelector('h1').textContent=data.titulo;
-   content.querySelector('p').textContent=data.descripcion;
+   document.getElementById('seasonHeroContent')?.remove();
    const button=hero.querySelector('button');if(button){button.innerHTML=(tema==='blackfriday'?'Ver ofertas Black Friday':tema==='orgullo'?'Explorar colección Pride':tema==='original'?'Explorar Catálogo':'Explorar colección')+' <i class="fa-solid fa-arrow-right"></i>';}
   }
   const offer=document.querySelector('#ofertas>div:first-child');
