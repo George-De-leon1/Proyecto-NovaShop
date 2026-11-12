@@ -1466,7 +1466,7 @@ body[data-tema="blackfriday"] header a.bg-nova {
 
     function normalizarTemaNovaShop(valor) {
       const texto = String(valor || 'original').toLowerCase().trim()
-        .normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       const clave = texto.replace(/[^a-z0-9]/g, '');
       const alias = {
         halloween: 'halloween', navidad: 'navidad',
@@ -2010,7 +2010,7 @@ body[data-tema="blackfriday"] header a.bg-nova {
   orgullo:{nombre:'Mes del Orgullo 🏳️‍🌈',kicker:'EDICIÓN ESPECIAL · MES DEL ORGULLO',titulo:'Viste con orgullo. Viste como eres.',descripcion:'Celebra la diversidad, la autenticidad y la libertad de expresar tu estilo. Todos los estilos tienen su lugar.',mensaje:'Diversidad, respeto y autenticidad'}
  };
  function normalizarTema(valor){
-  const texto=String(valor||'original').toLowerCase().trim().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'');
+  const texto=String(valor||'original').toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   const clave=texto.replace(/[^a-z0-9]/g,'');
   const alias={
    original:'original',normal:'original',
