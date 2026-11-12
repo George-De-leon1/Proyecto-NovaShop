@@ -137,24 +137,61 @@
   #inicioCarrusel .inicio-slide { filter:none !important; }
 </style>
 
-<style id="novashop-footer-tematico">
-  /* El footer sigue la temática que ya establece aplicarTema(). */
-  body[data-tema] footer.bg-nova {
-    background:linear-gradient(125deg,var(--ns-primary),color-mix(in srgb,var(--ns-primary) 72%,var(--ns-accent))) !important;
-    color:#fff !important;
-    border-top-color:var(--ns-accent) !important;
-    transition:background .3s ease,border-color .3s ease;
-  }
-  body[data-tema="orgullo"] footer.bg-nova {
-    background:linear-gradient(110deg,#a92e52,#b97429,#277f65,#2866a4,#653fa1) !important;
-  }
-  body[data-tema="blackfriday"] footer.bg-nova {
-    background:linear-gradient(125deg,#090909,#262626,#422006) !important;
-  }
-  body[data-tema] footer.bg-nova .bg-electric {background-color:var(--ns-accent) !important;}
-  body[data-tema] footer.bg-nova .text-electric {color:var(--ns-accent) !important;}
-  body[data-tema] footer.bg-nova a:hover {color:var(--ns-accent) !important;}
+
+<style id="novashop-header-season-fix">
+
+/* Encabezado adaptado a la temporada */
+body[data-tema] header {
+    border-bottom-color: var(--ns-accent) !important;
+}
+
+/* Botón Carrito */
+body[data-tema] header button.bg-nova,
+body[data-tema] header a.bg-nova {
+    background: linear-gradient(
+        135deg,
+        var(--ns-primary),
+        var(--ns-accent)
+    ) !important;
+
+    color: #ffffff !important;
+    border-color: var(--ns-accent) !important;
+}
+
+/* Icono del carrito */
+body[data-tema] header button.bg-nova i,
+body[data-tema] header a.bg-nova i {
+    color: #ffffff !important;
+}
+
+/* Contador */
+body[data-tema] #cartCount {
+    background: var(--ns-accent) !important;
+    color: #ffffff !important;
+}
+
+/* Botones de navegación */
+body[data-tema] header nav a:hover {
+    color: var(--ns-accent) !important;
+}
+
+/* Halloween */
+body[data-tema="halloween"] header button.bg-nova,
+body[data-tema="halloween"] header a.bg-nova {
+    background: linear-gradient(135deg,#18121f,#7c2d12) !important;
+    border-color: #f97316 !important;
+}
+
+/* Black Friday */
+body[data-tema="blackfriday"] header button.bg-nova,
+body[data-tema="blackfriday"] header a.bg-nova {
+    background: linear-gradient(135deg,#090909,#422006) !important;
+    border-color: #facc15 !important;
+}
+
 </style>
+</head>
+
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased flex flex-col min-h-screen">
 
@@ -162,7 +199,7 @@
   <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 transition-all duration-300 border-b border-slate-200/80">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
       <a href="index.html" class="flex items-center gap-2">
-        <img id="novaLogoOriginal" src="img/logo..png" alt="Logo de NovaShop" class="w-12 h-10 object-contain">
+        <img id="novaLogoOriginal" src="img/logo.png" alt="Logo de NovaShop" class="w-12 h-10 object-contain">
         <span id="novaLogoTemporada" class="hidden text-4xl leading-none" aria-hidden="true"></span>
         <span class="text-3xl font-black text-nova tracking-tight">
           Nova<span class="text-electric">Shop</span>
