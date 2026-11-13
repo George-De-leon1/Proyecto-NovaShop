@@ -189,6 +189,122 @@ body[data-tema="blackfriday"] header a.bg-nova {
     border-color: #facc15 !important;
 }
 
+/* =====================================
+   NOVASHOP - RESPONSIVE GENERAL
+===================================== */
+
+@media (max-width: 640px) {
+
+    /* Evitar desplazamiento horizontal */
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Espaciado de secciones */
+    #ofertas,
+    #tendencias,
+    #categorias,
+    #catalogo {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* Carrusel principal */
+    #inicioCarrusel {
+        height: 420px !important;
+    }
+
+    #inicioCarrusel img {
+        object-position: center;
+    }
+
+    /* Botones del carrusel */
+    #inicioCarrusel .bottom-6 {
+        left: 16px;
+        right: 16px;
+        bottom: 18px;
+        gap: 10px;
+    }
+
+    #inicioCarrusel .bottom-6 button {
+        padding: 12px 16px;
+        font-size: 12px;
+    }
+
+    /* Títulos */
+    #ofertas h2,
+    #tendencias h2,
+    #categorias h2,
+    #catalogo h2 {
+        font-size: 25px;
+        line-height: 1.2;
+    }
+
+    /* Filtros */
+    #filterButtons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    #filterButtons button {
+        font-size: 11px;
+        padding: 9px 11px;
+    }
+
+    /* Filtros de precio */
+    #filtrosPrecioNova {
+        padding: 14px;
+        gap: 14px;
+    }
+
+    /* Detalle del producto */
+    #vistaDetalle {
+        padding: 16px;
+    }
+
+    #vistaDetalle > div {
+        gap: 20px;
+    }
+
+    /* Opiniones */
+    #formOpinionNova {
+        padding: 14px;
+    }
+
+    /* Footer */
+    footer {
+        padding-top: 40px;
+    }
+
+    /* Notificaciones */
+    #toast {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        width: auto;
+    }
+}
+
+/* Tablets */
+@media (min-width: 641px) and (max-width: 1024px) {
+
+    #ofertas,
+    #tendencias,
+    #categorias,
+    #catalogo {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    #productsGrid,
+    #ofertasGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
 </style>
 </head>
 
@@ -239,6 +355,20 @@ body[data-tema="blackfriday"] header a.bg-nova {
         <a href="contacto.html" class="hover:text-electric transition-colors">Contacto</a>
       </div>
 
+      <!-- Botón de menú móvil -->
+<button
+  id="menuMovilBtn"
+  type="button"
+  onclick="toggleMenuMovil()"
+  class="md:hidden w-10 h-10 flex items-center justify-center
+         rounded-xl border border-slate-200 text-nova
+         hover:bg-slate-100 transition"
+  aria-label="Abrir menú"
+  aria-expanded="false"
+>
+  <i id="menuMovilIcon" class="fa-solid fa-bars text-lg"></i>
+</button>
+      
       <div class="flex items-center gap-3">
         <a href="cuenta.html" class="border border-nova/20 hover:border-nova text-nova font-bold px-4 py-2.5 rounded-xl text-sm transition-all hover:bg-slate-50 flex items-center gap-1.5">
           <i class="fa-regular font-bold fa-user"></i> <span class="hidden sm:inline">Mi cuenta</span>
@@ -250,6 +380,37 @@ body[data-tema="blackfriday"] header a.bg-nova {
           <span id="cartCount" class="bg-electric text-white text-xs px-2 py-0.5 rounded-full font-black min-w-[20px] text-center">0</span>
         </button>
       </div>
+
+      <!-- Navegación móvil -->
+<div id="menuMovil"
+     class="hidden md:hidden order-4 w-full border-t border-slate-200 pt-4">
+
+  <div class="flex flex-col gap-2 text-sm font-semibold">
+
+    <a href="index.html" class="p-3 rounded-xl hover:bg-blue-50">
+      <i class="fa-solid fa-house mr-2"></i> Inicio
+    </a>
+
+    <a href="#catalogo" onclick="volverAlCatalogo(); cerrarMenuMovil()"
+       class="p-3 rounded-xl hover:bg-blue-50">
+      <i class="fa-solid fa-shirt mr-2"></i> Catálogo
+    </a>
+
+    <a href="#categorias" onclick="volverAlCatalogo(); cerrarMenuMovil()"
+       class="p-3 rounded-xl hover:bg-blue-50">
+      <i class="fa-solid fa-layer-group mr-2"></i> Categorías
+    </a>
+
+    <a href="nosotros.html" class="p-3 rounded-xl hover:bg-blue-50">
+      <i class="fa-solid fa-users mr-2"></i> Nosotros
+    </a>
+
+    <a href="contacto.html" class="p-3 rounded-xl hover:bg-blue-50">
+      <i class="fa-solid fa-envelope mr-2"></i> Contacto
+    </a>
+
+  </div>
+</div>
     </nav>
   </header>
 
@@ -394,18 +555,7 @@ body[data-tema="blackfriday"] header a.bg-nova {
           </div>
         </div>
 
-        <div class="mt-6 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-wrap items-end gap-5" id="filtrosPrecioNova">
-          <div class="flex-1 min-w-[220px]">
-            <div class="flex justify-between items-center mb-3"><label for="precioMaxNova" class="text-xs font-black text-nova uppercase tracking-wider">Precio máximo</label><strong id="precioMaxNovaValor" class="text-electric text-sm"></strong></div>
-            <input id="precioMaxNova" type="range" min="0" step="100" class="w-full cursor-pointer accent-blue-600" oninput="actualizarFiltroPrecioNova()">
-          </div>
-          <div class="min-w-[190px]"><label for="ordenPrecioNova" class="block text-xs font-black text-nova uppercase tracking-wider mb-2">Ordenar productos</label><select id="ordenPrecioNova" onchange="renderProducts(currentCategory)" class="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm"><option value="default">Orden original</option><option value="asc">Precio: menor a mayor</option><option value="desc">Precio: mayor a menor</option></select></div>
-          <button type="button" onclick="limpiarFiltroPrecioNova()" class="rounded-xl border border-slate-200 px-4 py-3 text-xs font-bold hover:bg-slate-100">Limpiar precio</button>
-          <p id="contadorFiltroNova" class="w-full text-xs text-slate-500" aria-live="polite"></p>
-        </div>
         <div id="productsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"></div>
-      </section>
-    </div>
 
     <!-- VISTA INDEPENDIENTE: COLECCIÓN DE LA TEMPORADA ACTIVA. NO MEZCLA EL CATÁLOGO NORMAL. -->
     <section id="vistaCatalogoTemporada" class="hidden min-h-[70vh] px-5 sm:px-8 py-10" style="background:var(--season-bg,#fff)">
@@ -1210,25 +1360,6 @@ body[data-tema="blackfriday"] header a.bg-nova {
       });
     }
 
-    function configurarFiltroPrecioNova() {
-      const slider = document.getElementById('precioMaxNova');
-      if (!slider) return;
-      const max = Math.ceil(Math.max(...productos.map(p => Number(p.precio)), 100) / 100) * 100;
-      slider.max = String(max);
-      slider.value = String(max);
-      actualizarEtiquetaPrecioNova();
-    }
-    function actualizarEtiquetaPrecioNova() {
-      const slider = document.getElementById('precioMaxNova');
-      document.getElementById('precioMaxNovaValor').textContent = 'RD$ ' + Number(slider.value).toLocaleString('es-DO');
-    }
-    function actualizarFiltroPrecioNova() { actualizarEtiquetaPrecioNova(); renderProducts(currentCategory); }
-    function limpiarFiltroPrecioNova() {
-      const slider = document.getElementById('precioMaxNova'); slider.value = slider.max;
-      document.getElementById('ordenPrecioNova').value = 'default';
-      actualizarFiltroPrecioNova();
-    }
-    document.addEventListener('DOMContentLoaded', configurarFiltroPrecioNova);
 
     function claveOpinionNova() {
       return productoSeleccionado ? `novashop_opiniones_${productoSeleccionado.id}_${productoSeleccionado.nombre}` : '';
@@ -2084,6 +2215,32 @@ body[data-tema="blackfriday"] header a.bg-nova {
  window.addEventListener('pageshow',aplicarTema);
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)aplicarTema();});
 })();
+</script>
+<script>
+function toggleMenuMovil() {
+    const menu = document.getElementById('menuMovil');
+    const boton = document.getElementById('menuMovilBtn');
+    const icono = document.getElementById('menuMovilIcon');
+
+    const abierto = menu.classList.toggle('hidden');
+
+    boton.setAttribute('aria-expanded', !abierto);
+
+    icono.classList.toggle('fa-bars', abierto);
+    icono.classList.toggle('fa-xmark', !abierto);
+}
+
+function cerrarMenuMovil() {
+    const menu = document.getElementById('menuMovil');
+    const boton = document.getElementById('menuMovilBtn');
+    const icono = document.getElementById('menuMovilIcon');
+
+    menu.classList.add('hidden');
+    boton.setAttribute('aria-expanded', 'false');
+
+    icono.classList.remove('fa-xmark');
+    icono.classList.add('fa-bars');
+}
 </script>
 </body>
 </html>
