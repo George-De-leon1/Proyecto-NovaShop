@@ -306,6 +306,229 @@ body[data-tema="blackfriday"] header a.bg-nova {
 }
 
 </style>
+
+<style id="novashop-mobile-marketplace-layout">
+  .mobile-category-nav,
+  .mobile-bottom-nav { display: none; }
+
+  @media (max-width: 640px) {
+    html { scroll-padding-top: 118px; }
+    body { padding-bottom: 76px; }
+
+    /* Encabezado compacto: marca arriba y buscador debajo */
+    body > header { position: sticky; top: 0; z-index: 60; }
+    body > header nav {
+      padding: 10px 14px 12px !important;
+      gap: 10px !important;
+    }
+    body > header nav > a:first-child { gap: 7px !important; }
+    #novaLogoOriginal { width: 36px !important; height: 34px !important; }
+    #novaLogoTemporada { font-size: 27px !important; }
+    body > header nav > a:first-child > span:last-child {
+      font-size: 23px !important;
+    }
+    #menuMovilBtn { display: none !important; }
+    body > header nav > div.flex.items-center.gap-3 { gap: 8px !important; }
+    body > header nav > div.flex.items-center.gap-3 > a {
+      padding: 8px !important;
+      border: 0 !important;
+      background: transparent !important;
+    }
+    body > header nav > div.flex.items-center.gap-3 > button {
+      padding: 9px 11px !important;
+      border-radius: 999px !important;
+    }
+    body > header nav > div.flex.items-center.gap-3 > button span:nth-child(2) {
+      display: none !important;
+    }
+    body > header nav > div.flex.order-3 {
+      order: 3 !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
+    #searchInput {
+      min-height: 46px;
+      border-radius: 999px !important;
+      background: #f1f5f9 !important;
+      font-size: 14px !important;
+      padding-top: 11px !important;
+      padding-bottom: 11px !important;
+    }
+    #searchBox { width: 100%; }
+
+    /* Categorías en una sola línea, con desplazamiento horizontal */
+    .mobile-category-nav {
+      display: flex;
+      position: sticky;
+      top: 108px;
+      z-index: 45;
+      gap: 24px;
+      align-items: center;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 12px 16px 10px;
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+      scrollbar-width: none;
+    }
+    .mobile-category-nav::-webkit-scrollbar { display: none; }
+    .mobile-category-nav button {
+      flex: 0 0 auto;
+      position: relative;
+      padding: 2px 0 7px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .mobile-category-nav button.active { color: var(--ns-primary, #071a42); }
+    .mobile-category-nav button.active::after {
+      content: "";
+      position: absolute;
+      height: 3px;
+      width: 22px;
+      border-radius: 99px;
+      background: var(--ns-accent, #2563eb);
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+    }
+
+    /* Hero y secciones con ancho de pantalla */
+    #inicioCarrusel {
+      height: 285px !important;
+      min-height: 285px !important;
+    }
+    #inicioCarrusel img { object-position: center; }
+    #inicioCarrusel .bottom-6 {
+      left: 12px !important;
+      right: 12px !important;
+      bottom: 12px !important;
+      gap: 8px !important;
+    }
+    #inicioCarrusel .bottom-6 button {
+      padding: 10px 13px !important;
+      font-size: 11px !important;
+    }
+    #inicioCarrusel .bottom-6 > div {
+      padding: 9px !important;
+      max-width: 190px !important;
+    }
+    #ofertas, #tendencias, #categorias, #catalogo {
+      padding: 24px 12px !important;
+      margin-top: 0 !important;
+    }
+    #ofertas > div:first-child,
+    #tendencias > div:first-child {
+      border-radius: 18px !important;
+      padding: 20px !important;
+      margin-bottom: 18px !important;
+    }
+    #ofertas h2, #tendencias h2,
+    #categorias h2, #catalogo h2 {
+      font-size: 21px !important;
+      line-height: 1.2 !important;
+    }
+    #ofertasGrid, #tendenciasGrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 10px !important;
+    }
+    #productsGrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 10px !important;
+      margin-top: 16px !important;
+    }
+    #productsGrid article, #ofertasGrid article, #tendenciasGrid article {
+      min-width: 0;
+      border-radius: 14px !important;
+    }
+    #productsGrid article .p-5,
+    #ofertasGrid article .p-5,
+    #tendenciasGrid article .p-5 {
+      padding: 10px !important;
+    }
+    #productsGrid article h3,
+    #ofertasGrid article h3,
+    #tendenciasGrid article h3 {
+      font-size: 12px !important;
+      line-height: 1.35 !important;
+    }
+    #productsGrid article p.text-xl,
+    #ofertasGrid article p.text-xl,
+    #tendenciasGrid article p.text-xl {
+      font-size: 15px !important;
+    }
+    #productsGrid article button,
+    #ofertasGrid article button,
+    #tendenciasGrid article button {
+      margin: 0 9px 9px !important;
+      width: calc(100% - 18px) !important;
+      padding: 10px 5px !important;
+      font-size: 10px !important;
+    }
+    #filterButtons {
+      flex-wrap: nowrap !important;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 5px;
+      scrollbar-width: none;
+    }
+    #filterButtons::-webkit-scrollbar { display: none; }
+    #filterButtons button { flex: 0 0 auto; }
+    #categorias .grid { grid-template-columns: 1fr !important; gap: 10px !important; }
+    #categorias a { padding: 18px !important; border-radius: 16px !important; }
+    #categorias a h3 { margin-top: 10px !important; font-size: 19px !important; }
+
+    /* Barra inferior fija inspirada en apps de comercio */
+    .mobile-bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      min-height: 66px;
+      padding: 7px 5px calc(7px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,.98);
+      border-top: 1px solid #e2e8f0;
+      box-shadow: 0 -5px 20px rgba(15,23,42,.08);
+    }
+    .mobile-bottom-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      min-width: 0;
+      color: #475569;
+      font-size: 10px;
+      font-weight: 700;
+      background: transparent;
+    }
+    .mobile-bottom-link > i,
+    .mobile-cart-icon > i { font-size: 19px; }
+    .mobile-bottom-link.active { color: var(--ns-accent, #2563eb); }
+    .mobile-cart-icon { position: relative; display: inline-flex; }
+    .mobile-cart-icon b {
+      position: absolute;
+      top: -8px;
+      right: -12px;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 4px;
+      border-radius: 99px;
+      display: grid;
+      place-items: center;
+      background: var(--ns-accent, #2563eb);
+      color: white;
+      font-size: 9px;
+    }
+    footer { padding-bottom: 28px !important; }
+    #toast { bottom: 82px !important; }
+    #vistaDetalle { padding: 12px !important; }
+  }
+</style>
+
 </head>
 
 </head>
@@ -413,6 +636,33 @@ body[data-tema="blackfriday"] header a.bg-nova {
 </div>
     </nav>
   </header>
+
+  <!-- Navegación rápida de categorías para móviles -->
+  <nav id="mobileCategoryNav" class="mobile-category-nav" aria-label="Categorías rápidas">
+    <button type="button" class="active" onclick="renderProducts('all'); document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});">Todos</button>
+    <button type="button" onclick="renderProducts('casual'); document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});">Casual</button>
+    <button type="button" onclick="renderProducts('deportiva'); document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});">Deportiva</button>
+    <button type="button" onclick="renderProducts('streetwear'); document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});">Streetwear</button>
+    <button type="button" onclick="renderProducts('calzado'); document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});">Calzado</button>
+    <button type="button" onclick="renderProducts('ninos'); document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});">Niños</button>
+  </nav>
+
+  <!-- Barra inferior fija para móviles -->
+  <nav id="mobileBottomNav" class="mobile-bottom-nav" aria-label="Navegación principal móvil">
+    <a href="index.html" class="mobile-bottom-link active">
+      <i class="fa-solid fa-house"></i><span>Inicio</span>
+    </a>
+    <a href="#categorias" class="mobile-bottom-link" onclick="document.getElementById('categorias').scrollIntoView({behavior:'smooth'});">
+      <i class="fa-solid fa-layer-group"></i><span>Categorías</span>
+    </a>
+    <a href="cuenta.html" class="mobile-bottom-link">
+      <i class="fa-regular fa-user"></i><span>Mi cuenta</span>
+    </a>
+    <button type="button" class="mobile-bottom-link" onclick="toggleCart()">
+      <span class="mobile-cart-icon"><i class="fa-solid fa-cart-shopping"></i><b id="mobileCartCount">0</b></span>
+      <span>Carrito</span>
+    </button>
+  </nav>
 
   <main class="flex-grow">
 
@@ -2242,5 +2492,17 @@ function cerrarMenuMovil() {
     icono.classList.add('fa-bars');
 }
 </script>
+
+<script id="novashop-mobile-cart-sync">
+  document.addEventListener('DOMContentLoaded', () => {
+    const desktopCount = document.getElementById('cartCount');
+    const mobileCount = document.getElementById('mobileCartCount');
+    if (!desktopCount || !mobileCount) return;
+    const sync = () => { mobileCount.textContent = desktopCount.textContent.trim(); };
+    sync();
+    new MutationObserver(sync).observe(desktopCount, { childList: true, characterData: true, subtree: true });
+  });
+</script>
+
 </body>
 </html>
