@@ -323,7 +323,7 @@ body[data-tema="blackfriday"] header a.bg-nova {
     }
     body > header nav > a:first-child { gap: 7px !important; }
     #novaLogoOriginal { width: 36px !important; height: 34px !important; }
-    #novaLogoTemporada { font-size: 27px !important; }
+    #novaLogoTemporada { width: 36px !important; height: 34px !important; object-fit: contain; }
     body > header nav > a:first-child > span:last-child {
       font-size: 23px !important;
     }
@@ -538,8 +538,8 @@ body[data-tema="blackfriday"] header a.bg-nova {
   <header class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-40 transition-all duration-300 border-b border-slate-200/80">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center gap-4">
       <a href="index.html" class="flex items-center gap-2">
-        <img id="novaLogoOriginal" src="img/logo.png" alt="Logo de NovaShop" class="w-12 h-10 object-contain">
-        <span id="novaLogoTemporada" class="hidden text-4xl leading-none" aria-hidden="true"></span>
+        <img id="novaLogoOriginal" src="img/logo..png" alt="Logo de NovaShop" class="w-12 h-10 object-contain">
+        <img id="novaLogoTemporada" src="" alt="Logo NovaShop de temporada" class="hidden w-12 h-10 object-contain">
         <span class="text-3xl font-black text-nova tracking-tight">
           Nova<span class="text-electric">Shop</span>
         </span>
@@ -1597,6 +1597,7 @@ body[data-tema="blackfriday"] header a.bg-nova {
                 <span class="text-amber-500 font-bold">★ ${prod.rating} (${prod.reviews})</span>
               </div>
               <h3 onclick="abrirDetalleCompleto(${prod.id}, 'tendencia')" class="text-base font-bold text-slate-800 group-hover:text-electric transition-colors line-clamp-1 cursor-pointer">${prod.nombre}</h3>
+              <p class="text-xs text-slate-500 mt-1 line-clamp-2">${prod.descripcion || 'Prenda seleccionada de NovaShop.'}</p>
               <p class="text-xl font-black text-nova mt-2">RD$ ${prod.precio.toLocaleString('es-DO')}</p>
             </div>
           </div>
@@ -2283,7 +2284,10 @@ body[data-tema="blackfriday"] header a.bg-nova {
     document.addEventListener('DOMContentLoaded', function() {
       actualizarBotonLimpiarBusqueda();
     });
-  </script>
+      // Puente controlado para que el módulo de temporadas actualice las tarjetas originales.
+    window.__novaTendencias = tendenciasEspeciales;
+    window.__novaRenderTendencias = renderTendencias;
+</script>
 
   <script>
     // El carrusel usa exclusivamente imágenes de la temporada activa.
@@ -2378,6 +2382,129 @@ body[data-tema="blackfriday"] header a.bg-nova {
   </script>
 
 
+<script id="novashop-seasonal-trends">
+(function(){
+  // Colecciones reales de moda para las ocho tarjetas de Tendencias.
+  // Los IDs 301-308 se conservan para no romper detalle, carrito ni favoritos.
+  const tendenciasPorTemporada = {
+    halloween: [
+      { nombre: 'Camiseta negra gráfica', descripcion: 'Camiseta de algodón negra, fácil de combinar para un look de Halloween.', precio: 890, img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85', categoria: 'streetwear', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Sudadera negra con capucha', descripcion: 'Sudadera cómoda en tono oscuro para una capa extra en noches frescas.', precio: 1890, img: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=700&q=85', categoria: 'streetwear', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Chaqueta biker negra', descripcion: 'Chaqueta de estilo urbano para completar un conjunto de temporada.', precio: 3290, img: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=85', categoria: 'streetwear', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Vestido negro de noche', descripcion: 'Vestido negro versátil para una salida o celebración temática.', precio: 2490, img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'superior', tallas: ['S', 'M', 'L'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Camisa casual oscura', descripcion: 'Camisa de corte casual para combinar con pantalones negros o denim.', precio: 1750, img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#262626' },
+      { nombre: 'Pantalón negro urbano', descripcion: 'Pantalón de estilo moderno para crear un conjunto monocromático.', precio: 2190, img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'pantalon', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Botines de cuero', descripcion: 'Botines de estilo clásico que completan un outfit oscuro.', precio: 4290, img: 'https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&w=700&q=85', categoria: 'calzado', tipo: 'calzado', tallas: ['38', '39', '40', '41', '42'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Gorra urbana negra', descripcion: 'Gorra casual para añadir un accesorio discreto al look.', precio: 790, img: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=85', categoria: 'streetwear', tipo: 'superior', tallas: ['Única'], color: 'Negro', hex: '#171717' }
+    ],
+    navidad: [
+      { nombre: 'Suéter rojo clásico', descripcion: 'Suéter de punto en rojo festivo, ideal para reuniones y celebraciones.', precio: 1890, img: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Rojo', hex: '#b91c1c' },
+      { nombre: 'Camiseta verde casual', descripcion: 'Camiseta cómoda en verde profundo para un look relajado de temporada.', precio: 850, img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Verde', hex: '#166534' },
+      { nombre: 'Vestido rojo elegante', descripcion: 'Vestido de ocasión en rojo para cenas y eventos especiales.', precio: 2690, img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'superior', tallas: ['S', 'M', 'L'], color: 'Rojo', hex: '#b91c1c' },
+      { nombre: 'Camisa blanca de vestir', descripcion: 'Camisa de estilo pulido para combinar en celebraciones familiares.', precio: 1790, img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Blanco', hex: '#f8fafc' },
+      { nombre: 'Chaqueta verde urbana', descripcion: 'Chaqueta versátil para completar conjuntos de invierno y fiesta.', precio: 3190, img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Verde', hex: '#166534' },
+      { nombre: 'Pantalón de vestir', descripcion: 'Pantalón de corte clásico para un conjunto elegante y cómodo.', precio: 2290, img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'pantalon', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Botines de cuero', descripcion: 'Calzado de estilo clásico para cenas, reuniones y salidas.', precio: 4290, img: 'https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&w=700&q=85', categoria: 'calzado', tipo: 'calzado', tallas: ['38', '39', '40', '41', '42'], color: 'Marrón', hex: '#78350f' },
+      { nombre: 'Bolso de mano elegante', descripcion: 'Bolso práctico para completar un look de celebración.', precio: 2390, img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Negro', hex: '#171717' }
+    ],
+    sanvalentin: [
+      { nombre: 'Vestido rojo de ocasión', descripcion: 'Vestido rojo elegante para una cena, evento o salida especial.', precio: 2690, img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'superior', tallas: ['S', 'M', 'L'], color: 'Rojo', hex: '#be123c' },
+      { nombre: 'Blusa rosa ligera', descripcion: 'Blusa en tono rosa fácil de combinar con pantalón o falda.', precio: 1390, img: 'https://images.unsplash.com/photo-1564257577-0a5b1f3b8f91?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Rosa', hex: '#ec4899' },
+      { nombre: 'Camisa blanca elegante', descripcion: 'Camisa versátil para un conjunto limpio y sofisticado.', precio: 1790, img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Blanco', hex: '#f8fafc' },
+      { nombre: 'Conjunto casual para salir', descripcion: 'Ideas de prendas combinables para un look cómodo de cita.', precio: 2190, img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L'], color: 'Rosa y neutro', hex: '#f9a8d4' },
+      { nombre: 'Camiseta rosa básica', descripcion: 'Camiseta suave para un estilo casual en tonos románticos.', precio: 890, img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Rosa', hex: '#f9a8d4' },
+      { nombre: 'Pantalón de vestir', descripcion: 'Pantalón moderno para combinar con blusas y camisas.', precio: 2190, img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'pantalon', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Bolso de mano', descripcion: 'Accesorio práctico para completar un conjunto de ocasión.', precio: 2290, img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Rosa', hex: '#ec4899' },
+      { nombre: 'Lentes de sol clásicos', descripcion: 'Lentes de diseño atemporal para un toque final al outfit.', precio: 1350, img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Dorado', hex: '#eab308' }
+    ],
+    padre: [
+      { nombre: 'Polo clásico para caballero', descripcion: 'Polo cómodo y versátil para el día a día o una salida casual.', precio: 1290, img: 'https://images.unsplash.com/photo-1625910513413-5fc4e3e8d3c3?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Azul marino', hex: '#1e3a8a' },
+      { nombre: 'Camisa de vestir', descripcion: 'Camisa de corte clásico para ocasiones especiales y trabajo.', precio: 1890, img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Blanco', hex: '#f8fafc' },
+      { nombre: 'Chaqueta bomber', descripcion: 'Chaqueta urbana para combinar con jeans y camisetas básicas.', precio: 3290, img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=700&q=85', categoria: 'streetwear', tipo: 'superior', tallas: ['M', 'L', 'XL'], color: 'Verde militar', hex: '#365314' },
+      { nombre: 'Pantalón chino', descripcion: 'Pantalón casual elegante para un estilo cómodo y pulido.', precio: 2190, img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'pantalon', tallas: ['S', 'M', 'L', 'XL'], color: 'Beige', hex: '#d6c5a5' },
+      { nombre: 'Camiseta básica', descripcion: 'Camiseta de algodón para combinar con cualquier conjunto.', precio: 850, img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Blanco', hex: '#f8fafc' },
+      { nombre: 'Mochila urbana', descripcion: 'Mochila funcional para trabajo, estudio o uso diario.', precio: 2590, img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Botines de cuero', descripcion: 'Botines resistentes de estilo clásico para completar el look.', precio: 4290, img: 'https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&w=700&q=85', categoria: 'calzado', tipo: 'calzado', tallas: ['39', '40', '41', '42', '43'], color: 'Marrón', hex: '#78350f' },
+      { nombre: 'Gorra casual', descripcion: 'Gorra ajustable para un toque deportivo y relajado.', precio: 790, img: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Negro', hex: '#171717' }
+    ],
+    madre: [
+      { nombre: 'Vestido floral de ocasión', descripcion: 'Vestido femenino de estilo elegante para celebraciones y salidas.', precio: 2790, img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'superior', tallas: ['S', 'M', 'L'], color: 'Floral', hex: '#f9a8d4' },
+      { nombre: 'Blusa ligera', descripcion: 'Blusa versátil para combinar con pantalones o faldas.', precio: 1390, img: 'https://images.unsplash.com/photo-1564257577-0a5b1f3b8f91?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Rosa', hex: '#f9a8d4' },
+      { nombre: 'Conjunto elegante', descripcion: 'Prendas coordinadas para un look cómodo y sofisticado.', precio: 2490, img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'superior', tallas: ['S', 'M', 'L'], color: 'Neutro', hex: '#d6c5a5' },
+      { nombre: 'Camisa blanca', descripcion: 'Camisa clásica para combinar en looks casuales o formales.', precio: 1690, img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Blanco', hex: '#f8fafc' },
+      { nombre: 'Camiseta básica rosa', descripcion: 'Camiseta cómoda para un estilo diario y sencillo.', precio: 890, img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Rosa', hex: '#f9a8d4' },
+      { nombre: 'Pantalón de vestir', descripcion: 'Pantalón de corte moderno para combinar con blusas.', precio: 2190, img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'pantalon', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Bolso de mano', descripcion: 'Bolso funcional para acompañar looks de día o de noche.', precio: 2390, img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Beige', hex: '#d6c5a5' },
+      { nombre: 'Lentes de sol', descripcion: 'Lentes de diseño clásico para completar un conjunto.', precio: 1350, img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Dorado', hex: '#eab308' }
+    ],
+    nino: [
+      { nombre: 'Camiseta infantil divertida', descripcion: 'Camiseta cómoda para jugar y disfrutar todos los días.', precio: 650, img: 'https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?auto=format&fit=crop&w=700&q=85', categoria: 'ninos', tipo: 'superior', tallas: ['4Y', '6Y', '8Y', '10Y', '12Y'], color: 'Multicolor', hex: '#38bdf8' },
+      { nombre: 'Sudadera infantil', descripcion: 'Sudadera suave para actividades y días frescos.', precio: 1190, img: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=700&q=85', categoria: 'ninos', tipo: 'superior', tallas: ['4Y', '6Y', '8Y', '10Y', '12Y'], color: 'Azul', hex: '#2563eb' },
+      { nombre: 'Conjunto deportivo infantil', descripcion: 'Conjunto práctico para juegos, paseos y actividades.', precio: 1450, img: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=700&q=85', categoria: 'ninos', tipo: 'superior', tallas: ['4Y', '6Y', '8Y', '10Y', '12Y'], color: 'Multicolor', hex: '#f59e0b' },
+      { nombre: 'Vestido infantil', descripcion: 'Vestido cómodo para celebraciones y salidas familiares.', precio: 1090, img: 'https://images.unsplash.com/photo-1503919005314-30d93d07d823?auto=format&fit=crop&w=700&q=85', categoria: 'ninos', tipo: 'superior', tallas: ['4Y', '6Y', '8Y', '10Y'], color: 'Rosa', hex: '#f9a8d4' },
+      { nombre: 'Camiseta básica infantil', descripcion: 'Prenda ligera y fácil de combinar con pantalones o shorts.', precio: 590, img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85', categoria: 'ninos', tipo: 'superior', tallas: ['4Y', '6Y', '8Y', '10Y', '12Y'], color: 'Blanco', hex: '#f8fafc' },
+      { nombre: 'Pantalón jogger infantil', descripcion: 'Jogger cómodo para jugar y moverse con libertad.', precio: 990, img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=85', categoria: 'ninos', tipo: 'pantalon', tallas: ['4Y', '6Y', '8Y', '10Y', '12Y'], color: 'Gris', hex: '#6b7280' },
+      { nombre: 'Chaqueta infantil', descripcion: 'Chaqueta ligera para completar conjuntos casuales.', precio: 1590, img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=700&q=85', categoria: 'ninos', tipo: 'superior', tallas: ['4Y', '6Y', '8Y', '10Y', '12Y'], color: 'Azul', hex: '#2563eb' },
+      { nombre: 'Mochila infantil', descripcion: 'Mochila práctica para salidas, actividades y escuela.', precio: 1290, img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Azul', hex: '#2563eb' }
+    ],
+    blackfriday: [
+      { nombre: 'Camiseta básica premium', descripcion: 'Camiseta versátil seleccionada para aprovechar los especiales.', precio: 790, img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Sudadera urbana', descripcion: 'Sudadera cómoda con estilo casual para todos los días.', precio: 1590, img: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=700&q=85', categoria: 'streetwear', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Gris', hex: '#6b7280' },
+      { nombre: 'Chaqueta casual', descripcion: 'Chaqueta de estilo moderno para completar tu guardarropa.', precio: 2790, img: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Vestido de ocasión', descripcion: 'Vestido elegante para eventos y salidas especiales.', precio: 2190, img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'superior', tallas: ['S', 'M', 'L'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Camisa casual', descripcion: 'Camisa fácil de combinar para looks de diario.', precio: 1390, img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Blanco', hex: '#f8fafc' },
+      { nombre: 'Pantalón moderno', descripcion: 'Pantalón versátil para crear conjuntos casuales o formales.', precio: 1790, img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'pantalon', tallas: ['S', 'M', 'L', 'XL'], color: 'Azul marino', hex: '#1e3a8a' },
+      { nombre: 'Botines clásicos', descripcion: 'Calzado de estilo atemporal para completar distintos outfits.', precio: 3690, img: 'https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&w=700&q=85', categoria: 'calzado', tipo: 'calzado', tallas: ['38', '39', '40', '41', '42'], color: 'Marrón', hex: '#78350f' },
+      { nombre: 'Mochila urbana', descripcion: 'Mochila funcional para uso diario y salidas.', precio: 2190, img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Negro', hex: '#171717' }
+    ],
+    orgullo: [
+      { nombre: 'Camiseta arcoíris casual', descripcion: 'Camiseta cómoda para expresar tu estilo con color y autenticidad.', precio: 990, img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Multicolor', hex: '#a855f7' },
+      { nombre: 'Sudadera colorida', descripcion: 'Sudadera versátil para crear un look urbano lleno de personalidad.', precio: 1890, img: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=700&q=85', categoria: 'streetwear', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Multicolor', hex: '#a855f7' },
+      { nombre: 'Chaqueta urbana', descripcion: 'Chaqueta moderna para combinar con prendas de distintos colores.', precio: 3290, img: 'https://images.unsplash.com/photo-1548883354-7622d03aca27?auto=format&fit=crop&w=700&q=85', categoria: 'streetwear', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Multicolor', hex: '#a855f7' },
+      { nombre: 'Vestido de expresión', descripcion: 'Vestido versátil para celebrar tu estilo en cualquier ocasión.', precio: 2490, img: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=85', categoria: 'formal', tipo: 'superior', tallas: ['S', 'M', 'L'], color: 'Multicolor', hex: '#ec4899' },
+      { nombre: 'Camisa de color', descripcion: 'Camisa casual para crear combinaciones originales.', precio: 1790, img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'superior', tallas: ['S', 'M', 'L', 'XL'], color: 'Azul', hex: '#2563eb' },
+      { nombre: 'Pantalón urbano', descripcion: 'Pantalón cómodo para equilibrar conjuntos llenos de color.', precio: 2190, img: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=700&q=85', categoria: 'casual', tipo: 'pantalon', tallas: ['S', 'M', 'L', 'XL'], color: 'Negro', hex: '#171717' },
+      { nombre: 'Lentes de sol', descripcion: 'Accesorio de diseño clásico para completar tu outfit.', precio: 1350, img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Dorado', hex: '#eab308' },
+      { nombre: 'Mochila urbana', descripcion: 'Mochila práctica para acompañarte con estilo todos los días.', precio: 2590, img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=85', categoria: 'accesorios', tipo: 'superior', tallas: ['Única'], color: 'Multicolor', hex: '#a855f7' }
+    ]
+  };
+  const listaTendencias = window.__novaTendencias;
+  if (!Array.isArray(listaTendencias) || listaTendencias.length !== 8) { console.error('NovaShop: no se pudo conectar la colección de Tendencias.'); return; }
+  const baseOriginal = listaTendencias.map(p => ({...p, colores:p.colores.map(c=>({...c}))}));
+  function aplicarTendenciasTemporada(tema){
+    const productosTema = tendenciasPorTemporada[tema];
+    const seleccion = productosTema || baseOriginal;
+    listaTendencias.splice(0, listaTendencias.length, ...seleccion.map((p,i)=>{
+      const base = baseOriginal[i] || {};
+      return {
+        ...base, id:301+i, nombre:p.nombre || base.nombre,
+        tipo:p.tipo || base.tipo, categoria:p.categoria || base.categoria,
+        categoriaLabel: tema==='original' ? 'EXCLUSIVO TENDENCIA' : 'EDICIÓN '+String(tema).toUpperCase(),
+        precio:p.precio || base.precio, descripcion:p.descripcion || 'Prenda seleccionada de NovaShop.',
+        tallas:p.tallas || base.tallas, colores:[{nombre:p.color || base.colores[0].nombre,hex:p.hex || base.colores[0].hex,img:p.img || base.colores[0].img}]
+      };
+    }));
+    if(typeof window.__novaRenderTendencias==='function') window.__novaRenderTendencias();
+  }
+  window.aplicarTendenciasTemporada = aplicarTendenciasTemporada;
+  // Aplica el tema que ya publicó el administrador al cargar la tienda.
+  function leerTema(){
+    try{
+      const params = new URLSearchParams(window.location.search);
+      let v = params.get('tema') || localStorage.getItem('novashop_public_theme') || localStorage.getItem('novashop_public_theme_id') || 'original';
+      try{v=JSON.parse(v)}catch(e){}
+      if(v && typeof v==='object') v=v.tema||v.theme||v.temporada||v.season||v.value||v.selected||'original';
+      const clave=String(v||'original').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+      const alias={diadelpadre:'padre',diadelamadre:'madre',diadelnino:'nino',ninos:'nino',diadelamor:'sanvalentin',mesdelorgullo:'orgullo',normal:'original',originalnovashop:'original'};
+      return alias[clave]||clave;
+    }catch(e){return 'original'}
+  }
+  function iniciar(){aplicarTendenciasTemporada(leerTema());}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',iniciar); else iniciar();
+  window.addEventListener('storage',e=>{if(e.key==='novashop_public_theme') iniciar();});
+  window.addEventListener('novashop:theme-changed',iniciar);
+})();
+</script>
 <script id="novashop-index-theme-engine">
 (function(){
  const TEMAS={
@@ -2418,15 +2545,49 @@ body[data-tema="blackfriday"] header a.bg-nova {
  }
  function aplicarTema(){
   const elegido=leerTema();const tema=TEMAS[elegido]?elegido:'original';const data=TEMAS[tema];
+  if(typeof window.aplicarTendenciasTemporada==='function') window.aplicarTendenciasTemporada(tema);
   document.body.dataset.tema=tema;document.documentElement.dataset.tema=tema;
-  // El logo se adapta a la temporada sin alterar el nombre ni los enlaces de NovaShop.
-  const iconosTemporada={halloween:'🎃',navidad:'🎅',sanvalentin:'💘',padre:'👔',madre:'🌷',nino:'🎈',blackfriday:'🛍️',orgullo:'🏳️‍🌈'};
-  const emoji=iconosTemporada[tema]||'';
+  // Logo de NovaShop: imagen original o imagen correspondiente a la temporada.
+  const logosTemporada={
+   halloween:'img/logo hallowen.png',
+   navidad:'img/logo navidad.png',
+   sanvalentin:'img/logo san valetin.png?v=4',
+   padre:'img/logo dia del padre.png',
+   madre:'img/logo dia de la madre.png',
+   nino:'img/logo dia del niño.png',
+   blackfriday:'img/logo black friday.png?v=2',
+   orgullo:'img/logo del mes del orgullo.png?v=2'
+  };
+  const emojisTemporada={halloween:'🎃',navidad:'🎅',sanvalentin:'💘',padre:'👔',madre:'🌷',nino:'🎈',blackfriday:'🛍️',orgullo:'🏳️‍🌈'};
+  const imagenLogo=logosTemporada[tema]||'';
+  const emoji=emojisTemporada[tema]||'';
   const logoOriginal=document.getElementById('novaLogoOriginal');
   const logoTemporada=document.getElementById('novaLogoTemporada');
   const footerIcono=document.getElementById('novaFooterIcono');
-  if(logoOriginal)logoOriginal.classList.toggle('hidden',!!emoji);
-  if(logoTemporada){logoTemporada.textContent=emoji;logoTemporada.classList.toggle('hidden',!emoji);}
+
+  if(logoOriginal&&logoTemporada){
+   // El logo original debe mostrarse siempre en la temporada original.
+   // Para una temporada especial, se muestra su imagen solo cuando termina de cargar.
+   logoOriginal.classList.remove('hidden');
+   logoTemporada.classList.add('hidden');
+   logoTemporada.onerror=null;
+   if(imagenLogo){
+    logoTemporada.onload=()=>{
+     logoTemporada.classList.remove('hidden');
+     logoOriginal.classList.add('hidden');
+    };
+    logoTemporada.onerror=()=>{
+     console.error('No se pudo cargar el logo de temporada. Comprueba la ruta:',imagenLogo);
+     logoTemporada.classList.add('hidden');
+     logoOriginal.classList.remove('hidden');
+    };
+    logoTemporada.src=imagenLogo;
+   }else{
+    logoTemporada.removeAttribute('src');
+    logoTemporada.classList.add('hidden');
+    logoOriginal.classList.remove('hidden');
+   }
+  }
   if(footerIcono){footerIcono.textContent=emoji||'N';footerIcono.style.background=emoji?'transparent':'';footerIcono.style.fontSize=emoji?'26px':'';}
 
   document.body.classList.toggle('tema-especial',tema!=='original');
