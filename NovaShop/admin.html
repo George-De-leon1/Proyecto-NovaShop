@@ -1528,8 +1528,14 @@
       actualizarEstadoTema();
       showToast('Diseño seleccionado', `Abriendo la tienda pública con el tema ${TEMAS_PUBLICOS[temaFinal].nombre}.`, 'fa-palette');
 
-      // Abrir siempre index.html de la misma carpeta, enviando también la temporada por URL.
-      const tiendaUrl = new URL('./index.html', window.location.href);
+      // Las temporadas con página propia abren su archivo correspondiente.
+      // Las demás siguen utilizando index.html y su sistema de temas.
+      const paginasTemporada = {
+        blackfriday: 'novashop_black_friday.html',
+        orgullo: 'novashop_mes_del_orgullo.html'
+      };
+      const archivoDestino = paginasTemporada[temaFinal] || 'index.html';
+      const tiendaUrl = new URL('./' + archivoDestino, window.location.href);
       tiendaUrl.searchParams.set('tema', temaFinal);
       tiendaUrl.searchParams.set('actualizacion', String(Date.now()));
 

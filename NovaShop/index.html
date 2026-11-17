@@ -529,8 +529,18 @@ body[data-tema="blackfriday"] header a.bg-nova {
   }
 </style>
 
-</head>
 
+<style id="novashop-footer-tematico-restaurado">
+/* El footer toma la paleta de la temporada seleccionada desde el panel. */
+body footer { background:var(--ns-primary,#071A42) !important; border-top:3px solid var(--ns-accent,#2563eb) !important; transition:background .3s ease,border-color .3s ease; }
+body footer > div { border-color:color-mix(in srgb,var(--ns-accent,#2563eb) 35%,transparent) !important; }
+body footer a:hover { color:var(--ns-accent,#2563eb) !important; }
+body footer a > span.text-electric, body footer .text-electric { color:var(--ns-accent,#2563eb) !important; }
+body footer #novaFooterIcono { background:var(--ns-accent,#2563eb) !important; }
+body footer #novaFooterLogoTemporada { width:42px;height:42px;object-fit:contain; }
+body[data-tema="blackfriday"] footer { background:#090909 !important;color:#fff !important; }
+body[data-tema="orgullo"] footer { background:#31205f !important;border-top:5px solid transparent !important;border-image:linear-gradient(90deg,#e8414b,#f59e0b,#facc15,#22a06b,#2785d8,#8b5cf6) 1 !important; }
+</style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased flex flex-col min-h-screen">
 
@@ -947,6 +957,7 @@ body[data-tema="blackfriday"] header a.bg-nova {
       <div class="md:col-span-1">
         <a href="index.html" class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
           <span id="novaFooterIcono" class="bg-electric text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg font-bold">N</span>
+          <img id="novaFooterLogoTemporada" class="hidden w-10 h-10 object-contain shrink-0" alt="Logo NovaShop de temporada">
           Nova<span class="text-electric">Shop</span>
         </a>
         <p class="text-slate-400 text-sm mt-4 leading-relaxed">
@@ -2588,7 +2599,33 @@ body[data-tema="blackfriday"] header a.bg-nova {
     logoOriginal.classList.remove('hidden');
    }
   }
-  if(footerIcono){footerIcono.textContent=emoji||'N';footerIcono.style.background=emoji?'transparent':'';footerIcono.style.fontSize=emoji?'26px':'';}
+  // Footer: usar la misma imagen de temporada que el encabezado (sin emojis).
+  const footerLogo=document.getElementById('novaFooterLogoTemporada');
+  if(footerIcono&&footerLogo){
+   footerIcono.textContent='N';
+   footerIcono.style.background='';
+   footerIcono.style.fontSize='';
+   footerIcono.classList.remove('hidden');
+   footerLogo.classList.add('hidden');
+   footerLogo.onload=null;
+   footerLogo.onerror=null;
+   if(imagenLogo){
+    footerLogo.onload=()=>{
+     if(footerLogo.getAttribute('src')!==imagenLogo)return;
+     footerLogo.classList.remove('hidden');
+     footerIcono.classList.add('hidden');
+    };
+    footerLogo.onerror=()=>{
+     footerLogo.classList.add('hidden');
+     footerIcono.classList.remove('hidden');
+     console.warn('No se pudo cargar el logo del footer:',imagenLogo);
+    };
+    footerLogo.src=imagenLogo;
+    if(footerLogo.complete && footerLogo.naturalWidth>0)footerLogo.onload();
+   }else{
+    footerLogo.removeAttribute('src');
+   }
+  }
 
   document.body.classList.toggle('tema-especial',tema!=='original');
   document.body.classList.toggle('tema-blackfriday',tema==='blackfriday');document.body.classList.toggle('tema-orgullo',tema==='orgullo');
@@ -2650,7 +2687,7 @@ function cerrarMenuMovil() {
     menu.classList.add('hidden');
     boton.setAttribute('aria-expanded', 'false');
 
-    icono.classList.remove('fa-xmark');
+    icono.classList.remove('fa-xmark'); 
     icono.classList.add('fa-bars');
 }
 </script>
