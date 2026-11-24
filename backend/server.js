@@ -14,7 +14,12 @@ const usuariosRoutes = require('./routes/usuarios');
 const categoriasRoutes = require('./routes/categorias');
 const productosRoutes = require('./routes/productos');
 const variantesRoutes = require('./routes/variantes');
-const temporadaRoutes = require('./routes/temporada')
+const temporadaRoutes = require('./routes/temporada');
+const provinciasRoutes = require('./routes/provincias');
+const couriersRoutes = require('./routes/couriers');
+const courierProvinciaRoutes = require('./routes/courierProvincia');
+const pedidosRoutes = require('./routes/pedidos');
+const detallePedidoRoutes = require('./routes/detallepedido');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -68,7 +73,11 @@ app.use('/api/categorias', categoriasRoutes);
 app.use('/api/productos', require('./routes/productos'));
 app.use('/api/variantes', require('./routes/variantes'));
 app.use('/api/temporadas',require('./routes/temporada'));
-
+app.use('/api/provincias', require('./routes/provincias')); 
+app.use('/api/couriers', require('./routes/couriers'));
+app.use('/api/courier-provincia', require('./routes/courierProvincia'));
+app.use('/api/pedidos', pedidosRoutes);
+app.use('/api/detallepedido', detallePedidoRoutes);
 // ==========================================
 // INICIAR SERVIDOR
 // ==========================================

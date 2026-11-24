@@ -1006,12 +1006,125 @@
       clientes = c ? JSON.parse(c) : [...DEFAULT_CUSTOMERS];
     }
 
-    function guardarStorage() {
-      localStorage.setItem('novashop_pro_products_v2', JSON.stringify(productos));
-      localStorage.setItem('novashop_pro_orders_v2', JSON.stringify(pedidos));
-      localStorage.setItem('novashop_pro_customers_v2', JSON.stringify(clientes));
-      renderAll();
+   // CONEXIÓN CON EL BACKEND
+const API_BASE = 'http://localhost:3000/api';
+
+let categoriasAPI = [];
+let variantesAPI = [];
+
+async function cargarProductosAPI() {
+  try {
+    const [resProductos, resVariantes, resCategorias] = await Promise.all([
+      fetch(`${API_BASE}/productos`),
+      fetch(`${API_BASE}/variantes`),
+      fetch(`${API_BASE}/categorias`)
+    ]);
+
+    if (!resProductos.ok || !resVariantes.ok || !resCategorias.ok) {
+      throw new Error('Error consultando las APIs');
     }
+
+    const dataProductos = await resProductos.json();
+    const dataVariantes = await resVariantes.json();
+    const dataCategorias = await resCategorias.json();
+
+    if (!dataProductos.success || !dataVariantes.success || !dataCategorias.success) {
+      throw new Error('Respuesta incorrecta del servidor');
+    }
+
+    categoriasAPI = dataCategorias.categorias;
+    variantesAPI = dataVariantes.variantes;
+
+    const selectCategoria = document.getElementById('prodCategoria');
+    selectCategoria.innerHTML = '<option value="">Selecciona una categoría</option>';
+
+    categoriasAPI.filter(c => Number(c.Activa) === 1).forEach(c => {
+      const option = document.createElement('option');
+      option.value = c.CategoriaID;
+      option.textContent = c.Nombre;
+      selectCategoria.appendChild(option);
+    });
+
+    productos = dataProductos.productos.map(p => {
+      const variantes = variantesAPI.filter(v =>
+        Number(v.ProductoID) === Number(p.ProductoID)
+      );
+
+      return {
+        id: Number(p.ProductoID),
+        categoriaID: Number(p.CategoriaID),
+        nombre: p.Nombre,
+        categoria: p.NombreCategoria,
+        precio: Number(p.Precio),
+        stock: variantes.reduce((total, v) => total + Number(v.Stock || 0), 0),
+        sku: localStorage.getItem(`novashop_sku_${p.ProductoID}`) || '',
+        activo: Boolean(Number(p.Activo)),
+        ventas: 0
+      };
+    });
+
+    console.log('Productos cargados desde MySQL:', productos);
+    return true;
+
+  } catch (error) {
+    console.error('Error cargando productos:', error);
+    showToast('Error de conexión', error.message, 'fa-triangle-exclamation');
+    return false;
+  }
+}
+
+async function cargarPedidosAPI() {
+  try {
+    const respuesta = await fetch(`${API_BASE}/pedidos`);
+
+    if (!respuesta.ok) {
+      throw new Error('No se pudieron consultar los pedidos');
+    }
+
+    const data = await respuesta.json();
+
+    if (!data.success) {
+      throw new Error(data.mensaje || 'Respuesta incorrecta de pedidos');
+    }
+
+    pedidos = data.pedidos.map(p => ({
+      ...p,
+      id: p.PedidoID,
+      numeroPedido: p.NumeroPedido,
+      cliente: p.NombreCliente,
+      email: p.CorreoCliente,
+      fecha: p.FechaPedido
+        ? new Date(p.FechaPedido).toLocaleDateString('es-DO')
+        : '—',
+      items: '—',
+      productos: [],
+      total: Number(p.Total || 0),
+      estado: p.EstadoPedido === 'Pendiente'
+        ? 'En espera'
+        : p.EstadoPedido
+    }));
+
+    console.log('Pedidos cargados desde MySQL:', pedidos);
+    return true;
+
+  } catch (error) {
+    console.error('Error cargando pedidos:', error);
+    showToast(
+      'Error de conexión',
+      'No se pudieron cargar los pedidos desde MySQL',
+      'fa-triangle-exclamation'
+    );
+    return false;
+  }
+}
+// PERSISTENCIA LOCALSTORAGE
+function cargarStorage() {
+  const o = localStorage.getItem('novashop_pro_orders_v2');
+  const c = localStorage.getItem('novashop_pro_customers_v2');
+
+  pedidos = o ? JSON.parse(o) : [...DEFAULT_ORDERS];
+  clientes = c ? JSON.parse(c) : [...DEFAULT_CUSTOMERS];
+}
 
     function restablecerDatos() {
       if (confirm('¿Deseas restablecer todos los datos a la demostración inicial?')) {
