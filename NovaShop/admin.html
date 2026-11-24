@@ -613,12 +613,40 @@
           </div>
         </div>
 
-        <div class="glass-panel p-6 rounded-3xl shadow-sm">
-          <h3 class="font-bold text-slate-900 dark:text-white text-base mb-4">Resumen de Proyección Anual</h3>
-          <p class="text-xs text-slate-500 mb-6">Gráfico comparativo de objetivos financieros alcanzados vs esperados.</p>
-          <div class="h-72 w-full">
-            <canvas id="chartReporteProyeccion"></canvas>
+        <div class="glass-panel p-6 rounded-3xl shadow-sm space-y-5">
+          <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+            <div>
+              <h3 class="font-bold text-slate-900 dark:text-white text-base">Resumen de proyección de ventas</h3>
+              <p class="text-xs text-slate-500 mt-1">Consulta las ventas reales y la proyección estimada por período.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full lg:w-auto">
+              <div>
+                <label for="reportPeriodType" class="block text-[11px] font-bold text-slate-500 mb-1">Filtrar por</label>
+                <select id="reportPeriodType" class="w-full rounded-xl bg-slate-100 dark:bg-slate-800 p-3 text-sm outline-none focus:ring-2 focus:ring-electric">
+                  <option value="week">Semana</option><option value="month" selected>Mes</option><option value="year">Año</option>
+                </select>
+              </div>
+              <div id="reportWeekWrap" class="hidden">
+                <label for="reportWeekFilter" class="block text-[11px] font-bold text-slate-500 mb-1">Seleccionar semana</label>
+                <input id="reportWeekFilter" type="week" class="w-full rounded-xl bg-slate-100 dark:bg-slate-800 p-3 text-sm outline-none focus:ring-2 focus:ring-electric">
+              </div>
+              <div id="reportMonthWrap">
+                <label for="reportMonthFilter" class="block text-[11px] font-bold text-slate-500 mb-1">Seleccionar mes</label>
+                <input id="reportMonthFilter" type="month" class="w-full rounded-xl bg-slate-100 dark:bg-slate-800 p-3 text-sm outline-none focus:ring-2 focus:ring-electric">
+              </div>
+              <div id="reportYearWrap" class="hidden">
+                <label for="reportYearFilter" class="block text-[11px] font-bold text-slate-500 mb-1">Seleccionar año</label>
+                <select id="reportYearFilter" class="w-full rounded-xl bg-slate-100 dark:bg-slate-800 p-3 text-sm outline-none focus:ring-2 focus:ring-electric"></select>
+              </div>
+            </div>
           </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="rounded-2xl bg-slate-50 dark:bg-slate-800/70 p-4"><p class="text-[10px] uppercase font-bold tracking-wider text-slate-500">Ventas del período</p><p id="reportPeriodoVentas" class="text-xl font-black text-slate-900 dark:text-white mt-1">RD$ 0</p></div>
+            <div class="rounded-2xl bg-blue-50 dark:bg-blue-900/20 p-4"><p class="text-[10px] uppercase font-bold tracking-wider text-blue-600 dark:text-blue-300">Proyección estimada</p><p id="reportPeriodoProyeccion" class="text-xl font-black text-blue-700 dark:text-blue-300 mt-1">RD$ 0</p></div>
+            <div class="rounded-2xl bg-slate-50 dark:bg-slate-800/70 p-4"><p class="text-[10px] uppercase font-bold tracking-wider text-slate-500">Pedidos del período</p><p id="reportPeriodoPedidos" class="text-xl font-black text-slate-900 dark:text-white mt-1">0</p></div>
+          </div>
+          <div class="h-72 w-full"><canvas id="chartReporteProyeccion"></canvas></div>
+          <p id="reportProyeccionNota" class="text-[11px] text-slate-500">La proyección se calcula usando el ritmo de ventas registrado en el período seleccionado.</p>
         </div>
       </div>
 
@@ -965,9 +993,12 @@
       initDarkMode();
       cargarStorage();
       cargarCouriers();
+      // Mostrar desde el inicio las 32 provincias, sin necesidad de escribir en el buscador.
+      renderCouriers();
       actualizarEstadoTema();
       renderAll();
       initCharts();
+      inicializarFiltrosReportes();
     });
 
     // SISTEMA DE DARK MODE CON PERSISTENCIA
@@ -1437,12 +1468,111 @@ function cargarStorage() {
     }
 
     function renderReportes() {
-      const totalVentas = pedidos.reduce((sum, p) => sum + p.total, 0);
+      const totalVentas = pedidos.reduce((sum, p) => sum + Number(p.total || 0), 0);
       const ticketProm = pedidos.length ? (totalVentas / pedidos.length) : 0;
       document.getElementById('reportTicketPromedio').textContent = `RD$ ${Math.round(ticketProm).toLocaleString('es-DO')}`;
-
-      const valInv = productos.reduce((sum, p) => sum + (p.precio * p.stock), 0);
+      const valInv = productos.reduce((sum, p) => sum + (Number(p.precio || 0) * Number(p.stock || 0)), 0);
       document.getElementById('reportValorInventario').textContent = `RD$ ${valInv.toLocaleString('es-DO')}`;
+      actualizarReporteProyeccion();
+    }
+
+    function fechaPedidoReporte(pedido) {
+      const valor = pedido.fechaISO || pedido.fecha || pedido.createdAt || pedido.created_at || pedido.fechaCreacion || pedido.timestamp || pedido.date || pedido.created;
+      if (typeof valor === 'number') {
+        const d = new Date(valor < 1000000000000 ? valor * 1000 : valor);
+        return isNaN(d) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      }
+      if (!valor) return null;
+      const texto = String(valor).trim();
+      const relativo = texto.match(/hoy|ayer|hace\s+(\d+)\s+d[ií]as?/i);
+      if (relativo) {
+        const dias = /ayer/i.test(texto) ? 1 : (/hace/i.test(texto) ? Number(relativo[1]) : 0);
+        const d = new Date(); d.setDate(d.getDate() - dias);
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      }
+      const d = new Date(texto);
+      return isNaN(d) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    }
+
+    function claveSemanaReporte(fecha) {
+      const d = new Date(Date.UTC(fecha.getFullYear(), fecha.getMonth(), fecha.getDate()));
+      const dia = d.getUTCDay() || 7; d.setUTCDate(d.getUTCDate() + 4 - dia);
+      const inicio = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      const semana = Math.ceil((((d - inicio) / 86400000) + 1) / 7);
+      return `${d.getUTCFullYear()}-W${String(semana).padStart(2, '0')}`;
+    }
+
+    function inicializarFiltrosReportes() {
+      const hoy = new Date();
+      const week = claveSemanaReporte(hoy);
+      document.getElementById('reportWeekFilter').value = week;
+      document.getElementById('reportMonthFilter').value = `${hoy.getFullYear()}-${String(hoy.getMonth()+1).padStart(2,'0')}`;
+      const yearSelect = document.getElementById('reportYearFilter');
+      const years = new Set([hoy.getFullYear()]);
+      pedidos.forEach(p => { const f = fechaPedidoReporte(p); if (f) years.add(f.getFullYear()); });
+      [...years].sort((a,b)=>b-a).forEach(y => { const op=document.createElement('option'); op.value=y; op.textContent=y; yearSelect.appendChild(op); });
+      document.getElementById('reportPeriodType').addEventListener('change', cambiarTipoFiltroReporte);
+      ['reportWeekFilter','reportMonthFilter','reportYearFilter'].forEach(id => document.getElementById(id).addEventListener('change', actualizarReporteProyeccion));
+      cambiarTipoFiltroReporte();
+    }
+
+    function cambiarTipoFiltroReporte() {
+      const tipo = document.getElementById('reportPeriodType').value;
+      document.getElementById('reportWeekWrap').classList.toggle('hidden', tipo !== 'week');
+      document.getElementById('reportMonthWrap').classList.toggle('hidden', tipo !== 'month');
+      document.getElementById('reportYearWrap').classList.toggle('hidden', tipo !== 'year');
+      actualizarReporteProyeccion();
+    }
+
+    function actualizarReporteProyeccion() {
+      const tipoEl = document.getElementById('reportPeriodType');
+      if (!tipoEl) return;
+      const tipo = tipoEl.value;
+      const hoy = new Date(); hoy.setHours(0,0,0,0);
+      let inicio, fin, etiquetas = [], buckets = [];
+      if (tipo === 'week') {
+        const val = document.getElementById('reportWeekFilter').value || claveSemanaReporte(hoy);
+        const m = val.match(/^(\d{4})-W(\d{2})$/); if (!m) return;
+        const jan4 = new Date(Number(m[1]),0,4); const lunes = new Date(jan4); lunes.setDate(jan4.getDate() - ((jan4.getDay()+6)%7) + (Number(m[2])-1)*7);
+        inicio = new Date(lunes); fin = new Date(lunes); fin.setDate(fin.getDate()+6);
+        for(let i=0;i<7;i++){const d=new Date(inicio);d.setDate(d.getDate()+i);buckets.push({inicio:d,fin:d,label:d.toLocaleDateString('es-DO',{weekday:'short',day:'2-digit'})});}
+      } else if (tipo === 'month') {
+        const val = document.getElementById('reportMonthFilter').value;
+        if(!val) return; const [y,mo]=val.split('-').map(Number);
+        inicio = new Date(y,mo-1,1); fin = new Date(y,mo,0);
+        const totalSemanas = Math.ceil(fin.getDate()/7);
+        for(let i=0;i<totalSemanas;i++){const a=new Date(y,mo-1,i*7+1);const b=new Date(y,mo-1,Math.min((i+1)*7,fin.getDate()));buckets.push({inicio:a,fin:b,label:`Semana ${i+1}`});}
+      } else {
+        const y = Number(document.getElementById('reportYearFilter').value || hoy.getFullYear());
+        inicio = new Date(y,0,1); fin = new Date(y,11,31);
+        for(let i=0;i<12;i++) buckets.push({inicio:new Date(y,i,1),fin:new Date(y,i+1,0),label:new Date(y,i,1).toLocaleDateString('es-DO',{month:'short'})});
+      }
+      const pedidosPeriodo = pedidos.map(p=>({pedido:p,fecha:fechaPedidoReporte(p)})).filter(x=>x.fecha && x.fecha>=inicio && x.fecha<=fin);
+      const total = pedidosPeriodo.reduce((s,x)=>s+Number(x.pedido.total||0),0);
+      const cantidad = pedidosPeriodo.length;
+      const diasTranscurridos = Math.max(1, Math.min(Math.floor((hoy-inicio)/86400000)+1, Math.floor((fin-inicio)/86400000)+1));
+      const diasPeriodo = Math.floor((fin-inicio)/86400000)+1;
+      const proyeccion = (hoy < inicio) ? 0 : (hoy > fin ? total : total / diasTranscurridos * diasPeriodo);
+      document.getElementById('reportPeriodoVentas').textContent = `RD$ ${Math.round(total).toLocaleString('es-DO')}`;
+      document.getElementById('reportPeriodoProyeccion').textContent = `RD$ ${Math.round(proyeccion).toLocaleString('es-DO')}`;
+      document.getElementById('reportPeriodoPedidos').textContent = cantidad.toLocaleString('es-DO');
+      const promedioDiario = total / diasTranscurridos;
+      const reales = buckets.map(b=>pedidosPeriodo.filter(x=>x.fecha>=b.inicio && x.fecha<=b.fin).reduce((s,x)=>s+Number(x.pedido.total||0),0));
+      const proyectados = buckets.map((b,i)=>{
+        const dias = Math.floor((b.fin-b.inicio)/86400000)+1;
+        if (hoy > b.fin) return reales[i];
+        if (hoy < b.inicio) return promedioDiario*dias;
+        const diasActivos = Math.max(1,Math.floor((hoy-b.inicio)/86400000)+1);
+        return Math.max(reales[i], (reales[i]/diasActivos)*dias);
+      });
+      if(chartReporteObj){
+        chartReporteObj.data.labels=buckets.map(b=>b.label);
+        chartReporteObj.data.datasets[0].data=reales;
+        chartReporteObj.data.datasets[1].data=proyectados;
+        chartReporteObj.update();
+      }
+      const nota = document.getElementById('reportProyeccionNota');
+      nota.textContent = hoy < inicio ? 'El período seleccionado todavía no comienza; la proyección se basa en el promedio diario registrado.' : (hoy > fin ? 'Período finalizado: se muestran las ventas registradas, sin extrapolar días futuros.' : 'La proyección estima el cierre del período según el ritmo de ventas registrado hasta hoy.');
     }
 
     // OPERACIONES CRUD PRODUCTOS
@@ -1803,23 +1933,19 @@ function cargarStorage() {
         }
       });
 
-      // Gráfico Reporte Proyección
+      // Gráfico dinámico de proyección por semana, mes o año.
       const ctxRep = document.getElementById('chartReporteProyeccion').getContext('2d');
       chartReporteObj = new Chart(ctxRep, {
         type: 'bar',
-        data: {
-          labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-          datasets: [
-            { label: 'Objetivo Real (RD$)', data: [80000, 110000, 140000, 190000], backgroundColor: '#3B82F6', borderRadius: 8 },
-            { label: 'Meta Proyectada (RD$)', data: [75000, 100000, 130000, 180000], backgroundColor: '#cbd5e1', borderRadius: 8 }
-          ]
-        },
+        data: { labels: [], datasets: [
+          { label: 'Ventas reales (RD$)', data: [], backgroundColor: '#3B82F6', borderRadius: 8 },
+          { label: 'Proyección estimada (RD$)', data: [], backgroundColor: '#cbd5e1', borderRadius: 8 }
+        ]},
         options: {
-          responsive: true,
-          maintainAspectRatio: false,
+          responsive: true, maintainAspectRatio: false,
           plugins: { legend: { position: 'top', labels: { color: textColor } } },
           scales: {
-            y: { grid: { color: isDark ? '#1e293b' : '#f1f5f9' }, ticks: { color: textColor } },
+            y: { beginAtZero: true, grid: { color: isDark ? '#1e293b' : '#f1f5f9' }, ticks: { color: textColor, callback: value => 'RD$ ' + Number(value).toLocaleString('es-DO') } },
             x: { grid: { display: false }, ticks: { color: textColor } }
           }
         }

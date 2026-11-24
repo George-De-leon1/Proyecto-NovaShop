@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contacto | NovaShop</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -44,6 +45,28 @@ body[data-tema="nino"]{background-image:radial-gradient(circle at 8% 4%,#0ea5e91
 .ns-season-banner span:first-child,.ns-season-banner span:last-child{font-size:17px}
 body[data-tema]:not([data-tema="original"]) main section[class*="rounded"],body[data-tema]:not([data-tema="original"]) main article[class*="rounded"]{border-color:color-mix(in srgb,var(--ns-accent) 22%,var(--ns-border))}
 </style>
+
+<style id="novashop-assistant-styles">
+#ns-chat-launcher{position:fixed;right:24px;bottom:24px;z-index:80;width:62px;height:62px;border:0;border-radius:50%;background:var(--ns-accent,#2563eb);color:#fff;box-shadow:0 12px 32px #0f172a35;display:flex;align-items:center;justify-content:center;font-size:25px;cursor:pointer;transition:transform .2s,filter .2s}
+#ns-chat-launcher:hover{transform:translateY(-3px);filter:brightness(1.08)}
+#ns-chat-panel{position:fixed;right:24px;bottom:98px;z-index:81;width:min(390px,calc(100vw - 28px));height:min(570px,calc(100vh - 125px));background:#fff;border:1px solid #e2e8f0;border-radius:22px;box-shadow:0 22px 70px #0f172a35;display:none;overflow:hidden;flex-direction:column;color:#0f172a}
+#ns-chat-panel.ns-open{display:flex}
+#ns-chat-head{background:linear-gradient(125deg,var(--ns-primary,#071A42),var(--ns-accent,#2563eb));color:white;padding:17px;display:flex;align-items:center;justify-content:space-between}
+#ns-chat-head button{background:#ffffff20;border:0;color:#fff;border-radius:9px;width:32px;height:32px;cursor:pointer}
+#ns-chat-messages{flex:1;overflow-y:auto;padding:16px;background:#f8fafc;display:flex;flex-direction:column;gap:11px}
+.ns-chat-msg{max-width:88%;padding:11px 13px;border-radius:15px;font-size:13px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.ns-chat-bot{align-self:flex-start;background:#fff;border:1px solid #e2e8f0;border-bottom-left-radius:5px}
+.ns-chat-user{align-self:flex-end;background:var(--ns-accent,#2563eb);color:white;border-bottom-right-radius:5px}
+#ns-chat-quick{padding:10px 13px;display:flex;gap:7px;overflow-x:auto;border-top:1px solid #e2e8f0;background:#fff}
+#ns-chat-quick button{white-space:nowrap;border:1px solid #cbd5e1;border-radius:20px;padding:7px 10px;font-size:11px;font-weight:700;color:#334155;background:#fff;cursor:pointer}
+#ns-chat-form{display:flex;gap:8px;padding:12px;border-top:1px solid #e2e8f0;background:#fff}
+#ns-chat-input{min-width:0;flex:1;border:1px solid #cbd5e1;border-radius:12px;padding:11px 12px;font-size:13px;outline:none;color:#0f172a}
+#ns-chat-input:focus{border-color:var(--ns-accent,#2563eb);box-shadow:0 0 0 3px color-mix(in srgb,var(--ns-accent,#2563eb) 15%,transparent)}
+#ns-chat-send{border:0;border-radius:12px;padding:0 15px;background:var(--ns-accent,#2563eb);color:white;font-weight:800;cursor:pointer}
+#ns-chat-note{font-size:10px;color:#64748b;text-align:center;padding:0 10px 9px;background:#fff}
+@media(max-width:480px){#ns-chat-launcher{right:16px;bottom:16px}#ns-chat-panel{right:10px;bottom:88px;width:calc(100vw - 20px);height:min(590px,calc(100vh - 105px))}}
+</style>
+
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
 
@@ -135,7 +158,7 @@ body[data-tema]:not([data-tema="original"]) main section[class*="rounded"],body[
               </div>
               <div>
                 <p class="text-xs text-blue-300 font-bold uppercase tracking-wider">Correo Electrónico</p>
-                <p class="text-sm font-bold text-white mt-0.5">contacto@novashop.com</p>
+                <p class="text-sm font-bold text-white mt-0.5">centroeducacionalbautista80@gmail.com</p>
               </div>
             </div>
 
@@ -245,6 +268,69 @@ body[data-tema]:not([data-tema="original"]) main section[class*="rounded"],body[
 
   </main>
 
+
+<!-- Asistente virtual simulado de NovaShop (sin API) -->
+<button id="ns-chat-launcher" type="button" aria-label="Abrir asistente virtual" aria-expanded="false" title="Habla con nuestro asistente">
+  <i class="fa-solid fa-comments"></i>
+</button>
+<section id="ns-chat-panel" aria-label="Asistente virtual NovaShop" aria-live="polite">
+  <div id="ns-chat-head">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center"><i class="fa-solid fa-robot text-lg"></i></div>
+      <div><p class="font-black text-sm">Asistente NovaShop</p><p class="text-xs text-white/80">En línea · Atención automática</p></div>
+    </div>
+    <button id="ns-chat-close" type="button" aria-label="Cerrar chat"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div id="ns-chat-messages">
+    <div class="ns-chat-msg ns-chat-bot">¡Hola! 👋 Soy el asistente virtual de NovaShop. Puedo ayudarte con pedidos, envíos, pagos, tallas, cambios y devoluciones. ¿Qué deseas saber?</div>
+  </div>
+  <div id="ns-chat-quick">
+    <button type="button" data-question="¿Cuánto tarda el envío?">🚚 Envíos</button>
+    <button type="button" data-question="¿Cómo puedo saber el estado de mi pedido?">📦 Mi pedido</button>
+    <button type="button" data-question="¿Cuál es la política de cambios y devoluciones?">🔄 Devoluciones</button>
+    <button type="button" data-question="¿Qué métodos de pago aceptan?">💳 Pagos</button>
+  </div>
+  <form id="ns-chat-form">
+    <input id="ns-chat-input" type="text" autocomplete="off" placeholder="Escribe tu pregunta..." aria-label="Escribe tu pregunta" required>
+    <button id="ns-chat-send" type="submit" aria-label="Enviar mensaje"><i class="fa-solid fa-paper-plane"></i></button>
+  </form>
+  <p id="ns-chat-note">Asistente de demostración: respuestas automáticas programadas.</p>
+</section>
+<script id="novashop-simulated-assistant">
+(function(){
+ const launcher=document.getElementById('ns-chat-launcher');
+ const panel=document.getElementById('ns-chat-panel');
+ const closeBtn=document.getElementById('ns-chat-close');
+ const form=document.getElementById('ns-chat-form');
+ const input=document.getElementById('ns-chat-input');
+ const messages=document.getElementById('ns-chat-messages');
+ if(!launcher||!panel||!form||!input||!messages)return;
+ function toggleChat(open){panel.classList.toggle('ns-open',open);launcher.setAttribute('aria-expanded',String(open));if(open)setTimeout(()=>input.focus(),80)}
+ launcher.addEventListener('click',()=>toggleChat(!panel.classList.contains('ns-open')));
+ closeBtn.addEventListener('click',()=>toggleChat(false));
+ function addMessage(text,who){const el=document.createElement('div');el.className='ns-chat-msg '+(who==='user'?'ns-chat-user':'ns-chat-bot');el.textContent=text;messages.appendChild(el);messages.scrollTop=messages.scrollHeight}
+ function normalize(text){return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[¿?¡!.,;:]/g,' ').replace(/\s+/g,' ').trim()}
+ const answers=[
+  {keys:['hola','buenas','buenos dias','buenas tardes','saludos','hey'],reply:'¡Hola! 😊 Bienvenido/a a NovaShop. Estoy aquí para ayudarte. Puedes preguntarme sobre envíos, pedidos, pagos, productos, tallas o devoluciones.'},
+  {keys:['envio','envios','entrega','cuanto tarda','tiempo de entrega','cuando llega'],reply:'🚚 Los envíos dentro de República Dominicana toman entre 24 y 48 horas laborables una vez procesada la orden.'},
+  {keys:['pedido incorrecto','producto incorrecto','llego mal','llego roto','danado','defectuoso','problema con mi pedido'],reply:'Lo sentimos mucho. 😟 Si recibiste un producto incorrecto o dañado, conserva el empaque y los datos de tu compra. Contacta a soporte explicando lo ocurrido y, si puedes, adjunta fotografías.'},
+  {keys:['pedido','orden','estado','rastrear','seguimiento','donde esta'],reply:'📦 Para consultar el estado de tu pedido, revisa la sección “Mi cuenta” o comunícate con nuestro equipo indicando tu número de pedido. No puedo consultar pedidos reales desde este chat de demostración.'},
+  {keys:['pago','pagos','metodo','metodos','tarjeta','transferencia','efectivo'],reply:'💳 Para conocer las opciones disponibles, revisa los métodos que aparecen al momento de finalizar tu compra. Si tienes un inconveniente con un pago, escríbenos al correo de soporte.'},
+  {keys:['cambio','cambios','devolucion','devoluciones','reembolso','devolver'],reply:'🔄 Tienes hasta 30 días posteriores a la entrega para solicitar cambios de talla o devoluciones sin costo adicional, según la política indicada en esta página. Conserva los datos de tu compra y contacta a soporte para iniciar la solicitud.'},
+  {keys:['talla','tallas','medida','medidas','size'],reply:'👕 Para elegir tu talla, consulta la información y disponibilidad que aparece en la ficha del producto. Si tienes dudas entre dos tallas, envíanos el nombre del producto y tus medidas para orientarte.'},
+  {keys:['producto','productos','ropa','catalogo','disponible','disponibilidad'],reply:'🛍️ Puedes explorar los productos desde la sección “Catálogo”. En cada producto encontrarás sus detalles, tallas y opciones disponibles.'},
+  {keys:['horario','abren','atienden','atencion'],reply:'🕒 Nuestro horario de atención indicado es de lunes a viernes, de 8:00 AM a 6:00 PM, y sábados de 9:00 AM a 1:00 PM.'},
+  {keys:['contacto','correo','email','soporte','ayuda humana','hablar con alguien','asesor'],reply:'📧 Puedes comunicarte con nuestro equipo de soporte escribiendo a centroeducacionalbautista80@gmail.com. Para agilizar la ayuda, incluye tu nombre, número de pedido (si aplica) y una explicación del problema.'},
+  {keys:['gracias','muchas gracias','perfecto','excelente'],reply:'¡Con mucho gusto! 💙 En NovaShop estamos para ayudarte. ¿Tienes alguna otra pregunta?'},
+  {keys:['quien eres','que eres','asistente','ia'],reply:'🤖 Soy el asistente virtual de demostración de NovaShop. Respondo preguntas frecuentes mediante respuestas programadas; no utilizo una API ni puedo acceder a cuentas o pedidos reales.'}
+ ];
+ function getAnswer(question){const q=normalize(question);for(const item of answers){if(item.keys.some(key=>q.includes(normalize(key))))return item.reply;}return 'Gracias por escribirnos. No tengo una respuesta programada para esa consulta todavía. Puedes reformularla o contactar directamente a nuestro equipo en centroeducacionalbautista80@gmail.com y con gusto podrán orientarte.'}
+ function sendQuestion(question){const clean=question.trim();if(!clean)return;addMessage(clean,'user');input.value='';setTimeout(()=>addMessage(getAnswer(clean),'bot'),250)}
+ form.addEventListener('submit',e=>{e.preventDefault();sendQuestion(input.value)});
+ document.querySelectorAll('#ns-chat-quick [data-question]').forEach(btn=>btn.addEventListener('click',()=>sendQuestion(btn.getAttribute('data-question'))));
+})();
+</script>
+
   <!-- Notification Toast -->
   <div id="toast" class="fixed bottom-6 right-6 z-50 bg-nova text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
     <div class="w-8 h-8 rounded-full bg-electric/20 text-electric flex items-center justify-center">
@@ -288,7 +374,7 @@ body[data-tema]:not([data-tema="original"]) main section[class*="rounded"],body[
       <div>
         <h4 class="font-black text-white text-base mb-4">Contacto Directo</h4>
         <p class="text-xs text-slate-400 mb-2">San Pedro de Macorís, República Dominicana.</p>
-        <p class="text-xs text-slate-400">Correo: contacto@novashop.com</p>
+        <p class="text-xs text-slate-400">Correo: centroeducacionalbautista80@gmail.com</p>
       </div>
     </div>
 
@@ -309,11 +395,67 @@ body[data-tema]:not([data-tema="original"]) main section[class*="rounded"],body[
       document.getElementById('cartCount').textContent = totalCount;
     }
 
-    function handleSubmitMessage(e) {
+    async function handleSubmitMessage(e) {
       e.preventDefault();
-      const nombre = document.getElementById('contactName').value;
-      showToast(`¡Gracias ${nombre}! Tu mensaje ha sido enviado.`);
-      e.target.reset();
+
+      const form = e.target;
+      const submitButton = form.querySelector('button[type="submit"]');
+      const buttonContent = submitButton.innerHTML;
+      const nombre = document.getElementById('contactName').value.trim();
+      const correo = document.getElementById('contactEmail').value.trim();
+      const asunto = document.getElementById('contactSubject').value;
+      const mensaje = document.getElementById('contactMessage').value.trim();
+
+      if (!nombre || !correo || !mensaje) {
+        showToast('Completa todos los campos obligatorios.');
+        return;
+      }
+
+      if (!window.emailjs) {
+        showToast('No se pudo cargar el servicio de correo. Inténtalo de nuevo.');
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.classList.add('opacity-60', 'cursor-not-allowed');
+      submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Enviando...</span>';
+
+      try {
+        await emailjs.send(
+          'service_qlmyr51',
+          'template_6vibbw9',
+          {
+            to_email: 'centroeducacionalbautista80@gmail.com',
+            from_name: nombre,
+            from_email: correo,
+            reply_to: correo,
+            subject: asunto,
+            message: mensaje,
+            // Alias habituales por si la plantilla usa nombres de variables distintos:
+            name: nombre,
+            email: correo,
+            title: asunto,
+            user_name: nombre,
+            user_email: correo,
+            user_subject: asunto,
+            user_message: mensaje
+          },
+          { publicKey: 'dV0GRbtOEaFEgLL25' }
+        );
+
+        showToast(`¡Gracias ${nombre}! Tu mensaje fue enviado correctamente.`);
+        form.reset();
+      } catch (error) {
+        console.error('Error al enviar el mensaje con EmailJS:', error);
+        const detalle = error && (error.text || error.message)
+          ? String(error.text || error.message)
+          : 'Error desconocido. Revisa la consola del navegador y la configuración de EmailJS.';
+        showToast('EmailJS: ' + detalle);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.classList.remove('opacity-60', 'cursor-not-allowed');
+        submitButton.innerHTML = buttonContent;
+      }
     }
 
     function showToast(mensaje) {
