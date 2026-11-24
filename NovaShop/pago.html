@@ -20,6 +20,37 @@
     }
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style id="novashop-pago-temporadas">
+body[data-tema="original"] { --pay-primary:#071A42; --pay-accent:#2563eb; --pay-bg:#f8fafc; --pay-soft:#eff6ff; --pay-ink:#2563eb; }
+body[data-tema="halloween"] { --pay-primary:#27113d; --pay-accent:#f97316; --pay-bg:#fff7ed; --pay-soft:#ffedd5; --pay-ink:#9a3412; }
+body[data-tema="navidad"] { --pay-primary:#14532d; --pay-accent:#dc2626; --pay-bg:#f0fdf4; --pay-soft:#dcfce7; --pay-ink:#b91c1c; }
+body[data-tema="sanvalentin"] { --pay-primary:#881337; --pay-accent:#ec4899; --pay-bg:#fff1f2; --pay-soft:#fce7f3; --pay-ink:#be185d; }
+body[data-tema="padre"] { --pay-primary:#172554; --pay-accent:#ca8a04; --pay-bg:#fffbeb; --pay-soft:#fef3c7; --pay-ink:#854d0e; }
+body[data-tema="madre"] { --pay-primary:#831843; --pay-accent:#f472b6; --pay-bg:#fff1f2; --pay-soft:#fce7f3; --pay-ink:#be185d; }
+body[data-tema="nino"] { --pay-primary:#075985; --pay-accent:#f59e0b; --pay-bg:#f0f9ff; --pay-soft:#e0f2fe; --pay-ink:#92400e; }
+body[data-tema="blackfriday"] { --pay-primary:#090909; --pay-accent:#facc15; --pay-bg:#f5f5f4; --pay-soft:#fef9c3; --pay-ink:#854d0e; }
+body[data-tema="orgullo"] { --pay-primary:#31205f; --pay-accent:#8b5cf6; --pay-bg:#faf5ff; --pay-soft:#ede9fe; --pay-ink:#6d28d9; }
+body[data-tema] {background:var(--pay-bg)!important;}
+body[data-tema] header {background:white!important;border-bottom:4px solid var(--pay-accent)!important;}
+body[data-tema] .text-nova {color:var(--pay-primary)!important;}
+body[data-tema] .text-electric {color:var(--pay-ink)!important;}
+body[data-tema] #checkoutForm > div, body[data-tema] main aside {border:1px solid color-mix(in srgb,var(--pay-accent) 45%,white)!important;box-shadow:0 8px 25px #0f172a0a;}
+body[data-tema] #checkoutForm > div > div:first-child {border-color:var(--pay-accent);}
+body[data-tema] .bg-blue-50, body[data-tema] .bg-blue-100, body[data-tema] #shippingInfo, body[data-tema] #summaryItems > div, body[data-tema] aside .bg-slate-50 {background:var(--pay-soft)!important;}
+body[data-tema] .payment-option:has(input:checked) {border-color:var(--pay-accent)!important;background:var(--pay-soft)!important;}
+body[data-tema] .payment-option:not(:has(input:checked)) {border-color:#e2e8f0!important;background:white!important;}
+body[data-tema] input[type=radio] {accent-color:var(--pay-ink);}
+body[data-tema] input:focus, body[data-tema] select:focus {border-color:var(--pay-ink)!important;outline:2px solid var(--pay-soft);}
+body[data-tema] #checkoutForm button[type=submit] {background:linear-gradient(120deg,var(--pay-primary),var(--pay-ink))!important;color:white!important;}
+body[data-tema] #checkoutForm button[type=submit]:hover {filter:brightness(1.15);}
+body[data-tema] aside > h3 {background:var(--pay-primary);color:white!important;padding:14px;border-radius:14px;gap:8px;}
+body[data-tema] footer {background:var(--pay-primary)!important;color:white!important;border-top:4px solid var(--pay-accent)!important;}
+body[data-tema="blackfriday"] header {background:#090909!important;}
+body[data-tema="blackfriday"] header .text-nova,body[data-tema="blackfriday"] header .text-electric,body[data-tema="blackfriday"] header .text-slate-600 {color:#facc15!important;}
+body[data-tema="blackfriday"] #checkoutForm button[type=submit] {background:#facc15!important;color:#090909!important;}
+body[data-tema="orgullo"] header,body[data-tema="orgullo"] footer {border-image:linear-gradient(90deg,#e8414b,#f59e0b,#facc15,#22a06b,#2785d8,#8b5cf6) 1!important;}
+body[data-tema="orgullo"] #checkoutForm button[type=submit] {background:linear-gradient(110deg,#be123c,#6d28d9)!important;}
+</style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
 
@@ -543,5 +574,61 @@
       window.location.href = 'confirmacion.html?pedido=' + encodeURIComponent(id);
     }
   </script>
+<script id="novashop-pago-motor-temporadas">
+(function(){
+ function normalizarTema(valor){
+  const texto=String(valor||'original').toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const clave=texto.replace(/[^a-z0-9]/g,'');
+  const alias={
+   original:'original',normal:'original',
+   halloween:'halloween',navidad:'navidad',
+   sanvalentin:'sanvalentin',diadelamor:'sanvalentin',
+   padre:'padre',diadelpadre:'padre',
+   madre:'madre',diadelamadre:'madre',
+   nino:'nino',ninos:'nino',diadelnino:'nino',
+   blackfriday:'blackfriday',orgullo:'orgullo',mesdelorgullo:'orgullo'
+  };
+  return alias[clave]||'original';
+ }
+ function leerTema(){
+  const params=new URLSearchParams(location.search);const query=params.get('tema');
+  if(query)return normalizarTema(query);
+  try{
+   const raw=localStorage.getItem('novashop_public_theme');if(!raw)return 'original';
+   let parsed=raw;
+   try{parsed=JSON.parse(raw);}catch(e){/* Admite valores guardados como texto plano. */}
+   if(parsed&&typeof parsed==='object')parsed=parsed.tema||parsed.theme||parsed.temporada||parsed.season||parsed.value||parsed.selected||'original';
+   return normalizarTema(parsed);
+  }catch(e){return 'original';}
+ }
+const logosTemporada={
+   halloween:'img/logo hallowen.png',
+   navidad:'img/logo navidad.png',
+   sanvalentin:'img/logo san valetin.png?v=4',
+   padre:'img/logo dia del padre.png',
+   madre:'img/logo dia de la madre.png',
+   nino:'img/logo dia del niño.png',
+   blackfriday:'img/logo black friday.png?v=2',
+   orgullo:'img/logo del mes del orgullo.png?v=2'
+  };
+ const logo=document.querySelector('header nav a img');
+ const original=logo.getAttribute('src');
+ let ultimoTema;
+ function aplicar(){
+   const tema=leerTema();
+   document.body.dataset.tema=tema;
+   document.documentElement.dataset.tema=tema;
+   if(ultimoTema===tema)return;
+   ultimoTema=tema;
+   logo.onerror=function(){this.onerror=null;this.src=original;};
+   logo.src=logosTemporada[tema]||original;
+ }
+ aplicar();
+ window.addEventListener('pageshow',aplicar);
+ window.addEventListener('focus',aplicar);
+ window.addEventListener('novashop:theme-changed',aplicar);
+ window.addEventListener('storage',e=>{if(e.key==='novashop_public_theme'||e.key===null)aplicar();});
+})();
+</script>
 </body>
 </html>

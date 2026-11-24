@@ -138,6 +138,213 @@
        conservan sus estilos originales. */
 
   </style>
+
+<style id="novashop-carrito-tematico">
+
+  body[data-tema="original"] {
+    --cart-primary: #071A42;
+    --cart-accent: #2563eb;
+    --cart-bg: #f8fafc;
+  }
+
+  body[data-tema="halloween"] {
+    --cart-primary: #27113d;
+    --cart-accent: #f97316;
+    --cart-bg: #fff7ed;
+  }
+
+  body[data-tema="navidad"] {
+    --cart-primary: #14532d;
+    --cart-accent: #dc2626;
+    --cart-bg: #f0fdf4;
+  }
+
+  body[data-tema="sanvalentin"] {
+    --cart-primary: #881337;
+    --cart-accent: #ec4899;
+    --cart-bg: #fff1f2;
+  }
+
+  body[data-tema="padre"] {
+    --cart-primary: #172554;
+    --cart-accent: #ca8a04;
+    --cart-bg: #fffbeb;
+  }
+
+  body[data-tema="madre"] {
+    --cart-primary: #831843;
+    --cart-accent: #f472b6;
+    --cart-bg: #fff1f2;
+  }
+
+  body[data-tema="nino"] {
+    --cart-primary: #075985;
+    --cart-accent: #f59e0b;
+    --cart-bg: #f0f9ff;
+  }
+
+  body[data-tema="blackfriday"] {
+    --cart-primary: #090909;
+    --cart-accent: #facc15;
+    --cart-bg: #f5f5f4;
+  }
+
+  body[data-tema="orgullo"] {
+    --cart-primary: #31205f;
+    --cart-accent: #8b5cf6;
+    --cart-bg: #faf5ff;
+  }
+
+  /* Fondo general */
+  body[data-tema] {
+    background: var(--cart-bg) !important;
+    transition: background .35s ease;
+  }
+
+  /* Encabezado */
+  body[data-tema] header {
+    background: #ffffff !important;
+    border-bottom: 4px solid var(--cart-accent) !important;
+    transition: all .3s ease;
+  }
+
+  /* Titulos y textos principales */
+  body[data-tema] .text-nova {
+    color: var(--cart-primary) !important;
+  }
+
+  body[data-tema] .text-electric {
+    color: var(--cart-accent) !important;
+  }
+
+  /* Botones principales */
+  body[data-tema] .bg-nova {
+    background: var(--cart-primary) !important;
+  }
+
+  body[data-tema] .bg-electric {
+    background: var(--cart-accent) !important;
+  }
+
+  body[data-tema] button.bg-nova:hover,
+  body[data-tema] a.bg-nova:hover,
+  body[data-tema] a.bg-electric:hover {
+    filter: brightness(.88);
+  }
+
+  /* Contenedor de productos */
+  body[data-tema] #lista {
+    border: 2px solid var(--cart-accent) !important;
+    background: #ffffff !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,.06) !important;
+  }
+
+  /* Tarjetas de productos */
+  body[data-tema] #lista article {
+    background: var(--cart-bg) !important;
+    border: 1px solid var(--cart-border) !important;
+  }
+
+  /* Resumen de compra */
+  body[data-tema] main aside {
+    background: #ffffff !important;
+    border: 2px solid var(--cart-accent) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,.06) !important;
+  }
+
+  /* Titulo del resumen */
+  body[data-tema] main aside h2 {
+    background: var(--cart-primary);
+    color: #ffffff !important;
+    padding: 16px;
+    border-radius: 14px;
+    border: none !important;
+  }
+
+  body[data-tema] main aside h2 i {
+    color: #ffffff !important;
+  }
+
+  /* Boton continuar al pago */
+  body[data-tema] #btnCheckout {
+    background: linear-gradient(
+      135deg,
+      var(--cart-primary),
+      var(--cart-accent)
+    ) !important;
+
+    color: #ffffff !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,.15) !important;
+  }
+
+  /* Campo de cupon */
+  body[data-tema] #couponInput:focus {
+    border-color: var(--cart-accent) !important;
+  }
+
+  /* Icono del carrito vacio */
+  body[data-tema] #lista .bg-blue-50 {
+    background: var(--cart-bg) !important;
+  }
+
+  /* Pie de pagina */
+  body[data-tema] footer {
+    background: var(--cart-primary) !important;
+    color: #ffffff !important;
+    border-top: 4px solid var(--cart-accent) !important;
+  }
+
+  /* BLACK FRIDAY */
+  body[data-tema="blackfriday"] header {
+    background: #090909 !important;
+  }
+
+  body[data-tema="blackfriday"] header .text-nova,
+  body[data-tema="blackfriday"] header a {
+    color: #facc15 !important;
+  }
+
+  body[data-tema="blackfriday"] #btnCheckout {
+    background: #facc15 !important;
+    color: #090909 !important;
+  }
+
+  body[data-tema="blackfriday"] main .text-electric {
+    color: #854d0e !important;
+  }
+
+  /* MES DEL ORGULLO */
+  body[data-tema="orgullo"] header,
+  body[data-tema="orgullo"] footer {
+    border-image: linear-gradient(
+      90deg,
+      #e8414b,
+      #f59e0b,
+      #facc15,
+      #22a06b,
+      #2785d8,
+      #8b5cf6
+    ) 1 !important;
+  }
+
+  body[data-tema="orgullo"] #btnCheckout {
+    background: linear-gradient(
+      110deg,
+      #be123c,
+      #7c3aed
+    ) !important;
+  }
+
+  body[data-tema="orgullo"] main aside h2 {
+    background: linear-gradient(
+      110deg,
+      #31205f,
+      #8b5cf6
+    ) !important;
+  }
+
+</style>
+
 </head>
 
 <body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col justify-between">
@@ -844,6 +1051,73 @@
     })();
 
   </script>
+
+<script id="novashop-carrito-logo-temporada">
+
+(function () {
+
+  const logos = {
+    original: 'img/logo..png',
+    halloween: 'img/logo hallowen.png',
+    navidad: 'img/logo navidad.png',
+    sanvalentin: 'img/logo san valetin.png?v=4',
+    padre: 'img/logo dia del padre.png',
+    madre: 'img/logo dia de la madre.png',
+    nino: 'img/logo dia del niño.png',
+    blackfriday: 'img/logo black friday.png?v=2',
+    orgullo: 'img/logo del mes del orgullo.png?v=2'
+  };
+
+  function actualizarLogoCarrito() {
+
+    const tema = document.body.dataset.tema || 'original';
+
+    const logo = document.querySelector('header nav a img');
+
+    if (!logo) return;
+
+    const ruta = logos[tema] || logos.original;
+
+    logo.onerror = function () {
+      this.onerror = null;
+      this.src = logos.original;
+    };
+
+    if (logo.getAttribute('src') !== ruta) {
+      logo.src = ruta;
+    }
+
+    logo.alt = 'Logo NovaShop - ' + tema;
+
+  }
+
+  // Detectar cuando cambia la temporada
+  const observador = new MutationObserver(function () {
+    actualizarLogoCarrito();
+  });
+
+  observador.observe(document.body, {
+    attributes: true,
+    attributeFilter: ['data-tema']
+  });
+
+  // Aplicar el logo al abrir el carrito
+  actualizarLogoCarrito();
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    actualizarLogoCarrito
+  );
+
+  // Actualizar al regresar a la pagina
+  window.addEventListener(
+    'pageshow',
+    actualizarLogoCarrito
+  );
+
+})();
+
+</script>
 
 </body>
 </html>

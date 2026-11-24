@@ -16,7 +16,7 @@
     body{background:#fff!important;color:#172033!important;display:block!important}
     body *{visibility:hidden!important}
     #invoicePrint,#invoicePrint *{visibility:visible!important}
-    #invoicePrint{display:block!important;position:absolute;inset:0;width:100%;padding:0!important;margin:0!important;background:#fff!important}
+    #invoicePrint{display:block!important;position:static;width:100%;padding:0!important;margin:0!important;background:#fff!important}
     header,main,footer{display:none!important}
   }
   .invoice-paper{font-family:Arial,sans-serif;color:#172033;background:#fff}
@@ -27,6 +27,35 @@
   .invoice-total{background:#071A42;color:#fff;border-radius:14px;padding:18px}
   @media screen{#invoicePrint{max-width:900px;margin:30px auto;padding:24px;border:1px solid #e5eaf2;border-radius:20px;box-shadow:0 15px 45px #071a4212}}
 </style>
+
+<style id="confirmation-theme">
+body[data-tema="original"]{--primary:#071A42;--accent:#2563eb;--tint:#eef4ff;}
+body[data-tema="halloween"]{--primary:#27113d;--accent:#c2410c;--tint:#fff1e6;}
+body[data-tema="navidad"]{--primary:#14532d;--accent:#b91c1c;--tint:#edf8ef;}
+body[data-tema="sanvalentin"]{--primary:#881337;--accent:#be185d;--tint:#fff1f2;}
+body[data-tema="padre"]{--primary:#172554;--accent:#a16207;--tint:#fffbeb;}
+body[data-tema="madre"]{--primary:#831843;--accent:#be185d;--tint:#fff1f5;}
+body[data-tema="nino"]{--primary:#075985;--accent:#b45309;--tint:#effaff;}
+body[data-tema="blackfriday"]{--primary:#111111;--accent:#a16207;--tint:#f5f5f4;}
+body[data-tema="orgullo"]{--primary:#31205f;--accent:#7c3aed;--tint:#faf5ff;}
+@media screen {
+body[data-tema]{background:radial-gradient(ellipse at top,var(--tint),white 75%);}
+body[data-tema] header{border-bottom:4px solid var(--accent)}
+body[data-tema] .text-nova{color:var(--primary)!important}
+body[data-tema] .text-electric{color:var(--accent)!important}
+body[data-tema] .bg-nova{background:var(--primary)!important}
+body[data-tema] .bg-electric{background:var(--accent)!important}
+body[data-tema] .bg-blue-50{background:var(--tint)!important}
+body[data-tema] .print-card,body[data-tema] aside>div:first-child,body[data-tema] #searchPanel{border:1px solid color-mix(in srgb,var(--accent) 25%,white);box-shadow:0 12px 35px color-mix(in srgb,var(--primary) 9%,transparent)}
+#seasonHero{position:relative;overflow:hidden;padding:30px 16px;border-radius:26px;background:linear-gradient(135deg,var(--tint),white);border:1px solid var(--accent)}
+#seasonLabel{color:var(--accent)}
+body[data-tema] footer{background:var(--primary);color:white;border-top:4px solid var(--accent)}
+body[data-tema="blackfriday"] header{background:#111}
+body[data-tema="blackfriday"] header a,body[data-tema="blackfriday"] header .text-nova,body[data-tema="blackfriday"] header .text-electric{color:#facc15!important}
+body[data-tema="orgullo"] header,body[data-tema="orgullo"] footer{border-image:linear-gradient(90deg,#dc2626,#f97316,#eab308,#16a34a,#2563eb,#9333ea) 1}
+}
+@media print{#invoicePrint{print-color-adjust:exact;-webkit-print-color-adjust:exact}.invoice-table thead{display:table-header-group}.invoice-table tr,.invoice-total{break-inside:avoid}.invoice-top,.invoice-total{background:#fff!important;color:#172033!important;border:1px solid #071A42}.invoice-top *{color:#071A42!important}#invTotal{font-size:16px!important;overflow-wrap:anywhere}}
+</style>
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col">
 <header class="bg-white/90 backdrop-blur-lg border-b border-slate-200 sticky top-0 z-30">
@@ -36,7 +65,8 @@
  </nav>
 </header>
 <main class="w-full max-w-5xl mx-auto px-4 sm:px-6 py-9 sm:py-12 flex-1">
- <section class="text-center mb-8">
+ <section id="seasonHero" class="text-center mb-8">
+ <p id="seasonLabel" class="text-xs font-black uppercase tracking-widest mb-4"></p>
   <div class="w-20 h-20 rounded-3xl bg-emerald-100 text-emerald-600 grid place-items-center text-4xl mx-auto mb-5 shadow-sm"><i class="fa-solid fa-check"></i></div>
   <span class="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-800 px-4 py-1.5 text-xs font-black uppercase tracking-wider"><i class="fa-solid fa-circle-check"></i> Pedido registrado</span>
   <h1 class="text-3xl sm:text-4xl font-black text-nova mt-4">¡Gracias por tu compra!</h1>
@@ -97,7 +127,7 @@
       <div>
         <div style="font-size:29px;font-weight:900;letter-spacing:-1px">Nova<span style="color:#60a5fa">Shop</span></div>
         <div style="font-size:11px;color:#dbeafe;letter-spacing:2px;text-transform:uppercase;margin-top:4px">Tu estilo, tu esencia</div>
-        <div style="font-size:11px;color:#dbeafe;margin-top:15px">Comprobante de compra · Documento informativo</div>
+        <div style="font-size:11px;color:#dbeafe;margin-top:15px">Comprobante de pedido · Modo demostración</div>
       </div>
       <div style="text-align:right">
         <div style="font-size:25px;font-weight:900;letter-spacing:2px">FACTURA</div>
@@ -112,7 +142,8 @@
         <div style="font-size:10px;color:#64748b;font-weight:800;letter-spacing:1px;margin-bottom:8px">FACTURAR A</div>
         <div id="invCustomer" style="font-weight:800;font-size:15px">—</div>
         <div id="invEmail" style="font-size:12px;color:#64748b;margin-top:5px">—</div>
-        <div id="invAddress" style="font-size:12px;color:#64748b;margin-top:5px">—</div>
+        <div id="invPhone" style="font-size:12px;color:#64748b;margin-top:5px">—</div>
+         <div id="invAddress" style="font-size:12px;color:#64748b;margin-top:5px">—</div>
       </div>
       <div style="background:#f7f9fd;padding:16px;border-radius:12px">
         <div style="font-size:10px;color:#64748b;font-weight:800;letter-spacing:1px;margin-bottom:8px">INFORMACIÓN DE ENTREGA</div>
@@ -141,7 +172,7 @@
     </div>
     <div style="border-top:1px solid #e5eaf2;margin-top:25px;padding-top:14px;text-align:center;color:#94a3b8;font-size:10px;line-height:1.6">
       NovaShop · Tu estilo, tu esencia<br>
-      Este documento es un comprobante comercial generado por la tienda. No sustituye una factura fiscal ni incluye NCF.
+      Comprobante de pedido de demostración. No acredita un pago real, no sustituye una factura fiscal ni incluye NCF.
     </div>
   </div>
 </section>
@@ -154,6 +185,7 @@ let currentOrderId='';
 function getParam(){return new URLSearchParams(location.search).get('pedido')||localStorage.getItem('novashop_last_order_id')||'';}
 function stageFor(status){return {'En espera':0,'En preparación':1,'En camino':2,'Entregado':3}[status]??-1;}
 function renderOrder(order){
+ const pending=!!(order.envioPendiente || order.totalPendiente);
  currentOrderId=order.id; document.getElementById('orderNumber').textContent=order.id; document.getElementById('orderDate').textContent='Registrado: '+(order.fecha||'Fecha no disponible');
  const badge=document.getElementById('statusBadge'); badge.textContent=order.estado||'En espera';
  badge.className='rounded-full px-4 py-2 text-xs font-black '+(order.estado==='Entregado'?'bg-emerald-100 text-emerald-800':order.estado==='Cancelado'?'bg-rose-100 text-rose-800':order.estado==='En camino'?'bg-blue-100 text-blue-800':'bg-amber-100 text-amber-800');
@@ -165,27 +197,29 @@ function renderOrder(order){
  const subtotal=items.length?items.reduce((s,p)=>s+(Number(p.precio)||0)*(Number(p.cantidad)||1),0):Number(order.total||0);const shipping=Math.max(0,Number(order.total||0)-subtotal);
  const savedShipping=Number(order.envio ?? shipping);
  document.getElementById('subtotal').textContent=money(order.subtotal ?? subtotal);
- document.getElementById('shipping').textContent=savedShipping?money(savedShipping):'Gratis';
- document.getElementById('total').textContent=money(order.total);
+ document.getElementById('shipping').textContent=pending?'Por cotizar':savedShipping?money(savedShipping):'Gratis';
+ document.getElementById('total').textContent=pending?money(order.subtotal ?? subtotal)+' + envío por cotizar':money(order.total);
  document.getElementById('carrierName').textContent=order.transportista||'Courier pendiente de asignación';
  document.getElementById('deliveryType').textContent=order.tipoEntrega||'Entrega según cobertura de la provincia';
  document.getElementById('deliveryTime').textContent=order.tiempoEntrega||'Por confirmar';
- document.getElementById('deliveryCost').textContent=savedShipping?money(savedShipping):'Gratis';
+ document.getElementById('deliveryCost').textContent=pending?'Por cotizar':savedShipping?money(savedShipping):'Gratis';
  if(order.numeroRastreo||order.trackingNumber){document.getElementById('trackingWrap').classList.remove('hidden');document.getElementById('trackingNumber').textContent=order.numeroRastreo||order.trackingNumber;}
  else{document.getElementById('trackingWrap').classList.add('hidden');}
  document.getElementById('customerName').textContent=order.cliente||'—';document.getElementById('customerEmail').textContent=order.email||'—';document.getElementById('customerAddress').textContent=[order.direccion,order.sector,order.provincia].filter(Boolean).join(', ')||'No especificada';document.getElementById('paymentMethod').textContent=({entrega:'Pago contra entrega',tarjeta:'Tarjeta bancaria (modo demostración)',transferencia:'Transferencia bancaria'}[order.metodoPago]||order.metodoPago||'—');
+ fillInvoice(order, items, subtotal, savedShipping);
 }
 
 function printInvoice(){
- if(!currentOrderId){alert('Primero debes cargar un pedido para generar su factura.');return;}
+ if(!currentOrderId || !loadById(currentOrderId)){alert('Primero debes cargar un pedido para generar su factura.');return;}
  window.print();
 }
 function fillInvoice(order, items, subtotal, shipping){
  const put=(id,value)=>{document.getElementById(id).textContent=value||'—';};
  put('invNumber',order.id);
- put('invDate',order.fecha||new Date().toLocaleDateString('es-DO'));
+ put('invDate',order.fecha||(order.creadoEn?new Date(order.creadoEn).toLocaleString('es-DO'):'Fecha no disponible'));
  put('invCustomer',order.cliente||'Cliente NovaShop');
  put('invEmail',order.email||'');
+ put('invPhone',order.telefono||'No registrado');
  put('invAddress',[order.direccion,order.sector,order.provincia].filter(Boolean).join(', ')||'No especificada');
  put('invCarrier',order.transportista||'Pendiente de asignación');
  put('invDelivery',order.tipoEntrega||'Según cobertura');
@@ -194,8 +228,9 @@ function fillInvoice(order, items, subtotal, shipping){
  put('invPayment',({entrega:'Pago contra entrega',tarjeta:'Tarjeta bancaria (modo demostración)',transferencia:'Transferencia bancaria'}[order.metodoPago]||order.metodoPago||'No especificado'));
  put('invStatus',order.estado||'En espera');
  put('invSubtotal',money(order.subtotal ?? subtotal));
- put('invShipping',shipping?money(shipping):'Gratis');
- put('invTotal',money(order.total));
+ const pending=!!(order.envioPendiente || order.totalPendiente);
+ put('invShipping',pending?'Por cotizar':shipping?money(shipping):'Gratis');
+ put('invTotal',pending?money(order.subtotal ?? subtotal)+' + envío por cotizar':money(order.total));
  const rows=items.length?items.map(item=>{
    const qty=Number(item.cantidad)||1, price=Number(item.precio)||0;
    return `<tr><td style="font-weight:700">${escapeHtml(item.nombre||'Producto')}</td><td style="text-align:center">${qty}</td><td style="text-align:right">${money(price)}</td><td style="text-align:right;font-weight:700">${money(price*qty)}</td></tr>`;
@@ -209,5 +244,64 @@ document.addEventListener('DOMContentLoaded',()=>{const id=getParam();if(id&&loa
 document.getElementById('searchForm').addEventListener('submit',e=>{e.preventDefault();const ok=loadById(document.getElementById('searchOrder').value,document.getElementById('searchEmail').value);const m=document.getElementById('searchMessage');m.classList.remove('hidden');m.className='text-sm mt-3 '+(ok?'text-emerald-700':'text-rose-600');m.textContent=ok?'Pedido encontrado. Se muestra su estado actual.':'No encontramos un pedido con ese número y correo. Verifica los datos.';});
 window.addEventListener('storage',e=>{if(e.key==='novashop_pro_orders_v2'&&currentOrderId)loadById(currentOrderId);});
 setInterval(()=>{if(currentOrderId)loadById(currentOrderId);},4000);
+</script>
+<script id="novashop-confirmacion-motor-temporadas">
+(function(){
+ function normalizarTema(valor){
+  const texto=String(valor||'original').toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const clave=texto.replace(/[^a-z0-9]/g,'');
+  const alias={
+   original:'original',normal:'original',
+   halloween:'halloween',navidad:'navidad',
+   sanvalentin:'sanvalentin',diadelamor:'sanvalentin',
+   padre:'padre',diadelpadre:'padre',
+   madre:'madre',diadelamadre:'madre',
+   nino:'nino',ninos:'nino',diadelnino:'nino',
+   blackfriday:'blackfriday',orgullo:'orgullo',mesdelorgullo:'orgullo'
+  };
+  return alias[clave]||'original';
+ }
+ function leerTema(){
+  const params=new URLSearchParams(location.search);const query=params.get('tema');
+  if(query)return normalizarTema(query);
+  try{
+   const raw=localStorage.getItem('novashop_public_theme');if(!raw)return 'original';
+   let parsed=raw;
+   try{parsed=JSON.parse(raw);}catch(e){/* Admite valores guardados como texto plano. */}
+   if(parsed&&typeof parsed==='object')parsed=parsed.tema||parsed.theme||parsed.temporada||parsed.season||parsed.value||parsed.selected||'original';
+   return normalizarTema(parsed);
+  }catch(e){return 'original';}
+ }
+const logosTemporada={
+   halloween:'img/logo hallowen.png',
+   navidad:'img/logo navidad.png',
+   sanvalentin:'img/logo san valetin.png?v=4',
+   padre:'img/logo dia del padre.png',
+   madre:'img/logo dia de la madre.png',
+   nino:'img/logo dia del niño.png',
+   blackfriday:'img/logo black friday.png?v=2',
+   orgullo:'img/logo del mes del orgullo.png?v=2'
+  };
+ const logo=document.querySelector('header nav a img');
+ const labels={"original": "NovaShop", "halloween": "Halloween · Gracias por elegirnos", "navidad": "Navidad · Felices fiestas", "sanvalentin": "San Valentín · Compra con amor", "padre": "Día del Padre", "madre": "Día de las Madres", "nino": "Día del Niño", "blackfriday": "Black Friday", "orgullo": "Mes del Orgullo"};
+ const original=logo.getAttribute('src');
+ let ultimoTema;
+ function aplicar(){
+   const tema=leerTema();
+   document.body.dataset.tema=tema;
+   document.documentElement.dataset.tema=tema;
+   if(ultimoTema===tema)return;
+   ultimoTema=tema;
+   document.getElementById('seasonLabel').textContent=labels[tema];
+   logo.style.display='';
+   logo.onerror=function(){this.onerror=null;this.src=original;};
+   logo.src=logosTemporada[tema]||original;
+ }
+ aplicar();
+ window.addEventListener('pageshow',aplicar);
+ window.addEventListener('focus',aplicar);
+ window.addEventListener('novashop:theme-changed',aplicar);
+ window.addEventListener('storage',e=>{if(e.key==='novashop_public_theme'||e.key===null)aplicar();});
+})();
 </script>
 </body></html>
