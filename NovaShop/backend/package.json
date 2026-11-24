@@ -1,12 +1,14 @@
+
 {
-  "name": "backend",
+  "name": "novashop-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Backend de la tienda virtual NovaShop",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "keywords": [],
+  "keywords": ["novashop", "ecommerce"],
   "author": "",
   "license": "ISC",
   "type": "commonjs"
